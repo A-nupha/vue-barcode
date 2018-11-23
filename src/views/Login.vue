@@ -10,10 +10,11 @@
               <h4>Login</h4>
             </v-card-title>
             <v-form>
-            <v-text-field prepend-icon="mdi-person" name="Username" label="Username"></v-text-field>
+            <v-text-field prepend-icon="mdi-check-circle-outline" name="Username" label="Username"></v-text-field>
             <v-text-field prepend-icon="mdi-lock" name="Password" label="Password" type="password"></v-text-field>
             <v-card-actions>
-              <v-btn primary large block>Login</v-btn>
+              <v-btn color="blue" dark large block>Login</v-btn>
+              <v-btn color="primary" dark large block>Register</v-btn>
             </v-card-actions>
             </v-form>
           </v-card>
