@@ -6,10 +6,12 @@
       tabs
     >
    <v-toolbar-side-icon></v-toolbar-side-icon>
-   
+    <v-toolbar-title>Nav-Link</v-toolbar-title>
+
 
    </v-toolbar>
-     <tab/>
+   <LoginApp/>
+     <!-- <tab/> -->
    
     
   </div>
@@ -19,6 +21,7 @@ import HOME from './views/Home.vue'
 import About from './views/About.vue'
 import Syn from './views/Syn.vue'
 import tab from './views/tab.vue'
+import LoginApp from './views/Login.vue'
 
 export default {
   name: 'Profile',
@@ -38,6 +41,7 @@ export default {
     About,
     Syn,
     tab,
+    LoginApp,
   },
   // mounted() {
   //   let url = "../marry.json";
