@@ -29,7 +29,7 @@ import About from './views/About.vue'
 import Syn from './views/Syn.vue'
 import tab from './views/tab.vue'
 import LoginApp from './views/Login.vue'
-import menu from './views/menu.vue'
+import Menu from './views/menu.vue'
 
 export default {
   name: 'Profile',
@@ -52,7 +52,7 @@ export default {
     Syn,
     tab,
     LoginApp,
-    menu,
+    Menu,
   },
   // mounted() {
   //   let url = "../marry.json";
@@ -74,7 +74,7 @@ export default {
   watch: {
     login() {
       if (this.login) {
-        this.z = 'tab'
+        this.z = 'Menu'
       }
     },
   },
