@@ -29,8 +29,6 @@
         </v-tabs>
       </v-flex >
     </v-layout>
-
- 
   </div>
 </template>
 <script>

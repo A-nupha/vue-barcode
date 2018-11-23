@@ -10,10 +10,12 @@
 
 
    </v-toolbar>
-   <LoginApp/>
-     <!-- <tab/> -->
-   
-    
+   <!-- <LoginApp/> -->
+   <transition name="component-fade" mode="out-in">
+              <component v-bind:is="this.z"></component>
+  </transition>
+    <!-- <v-btn color="blue" dark large block @click="setData()">Login</v-btn> -->
+    <!-- <tab/> -->
   </div>
 </template>
 <script>
@@ -27,6 +29,7 @@ export default {
   name: 'Profile',
   data() {
     return {
+      z: '',
       active: null,
       button: 'ถัดไป',
     }
@@ -57,8 +60,14 @@ export default {
   //     .catch(function(error) {
   //       console.log("Error", error);
   //     });
+  mounted() {
+    this.z = 'LoginApp'
+  },
   // },
   methods: {
+    setData() {
+      this.z = 'tab'
+    },
     handleTabClick(e) {
       console.log(e)
     },
