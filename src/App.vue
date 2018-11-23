@@ -14,30 +14,37 @@
    <transition name="component-fade" mode="out-in">
               <component v-bind:is="this.z"></component>
   </transition>
+  <!-- {{login}}22 -->
     <!-- <v-btn color="blue" dark large block @click="setData()">Login</v-btn> -->
     <!-- <tab/> -->
+    <!-- {{}} -->
   </div>
 </template>
 <script>
+import {
+  mapState,
+} from 'vuex'
 import HOME from './views/Home.vue'
 import About from './views/About.vue'
 import Syn from './views/Syn.vue'
 import tab from './views/tab.vue'
 import LoginApp from './views/Login.vue'
+import menu from './views/menu.vue'
 
 export default {
   name: 'Profile',
   data() {
     return {
       z: '',
+      tab: 'tab',
       active: null,
       button: 'ถัดไป',
     }
   },
   computed: {
-    // ...mapState({
-    //   Pid: store => store.XUser.pid,
-    // }),
+    ...mapState({
+      login: store => store.getApi.login,
+    }),
   },
   components: {
     HOME,
@@ -45,6 +52,7 @@ export default {
     Syn,
     tab,
     LoginApp,
+    menu,
   },
   // mounted() {
   //   let url = "../marry.json";
@@ -63,11 +71,18 @@ export default {
   mounted() {
     this.z = 'LoginApp'
   },
+  watch: {
+    login() {
+      if (this.login) {
+        this.z = 'tab'
+      }
+    },
+  },
   // },
   methods: {
-    setData() {
-      this.z = 'tab'
-    },
+    // setData() {
+    //   this.z = tab
+    // },
     handleTabClick(e) {
       console.log(e)
     },

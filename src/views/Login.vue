@@ -16,8 +16,6 @@
               <v-btn color="blue" dark large block @click="setData()">Login</v-btn>
               <v-btn color="primary" dark large block>Register</v-btn>
             </v-card-actions>
-            <transition name="component-fade" mode="out-in">
-              <component v-bind:is="this.z"></component>
             </transition>
             </v-form>
           </v-card>
@@ -29,12 +27,15 @@
 </div>
 </template>
 <script>
-import tab from './tab.vue'
+import {
+  mapActions,
+} from 'vuex'
+// import tab from './tab.vue'
 
 export default {
   name: 'Login',
   components: {
-    tab,
+    // tab,
   },
   data() {
     return {
@@ -42,8 +43,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      setDataLogin: 'getApi/setDataLogin',
+    }),
     setData() {
-      this.z = 'tab'
+      this.setDataLogin(true);
     },
   },
 }

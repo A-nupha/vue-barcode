@@ -34,7 +34,8 @@
 <script>
 import HOME from './Home.vue'
 import About from './About.vue'
-import Syn from './Syn.vue'
+import Syn from './menu.vue'
+
 
 export default {
   name: 'tab',
