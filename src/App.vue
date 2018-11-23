@@ -1,7 +1,7 @@
 <template>
   <div id="app" dark>
        <v-toolbar
-      color="cyan"
+      color="blue lighten-1"
       dark
       tabs
     >
@@ -74,7 +74,7 @@ export default {
   watch: {
     login() {
       if (this.login) {
-        this.z = 'Menu'
+        this.z = 'tab'
       }
     },
   },

@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       model: 'tab-2',
-      // text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       decoder: {
         readers: ['ean_reader', 'ean_8_reader', 'code_39_reader', 'code_39_vin_reader', 'codabar_reader', 'upc_reader', 'upc_e_reader', 'i2of5_reader', '2of5_reader', 'code_93_reader'],
       },
@@ -46,6 +46,8 @@ export default {
   methods: {
     
     logIt(data) {
+
+
       console.log('detectedbarcode', data.codeResult.code)
       // alert(data.codeResult.code)
       this.databarcode = data.codeResult.code

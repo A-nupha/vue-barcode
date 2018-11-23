@@ -1,27 +1,27 @@
 <template>
 <div>
-    
+    <v-card >
     <v-layout md12>
       <v-flex xs12>
         <v-tabs
-        color="cyan"
+        color="blue lighten-1"
         dark
         slider-color="yellow"
           v-model="active">
           <v-tab :key="'About'"  >
-            About
+            CONFIG
           </v-tab>
            <v-tab-item :key="'About'">
             <About/>
           </v-tab-item>
           <v-tab :key="'HOME'" >
-            HOME
+            SCAN
           </v-tab>
              <v-tab-item :key="'HOME'">
             <HOME/>
           </v-tab-item>
           <v-tab :key="'Syn'">
-            Syn
+            ITEM
           </v-tab>
             <v-tab-item :key="'Syn'">
             <Syn/>
@@ -29,6 +29,7 @@
         </v-tabs>
       </v-flex >
     </v-layout>
+    </v-card>
   </div>
 </template>
 <script>
