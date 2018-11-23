@@ -1,75 +1,83 @@
 <template>
   <div id="app" dark>
+       <v-toolbar
+      color="cyan"
+      dark
+      tabs
+    >
+   <v-toolbar-side-icon></v-toolbar-side-icon>
+   
 
-      <v-layout ma-1 md12>
-        <v-flex justify-center>
-      <v-toolbar
-        color="blue darken-1"
-        dark
-        tabs
-      >
-        <v-toolbar-side-icon></v-toolbar-side-icon>
-
-        <v-toolbar-title>NAV LINK</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <!-- <v-btn icon>
-          <v-icon>search</v-icon>
-        </v-btn> -->
-
-        <!-- <v-btn icon>
-          <v-icon>more_vert</v-icon>
-        </v-btn> -->
-
-        <v-tabs
-          slot="extension"
-          v-model="model"
-          centered
-          color="blue darken-2"
-          slider-color="yellow"
-        >
-          <v-tab
-            v-for="i in 3"
-            :key="i"
-            :href="`#tab-${i}`"
-          >
-            Item {{ i }}
-          </v-tab>
-        </v-tabs>
-      </v-toolbar>
-
-      <v-tabs-items v-model="model">
-        <v-tab-item
-          v-for="i in 3"
-          :id="`tab-${i}`"
-          :key="i"
-        >
-          <v-card flat>
-            <v-card-text v-text="text"></v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs-items>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      </v-flex>
-      </v-layout>
-    <router-view/>
+   </v-toolbar>
+     <tab/>
+   
+    
   </div>
 </template>
 <script>
 import HOME from './views/Home.vue'
+import About from './views/About.vue'
+import Syn from './views/Syn.vue'
+import tab from './views/tab.vue'
 
 export default {
+  name: 'Profile',
   data() {
     return {
-      model: 'tab-1',
-      componen: HOME,
+      active: null,
+      button: 'ถัดไป',
     }
+  },
+  computed: {
+    // ...mapState({
+    //   Pid: store => store.XUser.pid,
+    // }),
+  },
+  components: {
+    HOME,
+    About,
+    Syn,
+    tab,
+  },
+  // mounted() {
+  //   let url = "../marry.json";
+  //   axios({
+  //     method: "get",
+  //     url: url,
+  //     dataType: "json",
+  //     headers: { "X-Requested-With": "XMLHttpRequest" }
+  //   })
+  //     .then(function(res) {
+  //       console.log("Data", res.data);
+  //     })
+  //     .catch(function(error) {
+  //       console.log("Error", error);
+  //     });
+  // },
+  methods: {
+    handleTabClick(e) {
+      console.log(e)
+    },
+    submit() {
+      alert('333')
+    },
+
+    next() {
+      const active = parseInt(this.active)
+      // alert(active);
+      if (active === 1) {
+        this.$data.button = 'บันทึก'
+      }
+      if (active === 2) {
+        this.submit()
+        // alert("sucess!!!");
+      } else {
+        this.active = active + 1
+      }
+    },
   },
 }
 </script>
-
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

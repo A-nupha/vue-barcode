@@ -1,0 +1,56 @@
+<template>
+<div>
+    
+    <v-layout md12>
+      <v-flex xs12>
+        <v-tabs
+        color="cyan"
+        dark
+        slider-color="yellow"
+          v-model="active">
+          <v-tab :key="'About'"  >
+            About
+          </v-tab>
+           <v-tab-item :key="'About'">
+            <About/>
+          </v-tab-item>
+          <v-tab :key="'HOME'" >
+            HOME
+          </v-tab>
+             <v-tab-item :key="'HOME'">
+            <HOME/>
+          </v-tab-item>
+          <v-tab :key="'Syn'">
+            Syn
+          </v-tab>
+            <v-tab-item :key="'Syn'">
+            <Syn/>
+          </v-tab-item>
+        </v-tabs>
+      </v-flex >
+    </v-layout>
+
+ 
+  </div>
+</template>
+<script>
+import HOME from './Home.vue'
+import About from './About.vue'
+import Syn from './Syn.vue'
+
+export default {
+  name: 'tab',
+  data() {
+    return {
+      active: null,
+      button: 'ถัดไป',
+    }
+  },
+  components: {
+    HOME,
+    About,
+    Syn,
+
+  },
+}
+</script>
