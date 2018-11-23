@@ -17,7 +17,7 @@
                   <v-card-actions class="text-xs-center">
                        <v-layout row>
                            <v-flex xs-4 class="text-xs-center">
-                                <v-btn  color="blue darken-1" @click="click='scan'">Share</v-btn>
+                                <v-btn  color="blue darken-1" @click="click='scan'">Go</v-btn>
                            </v-flex>
                        </v-layout>
                     </v-card-actions>
@@ -30,7 +30,7 @@
                    <v-card-actions class="text-xs-center">
                        <v-layout row>
                            <v-flex xs-4 class="text-xs-center">
-                                <v-btn  color="blue darken-1" @click="click='scan'">Share</v-btn>
+                                <v-btn  color="blue darken-1" @click="click='scan'">Go</v-btn>
                            </v-flex>
                        </v-layout>
                     </v-card-actions>
@@ -41,11 +41,11 @@
               <v-flex  xs6 pa-2>
                 <v-card dark color="#1565C0" class="text-xs-center" style="padding-top:50px;padding-bottom:20px;">
                   <v-icon >mdi-sync-alert</v-icon>
-                  <v-card-text>Physical Inventory Count</v-card-text>
+                  <v-card-text>Good Transfer</v-card-text>
                   <v-card-actions class="text-xs-center">
                        <v-layout row>
                            <v-flex xs-4 class="text-xs-center">
-                                <v-btn  color="blue darken-1" @click="click='scan'">Share</v-btn>
+                                <v-btn  color="blue darken-1" @click="click='scan'">Go</v-btn>
                            </v-flex>
                        </v-layout>
                     </v-card-actions>
@@ -53,12 +53,12 @@
               </v-flex>
                <v-flex  xs6 pa-2>
                 <v-card dark color="#1565C0" class="text-xs-center" style="padding-top:50px;padding-bottom:20px;">
-                  <v-icon >favorite</v-icon>
-                  <v-card-text>จัดการผู้ใช้งาน</v-card-text>
+                  <v-icon >mdi-pencil</v-icon>
+                  <v-card-text>Physical Count</v-card-text>
                   <v-card-actions class="text-xs-center">
                        <v-layout row>
                            <v-flex xs-4 class="text-xs-center">
-                                <v-btn  color="blue darken-1" @click="click='scan'">Share</v-btn>
+                                <v-btn  color="blue darken-1" @click="click='scan'">GO</v-btn>
                            </v-flex>
                        </v-layout>
                     </v-card-actions>
