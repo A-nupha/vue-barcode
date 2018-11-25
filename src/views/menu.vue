@@ -77,7 +77,7 @@
                         <v-container>
                             <v-card flat class="elevation-20">
                                 <v-card-title primary-title>
-                                    <h4>Login</h4>
+                                    <h4>Login : Rak</h4>
                                 </v-card-title>
                                 <v-form>
                               
@@ -98,7 +98,7 @@
                <v-flex  xs6 pa-2>
                 <v-card dark color="#1565C0" class="elevation-22" style="padding-top:50px;padding-bottom:20px;">
                   <v-icon >mdi-truck-delivery</v-icon>
-                  <v-card-text>Good Return</v-card-text>
+                  <v-card-text>Good <br>Return</v-card-text>
                    <v-card-actions class="text-xs-center">
                        <v-layout row>
                            <v-flex xs-4 class="text-xs-center">
@@ -165,5 +165,6 @@ export default {
   mounted () {
     // console.log(AdminMenuList)
   }
+
 }
 </script>

@@ -20,7 +20,7 @@
                                         <v-btn color="blue" dark large block @click="setData()">Login</v-btn>
                                         <v-btn color="blue" dark large block>Register</v-btn>
                                     </v-card-actions>
-                                    </transition>
+
                                 </v-form>
                             </v-card>
                         </v-container>
@@ -28,30 +28,48 @@
                 </v-layout>
             </v-container>
         </v-content>
+        <!-- {{data}} -->
     </div>
 </template>
 <script>
-    import {
-        mapActions,
-    } from 'vuex'
-    // import tab from './tab.vue'
-    export default {
-        name: 'Login',
-        components: {
-            // tab,
-        },
-        data() {
-            return {
-                z: '',
-            }
-        },
-        methods: {
-            ...mapActions({
-                setDataLogin: 'getApi/setDataLogin',
-            }),
-            setData() {
-                this.setDataLogin(true);
-            },
-        },
+import axios from 'axios'
+// import VueAxios from 'vue-axios'
+import {
+  mapActions,
+} from 'vuex'
+// import tab from './tab.vue'
+export default {
+  name: 'Login',
+  components: {
+    // tab,
+  },
+  data() {
+    return {
+      data: [],
+      z: '',
     }
+  },
+  async created() {
+    await this.getdata()
+  },
+  methods: {
+    ...mapActions({
+      setDataLogin: 'getApi/setDataLogin',
+    }),
+    setData() {
+      this.setDataLogin(true);
+    },
+    async getdata() {
+      alert('testFN')
+      await axios.get('https://jsonplaceholder.typicode.com/posts/42')
+        .then((response) => {
+          this.data = response.data
+          this.alert = this.data
+        })
+        .catch(() => {
+          this.alert = 'ไม่พบข้อมูล'
+        })
+    },
+  },
+}
 </script>

@@ -1,10 +1,26 @@
 <template>
 
   <div>
-    datatestbarcodeScenner:{{databarcode}}
-    <!-- <v-text-field v-model="databarcode"></v-text-field> -->
+    <v-layout ma-3>
+      
+      <v-flex >
+    <v-text-field label="barcode" v-model="databarcode"></v-text-field>
+    </v-flex>
+    <v-flex pt-3><v-icon>mdi-content-save</v-icon>
+    </v-flex>
+    </v-layout>
+   
+    
     <!-- <quagga-scanner v-bind=" readerSize={width:640,height:480}" :onDetected="logIt"></quagga-scanner> -->
-    <quagga-scanner v-if="!databarcode"    :onDetected="logIt" :readerSize="readerSize" :readerType="'ean_reader'"></quagga-scanner>
+    <v-card flat class="elevation-20">
+      <v-card-actions>
+        <quagga-scanner v-if="!databarcode"
+        :onDetected="logIt" :readerSize="readerSize" :readerType="'ean_reader'">
+        <video></video>
+        </quagga-scanner>
+        </v-card-actions>
+        </v-card>
+    <!-- <quagga-scanner v-if="!databarcode"    :onDetected="logIt" :readerSize="readerSize" :readerType="'ean_reader'"></quagga-scanner> -->
     <!-- <v-flex v-else>
       <v-text-field v-model="databarcode"></v-text-field>
     </v-flex> -->
@@ -60,7 +76,7 @@ export default {
       })
       .then((willDelete) => {
         if (willDelete) {
-          swal("barcode has been deleted!", {
+          swal("success", {
             icon: "success",
           });
           Quagga.stop();

@@ -35,7 +35,7 @@
 <script>
 import HOME from './Home.vue'
 import About from './About.vue'
-import Syn from './menu.vue'
+import Syn from './Syn.vue'
 
 
 export default {

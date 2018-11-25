@@ -5,7 +5,7 @@
       dark
       tabs
     >
-   <v-toolbar-side-icon></v-toolbar-side-icon>
+   <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-toolbar-title>Nav-Link</v-toolbar-title>
 
 
@@ -18,6 +18,48 @@
     <!-- <v-btn color="blue" dark large block @click="setData()">Login</v-btn> -->
     <!-- <tab/> -->
     <!-- {{}} -->
+     <v-layout
+      wrap
+      style="height: 50px;"
+    >
+<v-navigation-drawer
+        height="100%"
+        width ='170'
+        v-model="drawer"
+        absolute
+        temporary
+      >
+        <v-list class="pa-1">
+          <v-list-tile avatar>
+            <v-list-tile-avatar>
+              <img src="https://image.ibb.co/mwBrhf/13123.jpg">
+            </v-list-tile-avatar>
+  
+            <v-list-tile-content>
+              <v-list-tile-title>A-nupha.sup</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+  
+        <v-list class="pt-0" dense>
+          <v-divider></v-divider>
+  
+          <v-list-tile
+            v-for="item in items"
+            :key="item.title"
+            @click=""
+          >
+            <v-list-tile-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+  
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+    </v-layout>
   </div>
 </template>
 <script>
@@ -39,6 +81,11 @@ export default {
       tab: 'tab',
       active: null,
       button: 'ถัดไป',
+      drawer: null,
+      items: [
+        { title: 'Menu', icon: 'mdi-apps' },
+        { title: 'Logout', icon: 'mdi-logout' }
+      ],
     }
   },
   computed: {
