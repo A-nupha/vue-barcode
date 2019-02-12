@@ -13,7 +13,7 @@
    </v-toolbar>
    <!-- <LoginApp/> -->
    <transition name="component-fade" mode="out-in">
-              <component v-bind:is="this.z"></component>
+              <component v-bind:is="z"></component>
   </transition>
      <v-layout
       wrap
@@ -70,12 +70,13 @@ import Syn from './views/Syn.vue'
 import tab from './views/tab.vue'
 import LoginApp from './views/Login.vue'
 import Menu from './views/menu.vue'
+import request from './views/Request.vue'
 
 export default {
   name: 'Profile',
   data() {
     return {
-      z: '',
+      z: 'LoginApp',
       tab: 'tab',
       active: null,
       button: 'ถัดไป',
@@ -94,6 +95,7 @@ export default {
   },
   components: {
     HOME,
+    request,
     Branch,
     Syn,
     tab,
@@ -102,22 +104,26 @@ export default {
     moment,
   },
   mounted() {
-    this.z = 'LoginApp'
-    console.log(this.z)
+    // this.z = 'LoginApp'
+    // console.log(this.z)
   },
   watch: {
     login() {
-      if (this.login) {
+      if (this.login = 'Menu' ) {
         this.z = 'Menu'
       }
+      // if (this.login = 'request' ) { this.z = 'request' }
     },
-    handleTabClick() {
-      if (this.setMenuRequest == 1) { this.z = 'tab' }
-    },
+    // handleTabClick() {
+    //   if (this.setMenuRequest == 1) { this.z = 'tab' }
+    // },
   },
   methods: {
     submit() {
       alert('333')
+    },
+    handleTabClick() {
+      if (this.setMenuRequest == 1) { this.z = 'tab' }
     },
 
   },

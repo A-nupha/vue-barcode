@@ -1,5 +1,5 @@
 const state = {
-  login: false,
+  login: null,
   SetDataMenuRequest: null,
   
 }
@@ -9,6 +9,7 @@ const actions = {
   
   setDataLogin({ commit, state }, payload) {
     commit('SET_LOGIN', payload)
+    console.log(state)
   },
   SetDataMenuRequest({ commit, state }, payload) {
     commit('SetData_MenuRequest', payload)

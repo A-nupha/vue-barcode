@@ -161,10 +161,13 @@ export default {
   methods: {
     ...mapActions({
       SetDataMenuRequest: 'getApi/SetDataMenuRequest',
+      setDataLogin: 'getApi/setDataLogin',
     }),
     setMenuRequest() {
-      const flagMenu = 1;
-      this.SetDataMenuRequest(flagMenu);
+      // const flagMenu = 'request';
+      // this.SetDataMenuRequest(flagMenu);
+      const menu = 'request'
+      this.setDataLogin(menu);
       // console.log(typeof flagMenu)
     },
   },

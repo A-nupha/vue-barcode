@@ -62,7 +62,8 @@ export default {
       setDataLogin: 'getApi/setDataLogin',
     }),
     setData() {
-      this.setDataLogin(true);
+      const menu = 'Menu'
+      this.setDataLogin(menu);
     },
     async getdata() {
       // alert('testFN')
