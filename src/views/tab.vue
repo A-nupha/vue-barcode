@@ -8,11 +8,11 @@
         dark
         slider-color="yellow"
           v-model="active">
-          <v-tab :key="'About'"  >
+          <v-tab :key="'Barnch'"  >
             CONFIG
           </v-tab>
-           <v-tab-item :key="'About'">
-            <About/>
+           <v-tab-item :key="'Barnch'">
+            <Branch/>
           </v-tab-item>
           <v-tab :key="'HOME'" >
             SCAN
@@ -34,7 +34,7 @@
 </template>
 <script>
 import HOME from './Home.vue'
-import About from './About.vue'
+import Branch from './Branch.vue'
 import Syn from './Syn.vue'
 
 
@@ -48,7 +48,7 @@ export default {
   },
   components: {
     HOME,
-    About,
+    Branch,
     Syn,
 
   },

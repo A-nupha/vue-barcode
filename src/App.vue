@@ -6,18 +6,15 @@
       tabs
     >
    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-    <v-toolbar-title>Nav-Link</v-toolbar-title>
-
-
+    <v-toolbar-title>
+      <div>Inventory Control</div>
+      <!-- <span>{{ moment().format('MMMM Do YYYY, h:mm:ss a') }}</span> -->
+      </v-toolbar-title>
    </v-toolbar>
    <!-- <LoginApp/> -->
    <transition name="component-fade" mode="out-in">
               <component v-bind:is="this.z"></component>
   </transition>
-  <!-- {{login}}22 -->
-    <!-- <v-btn color="blue" dark large block @click="setData()">Login</v-btn> -->
-    <!-- <tab/> -->
-    <!-- {{}} -->
      <v-layout
       wrap
       style="height: 50px;"
@@ -34,28 +31,31 @@
             <v-list-tile-avatar>
               <img src="https://image.ibb.co/mwBrhf/13123.jpg">
             </v-list-tile-avatar>
-  
             <v-list-tile-content>
               <v-list-tile-title>A-nupha.sup</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
-  
         <v-list class="pt-0" dense>
           <v-divider></v-divider>
-  
-          <v-list-tile
-            v-for="item in items"
-            :key="item.title"
-            @click=""
-          >
-            <v-list-tile-action>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-  
+          <v-list-tile>
+            
             <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              <v-list-tile-title>
+                <v-flex xs1>Menu</v-flex>
+                </v-list-tile-title>
+                <v-list-tile-title>
+                  <v-divider></v-divider>
+                <v-flex xs1>Logout</v-flex>
+                </v-list-tile-title>
             </v-list-tile-content>
+
+            <v-list-tile-action>
+             <v-btn icon>
+                <v-icon color="blue">mdi-arrow-right-bold-box-outline</v-icon>
+              </v-btn>
+            </v-list-tile-action>
+
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
@@ -67,11 +67,12 @@ import {
   mapState,
 } from 'vuex'
 import HOME from './views/Home.vue'
-import About from './views/About.vue'
+import Branch from './views/Branch.vue'
 import Syn from './views/Syn.vue'
 import tab from './views/tab.vue'
 import LoginApp from './views/Login.vue'
 import Menu from './views/menu.vue'
+import moment from 'moment'
 
 export default {
   name: 'Profile',
@@ -95,26 +96,13 @@ export default {
   },
   components: {
     HOME,
-    About,
+    Branch,
     Syn,
     tab,
     LoginApp,
     Menu,
+    moment,
   },
-  // mounted() {
-  //   let url = "../marry.json";
-  //   axios({
-  //     method: "get",
-  //     url: url,
-  //     dataType: "json",
-  //     headers: { "X-Requested-With": "XMLHttpRequest" }
-  //   })
-  //     .then(function(res) {
-  //       console.log("Data", res.data);
-  //     })
-  //     .catch(function(error) {
-  //       console.log("Error", error);
-  //     });
   mounted() {
     this.z = 'LoginApp'
   },
@@ -125,11 +113,7 @@ export default {
       }
     },
   },
-  // },
   methods: {
-    // setData() {
-    //   this.z = tab
-    // },
     handleTabClick(e) {
       console.log(e)
     },
@@ -137,19 +121,6 @@ export default {
       alert('333')
     },
 
-    next() {
-      const active = parseInt(this.active)
-      // alert(active);
-      if (active === 1) {
-        this.$data.button = 'บันทึก'
-      }
-      if (active === 2) {
-        this.submit()
-        // alert("sucess!!!");
-      } else {
-        this.active = active + 1
-      }
-    },
   },
 }
 </script>
@@ -172,5 +143,8 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+#background{
+color: #0D47A1 ;
 }
 </style>

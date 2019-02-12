@@ -34,9 +34,9 @@
               <v-text-field prepend-icon="mdi-map-marker" name="location" label="location"></v-text-field>
             </v-flex>
             <v-flex xs2>
-              <v-btn icon>
+              <!-- <v-btn icon>
                 <v-icon color="blue">mdi-arrow-right-bold-box-outline</v-icon>
-              </v-btn>
+              </v-btn> -->
             </v-flex>
           </v-layout>
         </v-flex>
@@ -58,3 +58,16 @@ export default {
   },
 }
 </script>
+
+<style>
+.bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: red;
+    transform: scale(1.1);
+  }
+</style>
+
