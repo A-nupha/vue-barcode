@@ -41,7 +41,9 @@
           <v-list-tile>
             <v-list-tile-content>
               <v-list-tile-title>
-                <v-flex xs1>Menu</v-flex>
+                <v-layout >
+                <v-flex xs1 >Menu</v-flex>
+                </v-layout>
                 </v-list-tile-title>
                 <v-list-tile-title>
                   <v-divider></v-divider>
@@ -49,9 +51,7 @@
                 </v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
-             <v-btn icon>
-                <v-icon color="blue">mdi-arrow-right-bold-box-outline</v-icon>
-              </v-btn>
+             
             </v-list-tile-action>
           </v-list-tile>
         </v-list>
@@ -104,15 +104,13 @@ export default {
     moment,
   },
   mounted() {
-    // this.z = 'LoginApp'
-    // console.log(this.z)
+
   },
   watch: {
     login() {
-      if (this.login = 'Menu' ) {
-        this.z = 'Menu'
-      }
-      // if (this.login = 'request' ) { this.z = 'request' }
+      if (this.login === 'Menu') { this.z = 'Menu' }
+      if (this.login === 'request') { this.z = 'request' }
+      if (this.login === 'tab') { this.z = 'tab' }
     },
     // handleTabClick() {
     //   if (this.setMenuRequest == 1) { this.z = 'tab' }

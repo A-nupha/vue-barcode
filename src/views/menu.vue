@@ -85,7 +85,7 @@
                         <v-card-actions class="text-xs-center">
                           <v-layout row>
                             <v-flex xs-4 class="text-xs-center">
-                              <v-btn color="blue darken-1" @click="click='scan'">Go</v-btn>
+                              <v-btn color="blue darken-1" @click="click=setMenuTab()">Go</v-btn>
                             </v-flex>
                           </v-layout>
                         </v-card-actions>
@@ -95,7 +95,7 @@
                       <v-card dark color="#1565C0" class="elevation-22"
                       style="padding-top:50px;padding-bottom:20px;">
                         <v-icon x-large dark>mdi-truck-delivery</v-icon>
-                        <v-card-text>Good<br>Return</v-card-text>
+                        <v-card-text>Return</v-card-text>
                         <v-card-actions class="text-xs-center">
                           <v-layout row>
                             <v-flex xs-4 class="text-xs-center">
@@ -160,15 +160,16 @@ export default {
   mounted() {},
   methods: {
     ...mapActions({
-      SetDataMenuRequest: 'getApi/SetDataMenuRequest',
+      // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
       setDataLogin: 'getApi/setDataLogin',
     }),
     setMenuRequest() {
-      // const flagMenu = 'request';
-      // this.SetDataMenuRequest(flagMenu);
       const menu = 'request'
       this.setDataLogin(menu);
-      // console.log(typeof flagMenu)
+    },
+    setMenuTab() {
+      const menu = 'tab'
+      this.setDataLogin(menu);
     },
   },
 }

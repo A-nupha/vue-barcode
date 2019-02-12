@@ -14,7 +14,7 @@
                                 </v-card-title>
                                 <v-form>
                                     <v-layout>
-                                        <v-flex ma-1>
+                                        <v-flex ma-1 pr-5>
                                             <v-text-field prepend-icon="mdi-check-circle-outline"
                                             name="Username" label="Username"></v-text-field>
                                             <v-text-field prepend-icon="mdi-lock" name="Password"
