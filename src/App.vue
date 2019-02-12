@@ -51,7 +51,6 @@
                 </v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
-             
             </v-list-tile-action>
           </v-list-tile>
         </v-list>
@@ -112,18 +111,11 @@ export default {
       if (this.login === 'request') { this.z = 'request' }
       if (this.login === 'tab') { this.z = 'tab' }
     },
-    // handleTabClick() {
-    //   if (this.setMenuRequest == 1) { this.z = 'tab' }
-    // },
   },
   methods: {
     submit() {
       alert('333')
     },
-    handleTabClick() {
-      if (this.setMenuRequest == 1) { this.z = 'tab' }
-    },
-
   },
 }
 </script>
