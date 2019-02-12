@@ -39,7 +39,6 @@
         <v-list class="pt-0" dense>
           <v-divider></v-divider>
           <v-list-tile>
-            
             <v-list-tile-content>
               <v-list-tile-title>
                 <v-flex xs1>Menu</v-flex>
@@ -49,13 +48,11 @@
                 <v-flex xs1>Logout</v-flex>
                 </v-list-tile-title>
             </v-list-tile-content>
-
             <v-list-tile-action>
              <v-btn icon>
                 <v-icon color="blue">mdi-arrow-right-bold-box-outline</v-icon>
               </v-btn>
             </v-list-tile-action>
-
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
@@ -66,13 +63,13 @@
 import {
   mapState,
 } from 'vuex'
+import moment from 'moment'
 import HOME from './views/Home.vue'
 import Branch from './views/Branch.vue'
 import Syn from './views/Syn.vue'
 import tab from './views/tab.vue'
 import LoginApp from './views/Login.vue'
 import Menu from './views/menu.vue'
-import moment from 'moment'
 
 export default {
   name: 'Profile',
@@ -85,13 +82,14 @@ export default {
       drawer: null,
       items: [
         { title: 'Menu', icon: 'mdi-apps' },
-        { title: 'Logout', icon: 'mdi-logout' }
+        { title: 'Logout', icon: 'mdi-logout' },
       ],
     }
   },
   computed: {
     ...mapState({
       login: store => store.getApi.login,
+      setMenuRequest: store => store.getApi.setMenuRequest,
     }),
   },
   components: {
@@ -105,18 +103,19 @@ export default {
   },
   mounted() {
     this.z = 'LoginApp'
+    console.log(this.z)
   },
   watch: {
     login() {
       if (this.login) {
-        this.z = 'tab'
+        this.z = 'Menu'
       }
+    },
+    handleTabClick() {
+      if (this.setMenuRequest == 1) { this.z = 'tab' }
     },
   },
   methods: {
-    handleTabClick(e) {
-      console.log(e)
-    },
     submit() {
       alert('333')
     },
