@@ -85,8 +85,8 @@ export default {
     }),
     setData(data) {
       getData.sendData(data)
-      // const menu = 'Menu'
-      // this.setDataLogin(menu);
+      const menu = 'Menu'
+      this.setDataLogin(menu);
     },
     Register() {
       const Register = 'Register'
