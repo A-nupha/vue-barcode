@@ -1,25 +1,3 @@
-<?php
-	$catm = 10 ; 
-	if(isset($_GET['catm']) == true ){
-		$catm = $_GET['catm'];
-	}
-
-	$ref = "./uikit/landingPage.php?catm=" . $catm ; 
-	$state = ""; 
-
-	if($catm == "50010000"){
-		$state = "amphoe"; 
-	}else if($catm == "50000000"){
-		$state = "province"; 
-	}
-
-	if($state == "province"){
-		$width = " width : 50%; ";
-	}else{ 
-		$width = " width : 100%; ";
-	} 
-	$basePath = "../../../"; 
-?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
@@ -37,20 +15,11 @@ Released   : 20131117
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>DODS</title>	
-<meta name="keywords" content="" />
-<meta name="description" content="" />
+
 <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="../../../assets/css/default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
-<link rel="stylesheet" href="../../../font-awesome/css/font-awesome.css">
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"> -->
-<link rel="stylesheet" href="../../../assets/css/datatables.css">
-<link rel="stylesheet" type="text/css" href="../../../assets/css/slider.css">
-<link rel="stylesheet" type="text/css" href="../../../assets/css/bootstrap.css">  
-<link rel="stylesheet" type="text/css" href="../../../assets/css/card.css">  
-<link rel="stylesheet" type="text/css" href="../../../assets/css/footer.css">  
-<link rel="stylesheet" type="text/css" href="../../../assets/css/view.css">   
+
+
 
 <style>	
 	iframe { overflow: hidden; }
@@ -95,7 +64,6 @@ Released   : 20131117
 	<div style='display:flex; align-items: center ; margin-top:0px; background-color:#fff;'>	
 		<div class='margin-left:20px; height:100%;'>
 			<div class='row kanit' style='font-size:40px; border-bottom:5px solid #5BB9FA ; margin-bottom:30px; '>
-		 
 				<div id='cat-header'style='color:#5BB9FA;' class='col-xs-12'>
 					ข่าวประชาสัมพันธ์ 
 					<span style='font-size:15px; right:0px; color:#777;'  class='hoverAble' onClick="goPage('page-economy.php')">
@@ -154,29 +122,8 @@ Released   : 20131117
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
-
-
-<?php  $basePath = "../../../"; ?> 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
-    <script src="../assets/examples/js/dashboard/v1.js"></script>
-    <script type="text/javascript" language="javascript" src="<?php echo $basePath ."/"; ?>assets/js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" language="javascript" src="<?php echo $basePath ."/"; ?>assets/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" language="javascript" src="<?php echo $basePath ."/"; ?>assets/js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" language="javascript" src="<?php echo $basePath ."/"; ?>assets/js/basicJs.js"></script>
-    <script type="text/javascript" language="javascript" src="<?php echo $basePath ."/"; ?>/js/slider.js"></script>
-	<script src="../../global/js/getApiData.js"></script>
-	 
-    <?php    
-      include( $basePath . '/components/m_card.php');
-      include( $basePath . '/components/m-card-flat.php');
-      // include( $basePath . '/components/m-card-row.php'); 
-      include( $basePath . '/components/m-modal.php');
-      include( $basePath . '/components/m-footer.php');
-      include( $basePath . '/components/m_cardList.php');
-      include( $basePath . '/components/m_modalMulti.php'); 
-
-    ?> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.6/dist/vue.js"></script>
 
 <script>
 	$(document).ready(function(){ 
@@ -296,18 +243,6 @@ Released   : 20131117
 			} 
   	}, 
     created() {
-      let obj = this;   
-      let cc = obj.catm.substr(0,2) ;
-		  let aa = obj.catm.substr(2,2) ;
-		  
-          if(this.setcatm > 0 ){
-			  this.catm = this.setcatm;
-			}
-			let ccaattmm = this.catm;
-
-		  data_sale = {} ;
-			let common_url = "<a href='./page-detail.php?catm=" + obj.catm +"'>" ;
-		  
 		  //////****  NEWS  ****//////
         funcs.getApiData('news', this.catm )
           .then((responseData) => { 
@@ -328,7 +263,7 @@ Released   : 20131117
 				}) 
 			// data_sale.push(ret); 
 			data_sale = ret ;
-					});
+			});
 
 			funcs.getApiData('proj', this.catm )
 			.then((responseData) => {

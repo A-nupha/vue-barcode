@@ -42,6 +42,8 @@ import axios from 'axios'
 import {
   mapActions,
 } from 'vuex'
+import getdata from './getApiData/getApiData.js'
+
 // import tab from './tab.vue'
 export default {
   name: 'Login',
@@ -56,6 +58,7 @@ export default {
   },
   async created() {
     await this.getdata()
+    await getdata.getApiData()
   },
   methods: {
     ...mapActions({
