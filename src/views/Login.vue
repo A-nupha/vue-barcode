@@ -23,7 +23,7 @@
                                     </v-layout>
                                     <v-card-actions>
                                         <v-btn color="blue" dark large block @click="setData()">Login</v-btn>
-                                        <v-btn color="blue" dark large block>Register</v-btn>
+                                        <v-btn color="blue" dark large block @click="Register()">Register</v-btn>
                                     </v-card-actions>
 
                                 </v-form>
@@ -64,6 +64,10 @@ export default {
     setData() {
       const menu = 'Menu'
       this.setDataLogin(menu);
+    },
+    Register() {
+      const Register = 'Register'
+      this.setDataLogin(Register);
     },
     async getdata() {
       // alert('testFN')

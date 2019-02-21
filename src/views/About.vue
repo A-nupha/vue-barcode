@@ -47,7 +47,6 @@
 
 <script>
 import moment from 'moment'
-import Quagga from 'quagga';
 
 export default {
   name: 'abount',

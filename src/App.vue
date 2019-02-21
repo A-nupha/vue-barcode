@@ -70,6 +70,7 @@ import tab from './views/tab.vue'
 import LoginApp from './views/Login.vue'
 import Menu from './views/menu.vue'
 import request from './views/Request.vue'
+import Register from './views/Register.vue'
 
 export default {
   name: 'Profile',
@@ -101,6 +102,7 @@ export default {
     LoginApp,
     Menu,
     moment,
+    Register,
   },
   mounted() {
 
@@ -110,6 +112,7 @@ export default {
       if (this.login === 'Menu') { this.z = 'Menu' }
       if (this.login === 'request') { this.z = 'request' }
       if (this.login === 'tab') { this.z = 'tab' }
+      if (this.login === 'Register') { this.z = 'Register' }
     },
   },
   methods: {
