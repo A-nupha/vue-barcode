@@ -2,6 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+header('Access-Control-Allow-Origin: *');
+header('Content-type: application/json');
 
 $servername = "localhost";
 $username = "id3526601_anupha";
@@ -16,13 +18,14 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM user";
 $result = $conn->query($sql);
 
+$response = array();
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        // echo json_encode($row)
-      
-        echo $row;
 
+        $response[] = $row;
+        // echo json_encode($row);
+        echo json_encode($response);
     }
 } else {
     echo "0 results";

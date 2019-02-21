@@ -22,10 +22,11 @@
                                         </v-flex>
                                     </v-layout>
                                     <v-card-actions>
-                                        <v-btn color="blue" dark large block @click="setData()">Login</v-btn>
-                                        <v-btn color="blue" dark large block @click="Register()">Register</v-btn>
+                                        <v-btn color="blue" dark large block
+                                        @click="setData(datainsert)">Login</v-btn>
+                                        <v-btn color="blue" dark large block
+                                        @click="Register()">Register</v-btn>
                                     </v-card-actions>
-
                                 </v-form>
                             </v-card>
                         </v-container>
@@ -42,7 +43,8 @@ import axios from 'axios'
 import {
   mapActions,
 } from 'vuex'
-import getdata from './getApiData/getApiData.js'
+// eslint-disable-next-line import/extensions
+import getData from './getApiData/getApiData.js'
 
 // import tab from './tab.vue'
 export default {
@@ -54,19 +56,37 @@ export default {
     return {
       data: [],
       z: '',
+      datainsert: {
+        pid: '1199900388175',
+        fname: 'arada',
+        lname: 'suf',
+        tname: 'asd',
+        bdate: '25620202',
+        email: 'adaf@gmail.com',
+        tel: '0882881878',
+        flag_id: '0',
+        now_date: '22560202',
+        rcode_id: '7704',
+        index1: '123',
+        index2: '123',
+      },
+
     }
   },
   async created() {
     await this.getdata()
-    await getdata.getApiData()
+  },
+  mounted() {
+    getData.getApiData()
   },
   methods: {
     ...mapActions({
       setDataLogin: 'getApi/setDataLogin',
     }),
-    setData() {
-      const menu = 'Menu'
-      this.setDataLogin(menu);
+    setData(data) {
+      getData.sendData(data)
+      // const menu = 'Menu'
+      // this.setDataLogin(menu);
     },
     Register() {
       const Register = 'Register'

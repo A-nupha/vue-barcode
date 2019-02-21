@@ -14,6 +14,7 @@
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
+                      prepend-icon="mdi-email"
                       name="email"
                       label="Your E-mail"
                       id="email"
@@ -25,6 +26,7 @@
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
+                      prepend-icon="mdi-account"
                       name="First Name"
                       label="First Name"
                       id="name"
@@ -36,6 +38,7 @@
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
+                      prepend-icon=" "
                       name="Last Name"
                       label="Last Name"
                       id="LastName"
@@ -47,6 +50,7 @@
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
+                    prepend-icon="mdi-lock-question"
                       name="password"
                       label="Password"
                       id="password"
@@ -58,6 +62,7 @@
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
+                      prepend-icon= " "
                       name="confirmPassword"
                       label="Validate Password"
                       id="confirmPassword"
@@ -68,7 +73,8 @@
                 </v-layout>
                 <v-layout>
                   <v-flex xs12>
-                    <v-btn color="blue" dark large block type="submit" :loading="loading">Register</v-btn>
+                    <v-btn color="blue" dark large block
+                    type="submit" :loading="loading">Register</v-btn>
                   </v-flex>
                 </v-layout>
               </form>

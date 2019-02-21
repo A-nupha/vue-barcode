@@ -1,25 +1,21 @@
-import Axios from 'axios';
-
+import Axios from "axios";
 
 const funcs = {
   getApiData() {
-    const infoApi = '/select.php';
-    return new Promise((resolve, reject) => {
-      Axios.get(infoApi)
-        // .then((response) => {
-        //   console.log('show me res');
-        //   console.log(response)
-        // })
-        .then((response) => {
-          console.log('response: ', response);
-          // const retData = json.data;
-
-          resolve(response)
-        })
-        .catch((error) => {
-          reject(error)
-        })
-    })
+    let api = 'https://a-nuphasupit58.000webhostapp.com/select.php';
+    Axios.get(api)
+      .then((response) => {
+         const returnData = response.data
+         console.log(returnData);
+      })
+  },
+  sendData(data) {
+    let api = 'https://a-nuphasupit58.000webhostapp.com/save.php';
+    console.log(data);
+    Axios.post(api,{data})
+      .then((response) => {
+         console.log('response',response);
+      })
   },
 }
 export default funcs
