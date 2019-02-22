@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 header('Access-Control-Allow-Origin: *');
 header('Content-type: application/json');
 
-
    $pid = $_POST['pid'];
    $fname = $_POST['fname'];
    $lname = $_POST['lname'];
@@ -19,35 +18,36 @@ header('Content-type: application/json');
    $index1 = $_POST['index1'];
    $index2 = $_POST['index2'];
 
+$servername = "localhost";
+$username = "id3526601_anupha";
+$password = "ok223201";
+$dbname = "id3526601_projest_vue_barcode";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+//chk pid
+$query = "SELECT pid FROM user WHERE pid = '$pid'";
+$result = $conn->query($query);
+
+$response = array();
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        $response[] = $row;
+        echo json_encode($row);
+    }
+} else {
+   //  insert data
+    $query = "insert into user(pid,fname,lname,tname,bdate,email,tel, flag_id, now_date,rcode_id,index1,index2) values 
+    ($pid,'$fname','$lname','$tname','$bdate','$email','$tel', '$flag_id', '$now_date','$rcode_id','$index1','$index2')";
+    $result = $conn->query($query);
+    echo json_encode($result);
+}
 
 
-echo $pid;
-
-
-// $servername = "localhost";
-// $username = "id3526601_anupha";
-// $password = "ok223201";
-// $dbname = "id3526601_projest_vue_barcode";
-// // Create connection
-// $conn = new mysqli($servername, $username, $password, $dbname);
-// // Check connection
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// } 
-// $sql = "INSERT $data into FROM user";
-// $result = $conn->query($sql);
-
-// $response = array();
-// if ($result->num_rows > 0) {
-//     // output data of each row
-//     while($row = $result->fetch_assoc()) {
-
-//         $response[] = $row;
-//         // echo json_encode($row);
-//         echo json_encode($response);
-//     }
-// } else {
-//     echo "0 results";
-// }
-// $conn->close();
+$conn->close();
 ?>

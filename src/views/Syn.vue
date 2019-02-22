@@ -14,7 +14,7 @@
       </template>
       
     </v-data-table>
-    <v-btn color="blue" dark="">sync</v-btn>
+    <v-btn color="blue" dark="">บันทึก</v-btn>
     </div>
 </template>
 <script>

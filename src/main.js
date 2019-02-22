@@ -3,9 +3,9 @@ import Vue from 'vue';
 import './plugins/vuetify'
 import App from './App.vue';
 import router from './router';
-import './registerServiceWorker';
-import store from './store/index';
-import VueMoment from 'vue-moment'
+import store from './store/store';
+// eslint-disable-next-line import/order
+import VueMoment from 'vue-moment';
 // import moment from 'moment-timezone'
 
 

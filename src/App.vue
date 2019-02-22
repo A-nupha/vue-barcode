@@ -37,30 +37,34 @@
           </v-list-tile>
         </v-list>
 
-          <v-list-tile
-            v-for="item in items"
-            :key="item.title"
-            @click=""
-          >
+          <v-list-tile>
             <v-list-tile-action>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon>mdi-apps</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              <!-- <v-list-tile-title>Menu</v-list-tile-title> -->
+              <v-btn flat block color="blue" @click="navigationtab()">Menu</v-btn>
             </v-list-tile-content>
           </v-list-tile>
-       
-
+          <v-list-tile>
+            <v-list-tile-action>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <!-- <v-list-tile-title>Logout</v-list-tile-title> -->
+              <v-btn flat block color="blue">Logout</v-btn>
+            </v-list-tile-content>
+          </v-list-tile>
       </v-navigation-drawer>
     </v-layout>
   </div>
 </template>
 <script>
 import {
-  mapState,
+  mapState, mapActions,
 } from 'vuex'
 import moment from 'moment'
-import HOME from './views/Home.vue'
+import Scan from './views/Scan.vue'
 import Branch from './views/Branch.vue'
 import Syn from './views/Syn.vue'
 import tab from './views/tab.vue'
@@ -82,7 +86,7 @@ export default {
         { title: 'Menu', icon: 'mdi-apps' },
         { title: 'Logout', icon: 'mdi-logout' },
       ],
-      
+
     }
   },
   computed: {
@@ -92,7 +96,7 @@ export default {
     }),
   },
   components: {
-    HOME,
+    Scan,
     request,
     Branch,
     Syn,
@@ -114,8 +118,12 @@ export default {
     },
   },
   methods: {
-    submit() {
-      alert('333')
+    ...mapActions({
+      setDataLogin: 'getApi/setDataLogin',
+    }),
+    navigationtab() {
+      const menu = 'Menu'
+      this.setDataLogin(menu);
     },
   },
 }
@@ -136,7 +144,12 @@ export default {
   font-weight: bold;
   color: #2c3e50;
 }
-
+.viewport canvas[data-v-047f45f1], .viewport video[data-v-047f45f1] {
+    position: absolute !important;
+    left: 0 !important;
+    width: 450px !important;
+    top: 0 !important;
+}
 #nav a.router-link-exact-active {
   color: #42b983;
 }

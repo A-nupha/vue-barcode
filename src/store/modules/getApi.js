@@ -1,11 +1,12 @@
 const state = {
   login: null,
   SetDataMenuRequest: null,
+
 }
 const actions = {
   setDataLogin({ commit, state }, payload) {
     commit('SET_LOGIN', payload)
-    console.log(state)
+    console.log('state in store', state)
   },
   // SetDataMenuRequest({ commit, state }, payload) {
   //   commit('SetData_MenuRequest', payload)
@@ -16,9 +17,9 @@ const mutations = {
   SET_LOGIN(state, payload) {
     state.login = payload
   },
-  SetData_MenuRequest(state, payload) {
-    state.SetDataMenuRequest = payload
-  },
+  // SetData_MenuRequest(state, payload) {
+  //   state.SetDataMenuRequest = payload
+  // },
 }
 
 export default {

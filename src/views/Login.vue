@@ -9,14 +9,14 @@
                             <v-card flat>
                                 <v-card-title>
                                 <v-toolbar color="blue lighten-2" dark>
-          <v-toolbar-title>Login</v-toolbar-title>
+          <v-toolbar-title>Login {{userName}}</v-toolbar-title>
         </v-toolbar>
                                 </v-card-title>
                                 <v-form>
                                     <v-layout>
                                         <v-flex ma-1 pr-5>
                                             <v-text-field prepend-icon="mdi-check-circle-outline"
-                                            name="Username" label="Username"></v-text-field>
+                                            name="Username" label="Username" ></v-text-field>
                                             <v-text-field prepend-icon="mdi-lock" name="Password"
                                             label="Password" type="password"></v-text-field>
                                         </v-flex>
@@ -43,10 +43,9 @@ import axios from 'axios'
 import {
   mapActions,
 } from 'vuex'
-// eslint-disable-next-line import/extensions
-import getData from './getApiData/getApiData.js'
+import { sync } from 'vuex-pathify'
+import controlData from './getApiData/controlData.js'
 
-// import tab from './tab.vue'
 export default {
   name: 'Login',
   components: {
@@ -57,51 +56,47 @@ export default {
       data: [],
       z: '',
       datainsert: {
-        pid: '1199900388175',
-        fname: 'arada',
-        lname: 'suf',
-        tname: 'asd',
+        pid: '1759900252871',
+        fname: 'A-nupha',
+        lname: 'Supreyaporn',
+        tname: 'mr.',
         bdate: '25620202',
-        email: 'adaf@gmail.com',
+        email: 'fhj@gmail.com',
         tel: '0882881878',
         flag_id: '0',
         now_date: '22560202',
         rcode_id: '7704',
-        index1: '123',
-        index2: '123',
+        index1: '1234',
+        index2: '1234',
       },
 
     }
   },
-  async created() {
-    await this.getdata()
+  computed: {
+    ...sync('*'),
   },
-  mounted() {
-    getData.getApiData()
+  created() {
+    controlData.search()
   },
   methods: {
     ...mapActions({
       setDataLogin: 'getApi/setDataLogin',
     }),
-    setData(data) {
-      getData.sendData(data)
+    async setData(data) {
+      controlData.save(data)// เอาไว้เทสดาต้า
       const menu = 'Menu'
       this.setDataLogin(menu);
+      // await this.validatePassword()
     },
+    // validatePassword() {
+    //   if (Username == this.XXX && this.password == this.yyy) {
+    //     const menu = 'Menu'
+    //     this.setDataLogin(menu);
+    //   }
+    // },
     Register() {
       const Register = 'Register'
       this.setDataLogin(Register);
-    },
-    async getdata() {
-      // alert('testFN')
-      await axios.get('https://jsonplaceholder.typicode.com/posts/42')
-        .then((response) => {
-          this.data = response.data
-          this.alert = this.data
-        })
-        .catch(() => {
-          this.alert = 'ไม่พบข้อมูล'
-        })
     },
   },
 }

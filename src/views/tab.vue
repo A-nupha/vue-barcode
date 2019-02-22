@@ -14,11 +14,11 @@
            <v-tab-item :key="'Barnch'">
             <Branch/>
           </v-tab-item>
-          <v-tab :key="'HOME'" >
+          <v-tab :key="'Scan'" >
             SCAN
           </v-tab>
-             <v-tab-item :key="'HOME'">
-            <HOME/>
+             <v-tab-item :key="'Scan'">
+            <Scan/>
           </v-tab-item>
           <v-tab :key="'Syn'">
             ITEM
@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import HOME from './Home.vue'
+import Scan from './Scan.vue'
 import Branch from './Branch.vue'
 import Syn from './Syn.vue'
 
@@ -47,7 +47,7 @@ export default {
     }
   },
   components: {
-    HOME,
+    Scan,
     Branch,
     Syn,
 
