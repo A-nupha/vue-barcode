@@ -43,7 +43,7 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <!-- <v-list-tile-title>Menu</v-list-tile-title> -->
-              <v-btn flat block color="blue" @click="navigationtab()">Menu</v-btn>
+              <v-btn flat block color="grey" @click="navigationtab()">Menu</v-btn>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile>
@@ -52,7 +52,7 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <!-- <v-list-tile-title>Logout</v-list-tile-title> -->
-              <v-btn flat block color="blue">Logout</v-btn>
+              <v-btn flat block color="grey">Logout</v-btn>
             </v-list-tile-content>
           </v-list-tile>
       </v-navigation-drawer>

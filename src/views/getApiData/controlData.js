@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import store from "../../store/store"
+import store from '../../store/store'
 
 const funcs = {
 
@@ -7,15 +7,15 @@ const funcs = {
     const api = 'https://a-nuphasupit58.000webhostapp.com/php/select.php';
     Axios.get(api)
       .then((response) => {
-        var retData = response.data
+        let retData = response.data
 
-        retData.forEach(value => {
+        retData.forEach((value) => {
           // console.log(value.pid)
           // console.log(retData[0].pid);
           // const data = store.state
-          store.state.userName = value.pid
-          
-        })  
+          store.state.userName = value.index1
+          store.state.password = value.index2
+        })
       })
   },
   save(data) {

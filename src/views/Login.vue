@@ -9,16 +9,16 @@
                             <v-card flat>
                                 <v-card-title>
                                 <v-toolbar color="blue lighten-2" dark>
-          <v-toolbar-title>Login {{userName}}</v-toolbar-title>
+          <v-toolbar-title>Login {{userName}} {{passWord}}</v-toolbar-title>
         </v-toolbar>
                                 </v-card-title>
                                 <v-form>
                                     <v-layout>
                                         <v-flex ma-1 pr-5>
                                             <v-text-field prepend-icon="mdi-check-circle-outline"
-                                            name="Username" label="Username" ></v-text-field>
+                                            name="Username" label="Username" v-model="inputUserName" ></v-text-field>
                                             <v-text-field prepend-icon="mdi-lock" name="Password"
-                                            label="Password" type="password"></v-text-field>
+                                            label="Password" type="password" v-model="inputPassword"></v-text-field>
                                         </v-flex>
                                     </v-layout>
                                     <v-card-actions>
@@ -38,7 +38,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 // import VueAxios from 'vue-axios'
 import {
   mapActions,
@@ -53,6 +53,8 @@ export default {
   },
   data() {
     return {
+      inputUserName: null,
+      inputPassword: null,
       data: [],
       z: '',
       datainsert: {

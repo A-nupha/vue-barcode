@@ -47,6 +47,11 @@
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
+              <v-layout wrap>
+              <v-flex xs12>
+                <v-combobox prepend-icon=" " v-model="select" :items="items" label="Title name" />
+              </v-flex>
+              </v-layout>
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
@@ -71,7 +76,21 @@
                       :rules="[comparePasswords]"></v-text-field>
                   </v-flex>
                 </v-layout>
+                 <v-layout row>
+                  <v-flex xs12>
+                    <v-text-field
+                    prepend-icon="mdi-lock-question"
+                      name="password"
+                      label="Pid"
+                      id="password"
+                      v-model="Pid"
+                      type="Pid"
+                      mask="#-####-#####-##-#"
+                      required></v-text-field>
+                  </v-flex>
+                </v-layout>
                 <v-layout>
+                  
                   <v-flex xs12>
                     <v-btn color="blue" dark large block
                     type="submit" :loading="loading">Register</v-btn>
@@ -90,11 +109,17 @@
 export default {
   data() {
     return {
+      Pid: null,
       email: '',
       name: '',
       password: '',
       confirmPassword: '',
       LastName: '',
+      select: 'Mr.',
+      items: [
+        'Mrs.',
+        'Miss.',
+      ],
     }
   },
   computed: {

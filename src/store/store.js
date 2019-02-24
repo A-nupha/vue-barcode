@@ -7,6 +7,7 @@ import { make } from "vuex-pathify";
 
 const staticState = {
  userName: null,
+ passWord: null,
 
 }
 
