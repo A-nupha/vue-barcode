@@ -30,12 +30,11 @@
             <v-flex xs10 offset-xs1>
               <v-text-field prepend-icon="mdi-map-marker" name="location" label="location"></v-text-field>
             </v-flex>
-            <v-flex xs2>
-              <!-- <v-btn icon>
-                <v-icon color="blue">mdi-arrow-right-bold-box-outline</v-icon>
-              </v-btn> -->
-            </v-flex>
           </v-layout>
+          <v-flex xs2>
+              <v-btn icon label="ถัดไป">
+              </v-btn>
+            </v-flex>
         </v-flex>
       </v-card>
     </v-flex>

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Scan from './views/Scan.vue';
 
+
 Vue.use(Router);
 
 export default new Router({

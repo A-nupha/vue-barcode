@@ -18,17 +18,19 @@
             SCAN
           </v-tab>
              <v-tab-item :key="'Scan'">
-            <Scan/>
+            <Scan v-if="active==1"/>
           </v-tab-item>
           <v-tab :key="'Syn'">
             ITEM
           </v-tab>
             <v-tab-item :key="'Syn'">
-            <Syn/>
+            <Syn v-if="active==2"/>
           </v-tab-item>
         </v-tabs>
       </v-flex >
+
     </v-layout>
+    <v-flex><v-btn dark large @click="next()" block color="blue" >{{button}}</v-btn></v-flex>
     </v-card>
   </div>
 </template>
@@ -42,7 +44,7 @@ export default {
   name: 'tab',
   data() {
     return {
-      active: null,
+      active: 0,
       button: 'ถัดไป',
     }
   },
@@ -51,6 +53,26 @@ export default {
     Branch,
     Syn,
 
+  },
+  watch: {
+    active() {
+      if (this.active == 2) {
+        this.button = 'บันทึก'
+      } else {
+        this.button = 'ถัดไป'
+      }
+    },
+  },
+  methods: {
+    next() {
+      const active = parseInt(this.active);
+
+      if (this.active == 2) {
+        alert('5555')
+      } else {
+        this.active = active + 1;
+      }
+    },
   },
 }
 </script>

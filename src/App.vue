@@ -160,7 +160,8 @@ export default {
 .viewport canvas[data-v-047f45f1], .viewport video[data-v-047f45f1] {
     position: absolute !important;
     left: 0 !important;
-    width: 450px !important;
+    width: 400px !important;
+    height: 520px !important;
     top: 0 !important;
 }
 #nav a.router-link-exact-active {

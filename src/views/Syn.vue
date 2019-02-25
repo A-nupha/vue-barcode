@@ -2,34 +2,37 @@
     <div>
            <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="dataScan"
       :loading="true"
       class="elevation-1"
     >
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-         <td class="text-xs-right"><v-icon>mdi-delete</v-icon></td>
+        <td>{{ props.item.databarcode }}</td>
+        <td class="text-xs-center">{{ props.item.qty }}</td>
+        <td class="text-xs-center">{{ props.item.detailItems }}</td>
       </template>
-      
     </v-data-table>
-    <v-btn color="blue" dark="">บันทึก</v-btn>
+    {{dataScan}}
     </div>
 </template>
 <script>
+import { sync } from 'vuex-pathify'
+import controlData from './getApiData/controlData.js'
+import store from '../store/store'
+
 export default {
   data() {
     return {
       headers: [
         {
           text: 'Barcode',
-          align: 'left',
+          align: 'center',
           sortable: false,
           value: 'name',
         },
-        { text: 'QTY', value: 'calories' },
-        { text: 'Delete', value: 'calories' },
+        { text: 'QTY', value: 'calories', align: 'center' },
+        { text: 'Delete', value: 'calories', align: 'center' },
        
       ],
       desserts: [
@@ -96,5 +99,10 @@ export default {
       ],
     }
   },
+  computed: {
+    ...sync('*'),
+  },
+
 }
+
 </script>

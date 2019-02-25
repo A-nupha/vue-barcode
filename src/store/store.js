@@ -9,6 +9,7 @@ const staticState = {
   userName: null,
   passWord: null,
   dataSelect: [],
+  dataScan: [],
 }
 
 // initial state
