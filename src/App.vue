@@ -52,7 +52,7 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <!-- <v-list-tile-title>Logout</v-list-tile-title> -->
-              <v-btn flat block color="grey">Logout</v-btn>
+              <v-btn flat block color="grey" @click="logout()">Logout</v-btn>
             </v-list-tile-content>
           </v-list-tile>
       </v-navigation-drawer>
@@ -64,6 +64,8 @@ import {
   mapState, mapActions,
 } from 'vuex'
 import moment from 'moment'
+import { sync } from 'vuex-pathify'
+import store from './store/store'
 import Scan from './views/Scan.vue'
 import Branch from './views/Branch.vue'
 import Syn from './views/Syn.vue'
@@ -72,6 +74,7 @@ import LoginApp from './views/Login.vue'
 import Menu from './views/menu.vue'
 import request from './views/Request.vue'
 import Register from './views/Register.vue'
+// import login from './views/Login.vue'
 
 export default {
   name: 'Profile',
@@ -94,6 +97,7 @@ export default {
       login: store => store.getApi.login,
       setMenuRequest: store => store.getApi.setMenuRequest,
     }),
+    ...sync('*'),
   },
   components: {
     Scan,
@@ -115,9 +119,16 @@ export default {
       if (this.login === 'request') { this.z = 'request' }
       if (this.login === 'tab') { this.z = 'tab' }
       if (this.login === 'Register') { this.z = 'Register' }
+      if (this.login === 'LoginApp') { this.z = 'LoginApp' }
     },
   },
   methods: {
+    logout() {
+      store.state.userName = null
+      store.state.passWord = null
+      const menu = 'LoginApp'
+      this.setDataLogin(menu);
+    },
     ...mapActions({
       setDataLogin: 'getApi/setDataLogin',
     }),
@@ -133,6 +144,8 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
+  overflow: auto;
   text-align: center;
   color: #2c3e50;
 }
@@ -155,5 +168,9 @@ export default {
 }
 #background{
 color: #0D47A1 ;
+}
+.selectTest .v-menu__content {
+  top: 35px !important;
+  left: 0px !important;
 }
 </style>

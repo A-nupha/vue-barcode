@@ -9,32 +9,33 @@
                             <v-card flat>
                                 <v-card-title>
                                 <v-toolbar color="blue lighten-2" dark>
-          <v-toolbar-title>Login {{userName}} {{passWord}}</v-toolbar-title>
+          <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
                                 </v-card-title>
                                 <v-form>
                                     <v-layout>
                                         <v-flex ma-1 pr-5>
                                             <v-text-field prepend-icon="mdi-check-circle-outline"
-                                            name="Username" label="Username" v-model="inputUserName" ></v-text-field>
+                                            name="Username" label="Username" v-model="userName" ></v-text-field>
                                             <v-text-field prepend-icon="mdi-lock" name="Password"
-                                            label="Password" type="password" v-model="inputPassword"></v-text-field>
+                                            label="Password" type="password" v-model="passWord"></v-text-field>
                                         </v-flex>
                                     </v-layout>
                                     <v-card-actions>
                                         <v-btn color="blue" dark large block
-                                        @click="setData(datainsert)">Login</v-btn>
+                                        @click="login()">Login</v-btn>
                                         <v-btn color="blue" dark large block
                                         @click="Register()">Register</v-btn>
                                     </v-card-actions>
+                                    <li>{{userName}}</li>
                                 </v-form>
                             </v-card>
                         </v-container>
                     </v-flex>
+
                 </v-layout>
             </v-container>
         </v-content>
-        <!-- {{data}} -->
     </div>
 </template>
 <script>
@@ -45,6 +46,7 @@ import {
 } from 'vuex'
 import { sync } from 'vuex-pathify'
 import controlData from './getApiData/controlData.js'
+import store from '../store/store'
 
 export default {
   name: 'Login',
@@ -53,12 +55,13 @@ export default {
   },
   data() {
     return {
+
       inputUserName: null,
       inputPassword: null,
       data: [],
       z: '',
       datainsert: {
-        pid: '1759900252871',
+        pid: '1759900252875',
         fname: 'A-nupha',
         lname: 'Supreyaporn',
         tname: 'mr.',
@@ -78,9 +81,24 @@ export default {
     ...sync('*'),
   },
   created() {
-    controlData.search()
+    // controlData.search().then((response) => {
+    //   let retData = response.data
+    //   retData.forEach((k, v) => {
+    //     let pid = k.pid
+    //     if (pid != this.store.state.userName) {
+    //       alert('ไม่พบผู้ใช้งานนี้ในระบบ')
+    //     }
+    //   });
+    // });
   },
   methods: {
+    login() {
+      let userName = store.state.userName
+      let passWord = store.state.passWord
+      controlData.login(userName,passWord)
+       const menu = 'Menu'
+       this.setDataLogin(menu);
+    },
     ...mapActions({
       setDataLogin: 'getApi/setDataLogin',
     }),

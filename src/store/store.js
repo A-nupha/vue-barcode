@@ -2,13 +2,13 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import getApi from './modules/getApi';
 import pathify from "vuex-pathify";
-pathify.options.mapping = "simple";
 import { make } from "vuex-pathify";
+pathify.options.mapping = "simple";
 
 const staticState = {
- userName: null,
- passWord: null,
-
+  userName: null,
+  passWord: null,
+  dataSelect: [],
 }
 
 // initial state
@@ -18,7 +18,7 @@ const mutations = make.mutations(state)
 const resetMutation = {
   resetState(state) {
     Object.assign(state, getDefaultState());
-  }
+  },
 }
 Object.assign(mutations, resetMutation);
 
@@ -36,11 +36,11 @@ export default new Vuex.Store({
   },
   // use the plugin
   plugins: [
-    pathify.plugin
+    pathify.plugin,
   ],
   // store properties
   state,
   mutations,
   actions,
-  getters
+  getters,
 })
