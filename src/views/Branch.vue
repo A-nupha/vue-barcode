@@ -1,33 +1,23 @@
 <template>
   <div class="about">
     <v-flex ma-1 color="primary">
-      <v-card class="elevation-15">
+      <v-card>
         <v-flex>
           <v-layout>
             <v-flex ma-3> <span>{{ moment().format('MMMM Do YYYY, h:mm:ss a') }}</span></v-flex>
           </v-layout>
           <v-layout align-center justify-center>
-            <v-flex xs10 offset-xs1>
+            <v-flex xs10 >
               <v-text-field prepend-icon="mdi-city" name="Branch" label="Branch"></v-text-field>
             </v-flex>
-            <v-flex xs2>
-              <v-btn icon >
-                <v-icon color="blue">mdi-barcode-scan</v-icon>
-              </v-btn>
-            </v-flex>
           </v-layout>
           <v-layout align-center justify-center>
-            <v-flex xs10 offset-xs1>
+            <v-flex xs10>
               <v-text-field prepend-icon="mdi-check-circle-outline" name="batch" label="batch"></v-text-field>
             </v-flex>
-            <v-flex xs2>
-              <v-btn icon>
-                <v-icon color="blue">mdi-barcode-scan</v-icon>
-              </v-btn>
-            </v-flex>
           </v-layout>
           <v-layout align-center justify-center>
-            <v-flex xs10 offset-xs1>
+            <v-flex xs10>
               <v-text-field prepend-icon="mdi-map-marker" name="location" label="location"></v-text-field>
             </v-flex>
           </v-layout>

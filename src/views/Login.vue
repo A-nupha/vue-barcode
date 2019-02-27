@@ -1,42 +1,38 @@
 <template>
-    <div>
-      <!-- <span class="bg"></span> -->
-        <v-content>
+  <div>
+    <!-- <span class="bg"></span> -->
+    <v-content>
+      <v-container>
+        <v-layout align-center justify-center>
+          <v-flex class="grey lighten-4">
             <v-container>
-                <v-layout align-center justify-center>
-                    <v-flex class="grey lighten-4">
-                        <v-container>
-                            <v-card flat>
-                                <v-card-title>
-                                <v-toolbar color="blue lighten-2" dark>
-          <v-toolbar-title>Login</v-toolbar-title>
-        </v-toolbar>
-                                </v-card-title>
-                                <v-form>
-                                    <v-layout>
-                                        <v-flex ma-1 pr-5>
-                                            <v-text-field prepend-icon="mdi-check-circle-outline"
-                                            name="Username" label="Username" v-model="userName" ></v-text-field>
-                                            <v-text-field prepend-icon="mdi-lock" name="Password"
-                                            label="Password" type="password" v-model="passWord"></v-text-field>
-                                        </v-flex>
-                                    </v-layout>
-                                    <v-card-actions>
-                                        <v-btn color="blue" dark large block
-                                        @click="login()">Login</v-btn>
-                                        <v-btn color="blue" dark large block
-                                        @click="Register()">Register</v-btn>
-                                    </v-card-actions>
-                                    <li>{{userName}}</li>
-                                </v-form>
-                            </v-card>
-                        </v-container>
+              <v-card flat>
+                <v-card-title>
+                  <v-toolbar color="blue lighten-2" dark>
+                    <v-toolbar-title>Login</v-toolbar-title>
+                  </v-toolbar>
+                </v-card-title>
+                <v-form>
+                  <v-layout>
+                    <v-flex ma-1 pr-5>
+                      <v-text-field prepend-icon="mdi-account" name="Username" label="Username" v-model="userName"></v-text-field>
+                      <v-text-field prepend-icon="mdi-lock" name="Password" label="Password" type="password" v-model="passWord"></v-text-field>
                     </v-flex>
-
-                </v-layout>
+                  </v-layout>
+                  <v-card-actions>
+                    <v-btn color="blue"   :loading="loading"  dark large block @click="login()">Login</v-btn>
+                    <v-btn color="blue" dark large block @click="Register()">Register</v-btn>
+                  </v-card-actions>
+                  <li>{{userName}}</li>
+                  <li>{{msg}}</li>
+                </v-form>
+              </v-card>
             </v-container>
-        </v-content>
-    </div>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
+  </div>
 </template>
 <script>
 // import axios from 'axios'
@@ -44,7 +40,9 @@
 import {
   mapActions,
 } from 'vuex'
-import { sync } from 'vuex-pathify'
+import {
+  sync,
+} from 'vuex-pathify'
 import controlData from './getApiData/controlData.js'
 import store from '../store/store'
 
@@ -55,11 +53,11 @@ export default {
   },
   data() {
     return {
-
       inputUserName: null,
       inputPassword: null,
       data: [],
       z: '',
+      loading: false,
       datainsert: {
         pid: '1759900252875',
         fname: 'A-nupha',
@@ -74,7 +72,6 @@ export default {
         index1: '1234',
         index2: '1234',
       },
-
     }
   },
   computed: {
@@ -93,17 +90,26 @@ export default {
   },
   methods: {
     login() {
-      let userName = store.state.userName
-      let passWord = store.state.passWord
-      controlData.login(userName,passWord)
-       const menu = 'Menu'
-       this.setDataLogin(menu);
+      this.loading = true
+      const userName = store.state.userName
+      const passWord = store.state.passWord
+      controlData.login(userName, passWord)
+      console.log('store.state.msgLogin', store.state.msgLogin)
+      if (store.state.msgLogin == 'Password is correct') {
+        // alert('ถูกต้อง')
+        const menu = 'Menu'
+        this.setDataLogin(menu);
+        this.loading = false
+      } else {
+        // alert('ผิด')
+        this.loading = false
+      }
     },
     ...mapActions({
       setDataLogin: 'getApi/setDataLogin',
     }),
     async setData(data) {
-      controlData.save(data)// เอาไว้เทสดาต้า
+      controlData.save(data) // เอาไว้เทสดาต้า
       const menu = 'Menu'
       this.setDataLogin(menu);
       // await this.validatePassword()
@@ -122,13 +128,13 @@ export default {
 }
 </script>
 <style>
-/* .bg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: red;
-    transform: scale(1.1);
-  } */
+  /* .bg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: red;
+      transform: scale(1.1);
+    } */
 </style>

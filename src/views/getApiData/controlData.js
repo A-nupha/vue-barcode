@@ -1,3 +1,6 @@
+/* eslint-disable consistent-return */
+/* eslint-disable vars-on-top */
+/* eslint-disable no-var */
 import Axios from 'axios';
 import store from '../../store/store'
 
@@ -8,14 +11,17 @@ const funcs = {
     // eslint-disable-next-line no-var
     var api = 'https://a-nuphasupit58.000webhostapp.com/php/login.php';
     // eslint-disable-next-line no-var
+    // eslint-disable-next-line vars-on-top
     var params = new URLSearchParams();
     params.append('userName', userName)
     params.append('passWord', passWord)
-    console.log('params', params)
+    console.log('params', userName)
+    console.log('params', passWord)
     Axios.post(api, params)
       .then((response) => {
-        alert(response.data)
-
+        // eslint-disable-next-line no-unused-vars
+        store.state.msgLogin = response.data
+        // alert(msg,'js')
       })
   },
   search() {
@@ -35,7 +41,7 @@ const funcs = {
         //   // store.state.password = value.index2
         // })
         })
-        .catch(function (error) {
+        .catch((error) => {
           reject(error)
         })
     })

@@ -141,7 +141,6 @@ export default {
       items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
       confirmPassword: '',
       LastName: '',
-
       username: '',
       password: '',
       email: '',
