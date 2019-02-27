@@ -89,11 +89,11 @@ export default {
     // });
   },
   methods: {
-    login() {
+    async login() {
       this.loading = true
       const userName = store.state.userName
       const passWord = store.state.passWord
-      controlData.login(userName, passWord)
+      await controlData.login(userName, passWord)
       console.log('store.state.msgLogin', store.state.msgLogin)
       if (store.state.msgLogin == 'Password is correct') {
         // alert('ถูกต้อง')
