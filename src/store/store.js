@@ -12,6 +12,7 @@ const staticState = {
   dataScan: [],
   msgLogin: null,
 }
+console.log(staticState)
 
 // initial state
 const state = Object.assign(staticState)

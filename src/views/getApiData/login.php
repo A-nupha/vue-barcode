@@ -24,10 +24,16 @@ $query = "SELECT index1 FROM user WHERE index1 = '$index1' And index2 = '$index2
 $result = $conn->query($query);
 
 $response = array();
+$error = array();
 if ($result->num_rows > 0) {
-  
-    echo 'Password is correct';
-
+    
+    $returnData = array();// output data of each row
+    while($row = $result->fetch_assoc()) {
+        // $response[] = $row;
+        array_push($returnData, $row);
+        // echo $response;
+    }
+    echo json_encode($returnData);
 } else {
    //  insert data
     echo 'password is incorrect';

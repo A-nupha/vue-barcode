@@ -20,11 +20,12 @@
                     </v-flex>
                   </v-layout>
                   <v-card-actions>
-                    <v-btn color="blue"   :loading="loading"  dark large block @click="login()">Login</v-btn>
-                    <v-btn color="blue" dark large block @click="Register()">Register</v-btn>
+                    <v-btn color="blue" :loading="loading"  dark large block @click="login()">Login</v-btn>
+                    <!-- <v-btn color="blue" dark large block @click="Register()">Register</v-btn> -->
                   </v-card-actions>
                   <li>{{userName}}</li>
-                  <li>{{msg}}</li>
+                  <!-- <li>{{msg}}</li> -->
+                  <!-- {{store.state.msgSnackBar}} -->
                 </v-form>
               </v-card>
             </v-container>
@@ -32,11 +33,31 @@
         </v-layout>
       </v-container>
     </v-content>
+    <v-snackbar
+    :vertical="true"
+    v-model="snackฺฺฺBarBool"
+    color="orange"
+    :timeout="timeout"
+    bottom>
+    <v-flex headline>{{msgSnackBar}}</v-flex>
+    <!-- <v-flex text-xs-right>
+      <v-btn
+        color="btnColor"
+        class="pa-2"
+        dark
+        icon
+        @click="close()"
+        flat
+        v-text="`ปิด`
+        "/>
+    </v-flex> -->
+  </v-snackbar>
   </div>
 </template>
 <script>
 // import axios from 'axios'
 // import VueAxios from 'vue-axios'
+
 import {
   mapActions,
 } from 'vuex'
@@ -53,6 +74,9 @@ export default {
   },
   data() {
     return {
+      snackฺฺฺBarBool: null,
+      msgSnackBar: null,
+      timeout: 5000,
       inputUserName: null,
       inputPassword: null,
       data: [],
@@ -93,15 +117,22 @@ export default {
       this.loading = true
       const userName = store.state.userName
       const passWord = store.state.passWord
+      console.log(userName)
+      console.log(passWord)
       await controlData.login(userName, passWord)
-      console.log('store.state.msgLogin', store.state.msgLogin)
-      if (store.state.msgLogin == 'Password is correct') {
+      // console.log('store.state.msgLogin', store.state.msgLogin.)
+      if (store.state.msgLogin[0].index1 == userName) {
         // alert('ถูกต้อง')
         const menu = 'Menu'
         this.setDataLogin(menu);
         this.loading = false
-      } else {
-        // alert('ผิด')
+      } if (store.state.msgLogin == 'password is incorrect') {
+        const textmsg = 'รหัสผ่านไม่ถูกต้อง'
+        const boolmsg = true
+        this.msgSnackBar = textmsg
+        this.snackฺฺฺBarBool = boolmsg
+        console.log(store.state)
+        // console.log(textmsg, boolmsg)
         this.loading = false
       }
     },

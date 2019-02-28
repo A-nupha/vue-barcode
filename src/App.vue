@@ -7,11 +7,12 @@
     >
    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-toolbar-title>
-      <div>Inventory Control</div>
+      <v-flex>{{time}}</v-flex>
       <!-- <span>{{ moment().format('MMMM Do YYYY, h:mm:ss a') }}</span> -->
       </v-toolbar-title>
    </v-toolbar>
    <!-- <LoginApp/> -->
+   
    <transition name="component-fade" mode="out-in">
               <component v-bind:is="z"></component>
   </transition>
@@ -21,7 +22,7 @@
     >
 <v-navigation-drawer
         height="100%"
-        width ='170'
+        width ='200'
         v-model="drawer"
         absolute
         temporary
@@ -57,6 +58,7 @@
           </v-list-tile>
       </v-navigation-drawer>
     </v-layout>
+    <SnackBar/>
   </div>
 </template>
 <script>
@@ -74,6 +76,7 @@ import LoginApp from './views/Login.vue'
 import Menu from './views/menu.vue'
 import request from './views/Request.vue'
 import Register from './views/Register.vue'
+import SnackBar from './views/SnackBar.vue'
 // import login from './views/Login.vue'
 
 export default {
@@ -89,6 +92,7 @@ export default {
         { title: 'Menu', icon: 'mdi-apps' },
         { title: 'Logout', icon: 'mdi-logout' },
       ],
+      time: `Inventory Control${moment().format('h:mm:ss a')}`,
 
     }
   },
@@ -109,6 +113,7 @@ export default {
     Menu,
     moment,
     Register,
+    SnackBar,
   },
   mounted() {
 
@@ -123,6 +128,7 @@ export default {
     },
   },
   methods: {
+   
     logout() {
       store.state.userName = null
       store.state.passWord = null

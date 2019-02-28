@@ -6,7 +6,7 @@ import store from '../../store/store'
 
 const funcs = {
 
-  login(userName, passWord) {
+  async login(userName, passWord) {
     console.log('data', userName);
     // eslint-disable-next-line no-var
     var api = 'https://a-nuphasupit58.000webhostapp.com/php/login.php';
@@ -17,12 +17,11 @@ const funcs = {
     params.append('passWord', passWord)
     console.log('params', userName)
     console.log('params', passWord)
-    Axios.post(api, params)
-      .then((response) => {
+    const response = await Axios.post(api, params)
         // eslint-disable-next-line no-unused-vars
         store.state.msgLogin = response.data
         // alert(msg,'js')
-      })
+    
   },
   search() {
     return new Promise((resolve, reject) => {
