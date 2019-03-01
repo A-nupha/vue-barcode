@@ -36,7 +36,7 @@
                                         <td class="text-xs-center">{{ props.item.fat }}</td>
                                         <!-- <td class="text-xs-center">{{ props.item.carbs }}</td> -->
                                         <td class="text-xs-center">{{ props.item.carbs }}</td>
-                                        <td class="justify-center layout px-0">                                            
+                                        <td class="justify-center layout px-0">
                                             <v-btn icon>
                                             <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon>
                                             </v-btn>
@@ -111,52 +111,50 @@ export default {
   components: {
     // tab,
   },
-  data() {
-    return {
-      dialog: false,
-      headers: [{
-        text: 'Barcode',
-        align: 'center',
-        sortable: false,
-        value: 'name',
-      },
-      {
-        text: 'Status',
-        value: 'fat',
-        sortable: false,
-        align: 'center',
-      },
-      {
-        text: 'Quantity',
-        value: 'protein',
-        align: 'center',
-        sortable: false,
-      },
-      {
-        text: 'Edit',
-        value: 'name',
-        sortable: false,
-        align: 'center',
-      },
-      ],
-      desserts: [],
-      editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-    }
-  },
+  data: () => ({
+    dialog: false,
+    headers: [{
+      text: 'Barcode',
+      align: 'center',
+      sortable: false,
+      value: 'name',
+    },
+    {
+      text: 'Status',
+      value: 'fat',
+      sortable: false,
+      align: 'center',
+    },
+    {
+      text: 'Quantity',
+      value: 'protein',
+      align: 'center',
+      sortable: false,
+    },
+    {
+      text: 'Edit',
+      value: 'name',
+      sortable: false,
+      align: 'center',
+    },
+    ],
+    desserts: [],
+    editedIndex: -1,
+    editedItem: {
+      name: '',
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+    defaultItem: {
+      name: '',
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+  }),
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'

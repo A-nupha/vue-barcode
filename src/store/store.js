@@ -11,6 +11,8 @@ const staticState = {
   dataSelect: [],
   dataScan: [],
   msgLogin: null,
+  msgSuscessLogin: null,
+  msgErrorLogin: null,
 }
 console.log(staticState)
 

@@ -18,10 +18,9 @@ const funcs = {
     console.log('params', userName)
     console.log('params', passWord)
     const response = await Axios.post(api, params)
-        // eslint-disable-next-line no-unused-vars
-        store.state.msgLogin = response.data
-        // alert(msg,'js')
-    
+    // eslint-disable-next-line no-unused-vars
+    store.state.msgLogin = response.data
+    // alert(msg,'js')
   },
   search() {
     return new Promise((resolve, reject) => {
@@ -46,7 +45,7 @@ const funcs = {
     })
   },
 
-  save(data) {
+  async save(data) {
     // eslint-disable-next-line no-var
     var api = 'https://a-nuphasupit58.000webhostapp.com/php/save.php';
     // eslint-disable-next-line no-var
@@ -64,17 +63,17 @@ const funcs = {
     params.append('tel', data.tel)
     params.append('tname', data.tname)
     console.log('params', params)
-    Axios.post(api, params)
-      .then((response) => {
-        console.log(response);
-        if (response.data === true) {
-          alert('บันทึกสำเร็จ');
-          return 'บันทึกสำเร็จ'
-        } if (response.data === false) {
-          alert('บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล');
-          return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
-        }
-      })
+    const response = await Axios.post(api, params)
+    if (response.data === true) {
+      const msgSuscessLogin = ('บันทึกสำเร็จ');
+      store.state.msgLogin = msgSuscessLogin
+      // return 'บันทึกสำเร็จ'
+    } if (response.data === false) {
+      const msgErrorLogin = ('บันทึกล้มเหลวกรุณาตรวจสอบ');
+      store.state.msgErrorLogin = msgErrorLogin
+      // alert('บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล');
+      // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
+    }
   },
 }
 export default funcs

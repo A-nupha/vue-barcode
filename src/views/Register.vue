@@ -17,14 +17,13 @@
                     </v-select> -->
                     <v-text-field
                       prepend-icon="mdi-account-box"
-                      name="password"
+                      name="Username"
                       label="Username"
                       id="name"
                       type="name"
                       v-model="username"
                       required>
                     </v-text-field>
-                  
                   </v-flex>
                 </v-layout>
                 <v-layout row>
@@ -67,8 +66,8 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon="mdi-account"
-                      name="First Name"
-                      label="First Name"
+                      name="FirstName"
+                      label="FirstName"
                       id="name"
                       v-model="fname"
                       type="text"
@@ -79,8 +78,8 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon=" "
-                      name="Last Name"
-                      label="Last Name"
+                      name="LastName"
+                      label="LastName"
                       id="LastName"
                       v-model="lname"
                       type="text"
@@ -113,7 +112,7 @@
               </v-layout>
               <v-layout>
                   <v-flex xs12>
-                    <v-btn color="blue" dark large block
+                    <v-btn color="blue" dark large block :loading="loading"
                     type="submit" @click="dataInsert()">Register</v-btn>
                   </v-flex>
                 </v-layout>
@@ -132,7 +131,11 @@
 import {
   mapActions,
 } from 'vuex'
+import {
+  sync,
+} from 'vuex-pathify'
 import controlData from './getApiData/controlData.js'
+import store from '../store/store'
 
 export default {
   data() {
@@ -148,9 +151,11 @@ export default {
       lname: '',
       tname: 'Mr.',
       pid: '',
+      loading: null,
     }
   },
   computed: {
+    ...sync('*'),
     comparePasswords() {
       return this.password !== this.confirmPassword ? 'Passwords do not match.' : true
     },
@@ -182,6 +187,8 @@ export default {
       this.$store.dispatch('clearError')
     },
     dataInsert() {
+      this.loading = true
+      console.log('this.loading ', this.loading )
       const obj = {
         username: this.username,
         password: this.password,
@@ -193,9 +200,18 @@ export default {
       }
       console.log('obj', obj)
       controlData.save(obj)
+      console.log('store.state.msgErrorLogin', store.state.msgErrorLogin)
+      if (store.state.msgErrorLogin == 'บันทึกล้มเหลวกรุณาตรวจสอบ') {
+        // console.log('store.state.msgErrorLogin')
+        // const menu = 'LoginApp'
+        // this.setDataLogin(menu);
+        alert('test')
+        // this.loading = false
+      } else {
+        this.loading = false
+        // this.loading = false
+      }
       // "bdate=undefined&email=scvsd%40gmail.com&flag_id=undefined&fname=anupha&index1=dfbdfb&index2=123&lname=ssdsfff&now_date=undefined&pid=1759900252522&rcode_id=undefined&tel=undefined&tname=Mr."
-      const menu = 'LoginApp'
-      this.setDataLogin(menu);
     },
   },
 }

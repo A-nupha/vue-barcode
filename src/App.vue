@@ -12,7 +12,6 @@
       </v-toolbar-title>
    </v-toolbar>
    <!-- <LoginApp/> -->
-   
    <transition name="component-fade" mode="out-in">
               <component v-bind:is="z"></component>
   </transition>
@@ -76,7 +75,7 @@ import LoginApp from './views/Login.vue'
 import Menu from './views/menu.vue'
 import request from './views/Request.vue'
 import Register from './views/Register.vue'
-import SnackBar from './views/SnackBar.vue'
+// import SnackBar from './views/SnackBar.vue'
 // import login from './views/Login.vue'
 
 export default {
@@ -92,7 +91,7 @@ export default {
         { title: 'Menu', icon: 'mdi-apps' },
         { title: 'Logout', icon: 'mdi-logout' },
       ],
-      time: `Inventory Control${moment().format('h:mm:ss a')}`,
+      time: 'Inventory Control',
 
     }
   },
@@ -113,7 +112,7 @@ export default {
     Menu,
     moment,
     Register,
-    SnackBar,
+
   },
   mounted() {
 
