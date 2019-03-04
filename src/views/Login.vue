@@ -14,14 +14,15 @@
                 </v-card-title>
                 <v-form>
                   <v-layout>
-                    <v-flex ma-1 pr-5>
+                    <v-flex ma-1 pr-5  >
                       <v-text-field prepend-icon="mdi-account" name="Username" label="Username" v-model="userName"></v-text-field>
                       <v-text-field prepend-icon="mdi-lock" name="Password" label="Password" type="password" v-model="passWord"></v-text-field>
                     </v-flex>
+                    
                   </v-layout>
                   <v-card-actions>
                     <v-btn color="blue" :loading="loading"  dark large block @click="login()">Login</v-btn>
-                    <v-btn color="red" dark large block @click="Register()">testRegister</v-btn>
+                    <!-- <v-btn color="red" dark large block @click="Register()">Register</v-btn> -->
                   </v-card-actions>
                   <li>{{userName}}</li>
                   <!-- <li>{{msg}}</li> -->

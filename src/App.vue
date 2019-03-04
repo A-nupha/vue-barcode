@@ -57,7 +57,7 @@
           </v-list-tile>
       </v-navigation-drawer>
     </v-layout>
-    <SnackBar/>
+    <!-- <SnackBar/> -->
   </div>
 </template>
 <script>
@@ -75,6 +75,9 @@ import LoginApp from './views/Login.vue'
 import Menu from './views/menu.vue'
 import request from './views/Request.vue'
 import Register from './views/Register.vue'
+import chart from './views/Chart.vue'
+
+// import LineChart from './lineChart'
 // import SnackBar from './views/SnackBar.vue'
 // import login from './views/Login.vue'
 
@@ -103,6 +106,7 @@ export default {
     ...sync('*'),
   },
   components: {
+    chart,
     Scan,
     request,
     Branch,
@@ -124,10 +128,10 @@ export default {
       if (this.login === 'tab') { this.z = 'tab' }
       if (this.login === 'Register') { this.z = 'Register' }
       if (this.login === 'LoginApp') { this.z = 'LoginApp' }
+      if (this.login === 'chart') { this.z = 'chart' }
     },
   },
   methods: {
-   
     logout() {
       store.state.userName = null
       store.state.passWord = null

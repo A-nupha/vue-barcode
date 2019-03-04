@@ -115,7 +115,7 @@
                         class="text-xs-center menuCard"
                         clickable
                         style="position:relative;"
-                        @click.native="click=setMenuTab()"
+                        @click.native="click=setMenuChart()"
                         height="100%"
                       >
                         <div class="background-icon">
@@ -152,7 +152,7 @@ export default {
     }
   },
   mounted() {},
-   computed: {
+  computed: {
     ...sync('*'),
   },
   methods: {
@@ -166,6 +166,10 @@ export default {
     },
     setMenuTab() {
       const menu = 'tab'
+      this.setDataLogin(menu);
+    },
+    setMenuChart() {
+      const menu = 'chart'
       this.setDataLogin(menu);
     },
   },

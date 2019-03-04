@@ -8,11 +8,18 @@ module.exports = {
         changeOrigin: true,
       },
     },
+    // resolve: {
+    //   alias: {
+    //     vue$: 'vue/dist/vue.common.js',
+    //     jquery: 'jquery/src/jquery.js',
+    //   },
+    // },
+    
   },
-
   pwa: {
     name: 'Inventory Control',
     themeColor: '#2196F3',
     msTileColor: '#1976D2',
   },
+  
 }
