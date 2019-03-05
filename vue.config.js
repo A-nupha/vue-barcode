@@ -14,7 +14,6 @@ module.exports = {
     //     jquery: 'jquery/src/jquery.js',
     //   },
     // },
-    
   },
   pwa: {
     name: 'Inventory Control',

@@ -13,12 +13,14 @@
           </v-layout>
           <v-layout align-center justify-center>
             <v-flex xs10>
-              <v-text-field prepend-icon="mdi-check-circle-outline" name="batch" label="batch"></v-text-field>
+              <v-text-field prepend-icon="mdi-check-circle-outline"
+              name="batch" label="batch"></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout align-center justify-center>
             <v-flex xs10>
-              <v-text-field prepend-icon="mdi-map-marker" name="location" label="location"></v-text-field>
+              <v-text-field prepend-icon="mdi-map-marker"
+              name="location" label="location"></v-text-field>
             </v-flex>
           </v-layout>
           <v-flex xs2>
@@ -33,7 +35,7 @@
 
 <script>
 import moment from 'moment'
-import Quagga from 'quagga';
+// import Quagga from 'quagga';
 
 export default {
   name: 'abount',

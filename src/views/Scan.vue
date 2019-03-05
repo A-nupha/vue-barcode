@@ -94,8 +94,8 @@ export default {
     ...sync('*'),
   },
   methods: {
-    bottonNext(){
-      this.$router.push('/' + this.items[indexMenu].click)
+    bottonNext() {
+      this.$router.push(`/${  this.items[indexMenu].click}`)
     },
     putdata() {
       const databarcode = this.databarcode

@@ -7,7 +7,10 @@ import store from './store/store';
 // eslint-disable-next-line import/order
 import VueMoment from 'vue-moment';
 // import moment from 'moment-timezone'
+import 'chart.js'
+import 'hchs-vue-charts'
 
+Vue.use(window.VueCharts)
 
 Vue.config.productionTip = false;
 
