@@ -10,28 +10,28 @@
 </template>
 
 <script>
-// import Raphael from 'raphael/raphael'
+import Raphael from 'raphael/raphael'
 
-// import Vue from 'vue'
-// import { DonutChart } from 'vue-morris'
 
-// global.Raphael = Raphael
+import { DonutChart } from 'vue-morris'
 
-// export default {
-//   name: 'VueChartJS',
-//   components: {
-//     DonutChart,
-//   },
-//   data() {
-//     return {
-//       donutData: [
-//         { label: 'Red', value: 300 },
-//         { label: 'Blue', value: 50 },
-//         { label: 'Yellow', value: 100 },
-//       ],
-//     }
-//   },
-// }
+global.Raphael = Raphael
+
+export default {
+  name: 'VueChartJS',
+  components: {
+    DonutChart,
+  },
+  data() {
+    return {
+      donutData: [
+        { label: 'okamoto', value: 300 },
+        { label: 'durex', value: 50 },
+        { label: 'Yellow', value: 100 },
+      ],
+    }
+  },
+}
 </script>
 
 <style scoped>
