@@ -1,45 +1,37 @@
 <template>
-  <section class="container">
-    <!-- <ul>
-      <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/chartjs">vue-chartjs</router-link></li>
-      <li><router-link to="/charts">vue-charts</router-link></li>
-      <li><router-link to="/chartkick">vue-chartkick</router-link></li>
-    </ul> -->
-    <h1>Demo examples of vue-chartjs</h1>
-    <div class="columns">
-      <div class="column">
-        <h3>Line Chart</h3>
-        <!-- <line-chart></line-chart> -->
-      </div>
-      <div class="column">
-        <h3>Bar Chart</h3>
-        <!-- <bar-chart></bar-chart> -->
-      </div>
-    </div>
-
-  </section>
+  <div>
+    <donut-chart
+      id="donut"
+      :data="donutData"
+      colors='[ "#FF6384", "#36A2EB", "#FFCE56" ]'
+      resize="true">
+    </donut-chart>
+  </div>
 </template>
 
 <script>
-// import LineChart from './LineChart.vue'
-// import BarChart from './BarChart.vue'
-// import BubbleChart from './BubbleChart.vue'
-// import Reactive from '@/components/Reactive'
+// import Raphael from 'raphael/raphael'
 
-export default {
-  name: 'VueChartJS',
-  components: {
-    // LineChart,
-    // BarChart,
-    // BubbleChart,
-  },
-  data() {
-    return {
-      datacollection: null,
-    }
-  },
-}
+// import Vue from 'vue'
+// import { DonutChart } from 'vue-morris'
+
+// global.Raphael = Raphael
+
+// export default {
+//   name: 'VueChartJS',
+//   components: {
+//     DonutChart,
+//   },
+//   data() {
+//     return {
+//       donutData: [
+//         { label: 'Red', value: 300 },
+//         { label: 'Blue', value: 50 },
+//         { label: 'Yellow', value: 100 },
+//       ],
+//     }
+//   },
+// }
 </script>
 
 <style scoped>

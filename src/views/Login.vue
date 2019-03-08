@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <span class="bg"></span> -->
     <v-content>
       <v-container>
         <v-layout align-center justify-center>
@@ -18,7 +17,6 @@
                       <v-text-field prepend-icon="mdi-account" name="Username" label="Username" v-model="userName"></v-text-field>
                       <v-text-field prepend-icon="mdi-lock" name="Password" label="Password" type="password" v-model="passWord"></v-text-field>
                     </v-flex>
-                    
                   </v-layout>
                   <v-card-actions>
                     <v-btn color="blue" :loading="loading"  dark large block @click="login()">Login</v-btn>
@@ -41,23 +39,10 @@
     :timeout="timeout"
     bottom>
     <v-flex headline>{{msgSnackBar}}</v-flex>
-    <!-- <v-flex text-xs-right>
-      <v-btn
-        color="btnColor"
-        class="pa-2"
-        dark
-        icon
-        @click="close()"
-        flat
-        v-text="`ปิด`
-        "/>
-    </v-flex> -->
   </v-snackbar>
   </div>
 </template>
 <script>
-// import axios from 'axios'
-// import VueAxios from 'vue-axios'
 
 import {
   mapActions,
