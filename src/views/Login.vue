@@ -20,7 +20,7 @@
                   </v-layout>
                   <v-card-actions>
                     <v-btn color="blue" :loading="loading"  dark large block @click="login()">Login</v-btn>
-                    <!-- <v-btn color="red" dark large block @click="Register()">Register</v-btn> -->
+                    <v-btn color="red" dark large block @click="Register()">Register</v-btn>
                   </v-card-actions>
                   <li>{{userName}}</li>
                   <!-- <li>{{msg}}</li> -->

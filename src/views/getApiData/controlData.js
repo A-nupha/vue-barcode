@@ -31,6 +31,7 @@ const funcs = {
           // console.log('value', retData)
           // store.state.dataSelect = retData
           resolve(response);
+          console.log(response)
         // retData.forEach((value) => {
         //   // console.log(value.pid)
         //   // console.log(retData[0].pid);

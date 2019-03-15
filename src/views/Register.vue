@@ -19,8 +19,6 @@
                       prepend-icon="mdi-account-box"
                       name="Username"
                       label="Username"
-                      id="name"
-                      type="name"
                       v-model="username"
                       required>
                     </v-text-field>
@@ -30,10 +28,8 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon="mdi-lock-question"
-                      name="password"
-                      label="Password"
-                      id="password"
                       v-model="password"
+                      label="password"
                       type="password"
                       required></v-text-field>
                   </v-flex>
@@ -42,9 +38,9 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon= "mdi-alert-octagon"
-                      name="confirmPassword"
+
                       label="Validate Password"
-                      id="confirmPassword"
+
                       v-model="confirmPassword"
                       type="password"
                       :rules="[comparePasswords]"></v-text-field>
@@ -54,9 +50,9 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon="mdi-email"
-                      name="email"
+
                       label="Your E-mail"
-                      id="email"
+
                       v-model="email"
                       type="email"
                       required></v-text-field>
@@ -78,9 +74,9 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon=" "
-                      name="LastName"
+
                       label="LastName"
-                      id="LastName"
+
                       v-model="lname"
                       type="text"
                       required></v-text-field>
@@ -90,29 +86,29 @@
                   <v-flex xs12>
                     <v-text-field
                     prepend-icon="mdi-account-card-details"
-                      name="password"
+
                       label="Pid"
-                      id="password"
+
                       v-model="pid"
-                      type="Pid"
+
                       mask="#-####-#####-##-#"
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
               <v-layout wrap>
               <v-flex xs12>
-                <!-- <v-combobox prepend-icon=" " v-model="select" :items="items" label="Title name" /> -->
+
                 <v-radio-group v-model="tname" row>
                   <v-radio required prepend-icon=" "  color="blue" label="Mr." value="Mr."/>
                   <v-radio required prepend-icon=" "  color="blue" label="Mrs." value="Mrs."/>
                   <v-radio required prepend-icon=" "  color="blue" label="Ms." value="Ms."/>
                 </v-radio-group>
-                <!-- {{tname}} -->
+
               </v-flex>
               </v-layout>
               <v-layout>
                   <v-flex xs12>
-                    <v-btn color="blue" dark large block :loading="loading"
+                    <v-btn color="blue" dark large block :loading="loadingbtn"
                     type="submit" @click="dataInsert()">Register</v-btn>
                   </v-flex>
                 </v-layout>
@@ -134,14 +130,13 @@ import {
 import {
   sync,
 } from 'vuex-pathify'
-import controlData from './getApiData/controlData.js'
+import controlData from './getApiData/controlData'
 import store from '../store/store'
 
 export default {
   data() {
     return {
       selected: '',
-      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
       confirmPassword: '',
       LastName: '',
       username: '',
@@ -151,7 +146,7 @@ export default {
       lname: '',
       tname: 'Mr.',
       pid: '',
-      loading: null,
+      loadingbtn: null,
     }
   },
   computed: {
@@ -187,8 +182,8 @@ export default {
       this.$store.dispatch('clearError')
     },
     dataInsert() {
-      this.loading = true
-      console.log('this.loading ', this.loading )
+      this.loadingbtn = true
+      console.log('this.loading ', this.loadingbtn )
       const obj = {
         username: this.username,
         password: this.password,
@@ -205,10 +200,10 @@ export default {
         // console.log('store.state.msgErrorLogin')
         // const menu = 'LoginApp'
         // this.setDataLogin(menu);
-        alert('test')
-        // this.loading = false
+        alert('บันทึกล้มเหลวกรุณาตรวจสอบ')
+        this.loadingbtn = false
       } else {
-        this.loading = false
+        this.loadingbtn = false
         // this.loading = false
       }
       // "bdate=undefined&email=scvsd%40gmail.com&flag_id=undefined&fname=anupha&index1=dfbdfb&index2=123&lname=ssdsfff&now_date=undefined&pid=1759900252522&rcode_id=undefined&tel=undefined&tname=Mr."
