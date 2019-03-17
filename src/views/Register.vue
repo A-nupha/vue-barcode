@@ -203,6 +203,7 @@ export default {
         alert('บันทึกล้มเหลวกรุณาตรวจสอบ')
         this.loadingbtn = false
       } else {
+        console.log('else')
         this.loadingbtn = false
         // this.loading = false
       }

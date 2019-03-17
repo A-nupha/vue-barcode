@@ -7,7 +7,7 @@
     >
    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-toolbar-title>
-      <v-flex>{{time}}</v-flex>
+      <!-- <v-flex>{{time}}</v-flex> -->
       <!-- <span>{{ moment().format('MMMM Do YYYY, h:mm:ss a') }}</span> -->
       </v-toolbar-title>
    </v-toolbar>
@@ -37,24 +37,22 @@
           </v-list-tile>
         </v-list>
 
-          <v-list-tile>
-            <v-list-tile-action>
-              <v-icon>mdi-apps</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <!-- <v-list-tile-title>Menu</v-list-tile-title> -->
-              <v-btn flat block color="grey" @click="navigationtab()">Menu</v-btn>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-action>
-              <v-icon>mdi-logout</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <!-- <v-list-tile-title>Logout</v-list-tile-title> -->
-              <v-btn flat block color="grey" @click="logout()">Logout</v-btn>
-            </v-list-tile-content>
-          </v-list-tile>
+
+<v-list-tile @click="navigationtab()" ripple>
+        <v-list-tile-action>
+          <v-icon>mdi-apps</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title>Menu</v-list-tile-title>
+      </v-list-tile>
+
+<v-list-tile @click="logout()" ripple>
+        <v-list-tile-action>
+          <v-icon>mdi-logout</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title>LOGOUT</v-list-tile-title>
+      </v-list-tile>
+
+
       </v-navigation-drawer>
     </v-layout>
     <!-- <SnackBar/> -->
@@ -149,7 +147,7 @@ export default {
 }
 </script>
 <style>
-#app {
+/* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -182,5 +180,5 @@ color: #0D47A1 ;
 .selectTest .v-menu__content {
   top: 35px !important;
   left: 0px !important;
-}
+} */
 </style>

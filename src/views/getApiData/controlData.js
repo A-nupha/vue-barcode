@@ -47,34 +47,40 @@ const funcs = {
   },
 
   async save(data) {
+    console.log('data', data.username)
     // eslint-disable-next-line no-var
     var api = 'https://a-nuphasupit58.000webhostapp.com/php/save.php';
     // eslint-disable-next-line no-var
+
     var params = new URLSearchParams();
-    params.append('bdate', data.bdate)
-    params.append('email', data.email)
-    params.append('flag_id', data.flag_id)
-    params.append('fname', data.fname)
+    // params.append('bdate', data.bdate)
+
     params.append('index1', data.username)
     params.append('index2', data.password)
+    params.append('email', data.email)
+    params.append('fname', data.fname)
     params.append('lname', data.lname)
-    params.append('now_date', data.now_date)
-    params.append('pid', data.pid)
-    params.append('rcode_id', data.rcode_id)
-    params.append('tel', data.tel)
     params.append('tname', data.tname)
-    console.log('params', params)
+    params.append('pid', data.pid)
+
+    // params.append('flag_id', data.flag_id)
+    // params.append('now_date', data.now_date)
+    // params.append('rcode_id', data.rcode_id)
+    // params.append('tel', data.tel)
+
+    console.log('params', params.toString())
     const response = await Axios.post(api, params)
-    if (response.data === true) {
-      const msgSuscessLogin = ('บันทึกสำเร็จ');
-      store.state.msgLogin = msgSuscessLogin
-      // return 'บันทึกสำเร็จ'
-    } if (response.data === false) {
-      const msgErrorLogin = ('บันทึกล้มเหลวกรุณาตรวจสอบ');
-      store.state.msgErrorLogin = msgErrorLogin
-      // alert('บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล');
-      // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
-    }
+    console.log('response', response)
+    // if (response.data === true) {
+    //   const msgSuscessLogin = ('บันทึกสำเร็จ');
+    //   store.state.msgLogin = msgSuscessLogin
+    //   // return 'บันทึกสำเร็จ'
+    // } if (response.data === false) {
+    //   const msgErrorLogin = ('บันทึกล้มเหลวกรุณาตรวจสอบ');
+    //   store.state.msgErrorLogin = msgErrorLogin
+    //   // alert('บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล');
+    //   // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
+    // }
   },
 }
 export default funcs

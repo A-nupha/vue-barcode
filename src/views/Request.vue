@@ -6,19 +6,6 @@
                 <v-flex class="grey lighten-4">
                     <v-container>
                         <v-card flat>
-                            <!-- <v-form>
-                                                        <v-layout>
-                                                            <v-flex ma-1 pr-5>
-                                                                <v-text-field prepend-icon="mdi-account" name="Username" label="Username" v-model="userName"></v-text-field>
-                                                                <v-text-field prepend-icon="mdi-lock" name="Password" label="Password" type="password" v-model="passWord"></v-text-field>
-                                                            </v-flex>
-                                                        </v-layout>
-                                                        <v-card-actions>
-                                                            <v-btn color="blue" :loading="loading" dark large block @click="login()">Login</v-btn>
-                                                            <v-btn color="blue" dark large block @click="Register()">Register</v-btn>
-                                                        </v-card-actions>
-                                                        <li>{{userName}}</li>
-                                                    </v-form> -->
                             <div>
                                 <v-toolbar flat color="white">
                                     <v-toolbar-title>
@@ -31,19 +18,24 @@
                                 </v-toolbar>
                                 <v-data-table :headers="headers" :items="desserts" class="elevation-1">
                                     <template slot="items" slot-scope="props">
-                                        <td class="text-xs-center">{{ props.item.name }}</td>
+                                        <td class="text-xs-center">{{ props.item.Barcode }}</td>
                                         <!-- <td class="text-xs-center">{{ props.item.calories }}</td> -->
                                         <td class="text-xs-center">{{ props.item.fat }}</td>
                                         <!-- <td class="text-xs-center">{{ props.item.carbs }}</td> -->
                                         <td class="text-xs-center">{{ props.item.carbs }}</td>
-                                        <td class="justify-center layout px-0">
+                                        <td class="text-xs-center">
                                             <v-btn icon>
                                             <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon>
                                             </v-btn>
-                                            <!-- <v-btn icon>
-                                            <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
-                                            </v-btn> -->
                                         </td>
+
+                                        <td class="text-xs-center">
+                                           <v-btn icon>
+                                            <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
+                                            </v-btn>
+                                        </td>
+
+
                                     </template>
                                     <template slot="no-data">
                                         <v-btn color="primary" @click="initialize">
@@ -66,7 +58,7 @@
 
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn dark flat @click="dialog = false">Save</v-btn>
+                <v-btn dark flat @click="dialog = false;save()">Save</v-btn>
             </v-toolbar-items>
         </v-toolbar>
         <v-card>
@@ -78,19 +70,19 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field v-model="editedItem.name" label="Barcode"></v-text-field>
+                            <v-text-field disabled v-model="editedItem.Barcode" label="Barcode"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field v-model="editedItem.calories" label="Branch"></v-text-field>
+                            <v-text-field disabled v-model="editedItem.calories" label="Branch"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field v-model="editedItem.fat" label="Status"></v-text-field>
+                            <v-text-field disabled v-model="editedItem.fat" label="Status"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field v-model="editedItem.carbs" label="Quanity"></v-text-field>
+                            <v-text-field  v-model="editedItem.carbs" label="Quanity"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field v-model="editedItem.protein" label="Name"></v-text-field>
+                            <v-text-field disabled v-model="editedItem.protein" label="Name"></v-text-field>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -98,10 +90,34 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-                <v-btn color="red darken-1" dark @click="deleteItem(props.item)">Delete</v-btn>
+
             </v-card-actions>
         </v-card>
     </v-dialog>
+    <v-snackbar
+    :vertical="true"
+    v-model="snackฺฺฺBarBool"
+    color="orange"
+    :timeout="timeout"
+    bottom>
+    <v-flex >{{msgSnackBar}}</v-flex>
+    <v-layout><v-flex><v-btn
+        color="white"
+        flat
+        @click="snackฺฺฺBarBool = false "
+      >
+        no
+      </v-btn></v-flex>
+    <v-flex><v-btn
+        color="white"
+        flat
+        @click="deleteItemS()"
+      >
+        yes
+      </v-btn></v-flex></v-layout>
+
+
+  </v-snackbar>
 </div>
 </template>
 
@@ -112,6 +128,9 @@ export default {
     // tab,
   },
   data: () => ({
+    confirm: false,
+    snackฺฺฺBarBool: '',
+    msgSnackBar: '',
     dialog: false,
     headers: [{
       text: 'Barcode',
@@ -133,6 +152,12 @@ export default {
     },
     {
       text: 'Edit',
+      value: 'name',
+      sortable: false,
+      align: 'center',
+    },
+    {
+      text: 'Delete',
       value: 'name',
       sortable: false,
       align: 'center',
@@ -171,35 +196,35 @@ export default {
   methods: {
     initialize() {
       this.desserts = [{
-        name: '12345678910115',
+        Barcode: '12345678910115',
         calories: 'งามวงวาล',
         fat: 'ชำรุด',
         carbs: 24,
         protein: 'โค๊ก',
       },
       {
-        name: '12365498798788',
+        Barcode: '12365498798788',
         calories: 'พญาไท',
         fat: 'สูญหาย',
         carbs: 37,
         protein: 'น้ำเปล่า',
       },
       {
-        name: '12365498798788',
+        Barcode: '12365498798788',
         calories: 'ดินแดง',
         fat: 'สูญหาย',
         carbs: 23,
         protein: 'ดินสอ',
       },
       {
-        name: '12365412398788',
+        Barcode: '12365412398788',
         calories: 'สุขุมวิท',
         fat: 'ชำรุด',
         carbs: 67,
         protein: 'เมาส์',
       },
       {
-        name: '12367892398118',
+        Barcode: '12367892398118',
         calories: 'อโศก',
         fat: 'ชำรุด',
         carbs: 49,
@@ -213,9 +238,16 @@ export default {
       this.dialog = true
     },
     deleteItem(item) {
-      const index = this.desserts.indexOf(item)
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+      this.getdataTable = item
+      this.msgSnackBar = 'Are you sure you want to delete this item?'
+      this.snackฺฺฺBarBool = true
     },
+    deleteItemS() {
+      const index = this.desserts.indexOf(this.getdataTable)
+      this.desserts.splice(index, 1)
+      this.snackฺฺฺBarBool = false
+    },
+
     close() {
       this.dialog = false
       setTimeout(() => {

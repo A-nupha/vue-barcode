@@ -18,11 +18,15 @@ header('Content-type: application/json');
    $index1 = $_POST['index1'];
    $index2 = $_POST['index2'];
 
+
+
+
+
 $servername = "localhost";
 $username = "id3526601_anupha";
 $password = "ok223201";
 $dbname = "id3526601_projest_vue_barcode";
-// Create connection
+Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
