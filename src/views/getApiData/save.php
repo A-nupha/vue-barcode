@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 header('Access-Control-Allow-Origin: *');
 header('Content-type: application/json');
@@ -17,7 +17,7 @@ header('Content-type: application/json');
    $rcode_id = $_POST['rcode_id'];
    $index1 = $_POST['index1'];
    $index2 = $_POST['index2'];
-
+//    $index2 = $_POST['index2'];
 
 
 
@@ -26,7 +26,7 @@ $servername = "localhost";
 $username = "id3526601_anupha";
 $password = "ok223201";
 $dbname = "id3526601_projest_vue_barcode";
-Create connection
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
@@ -40,16 +40,17 @@ $result = $conn->query($query);
 $response = array();
 if ($result->num_rows > 0) {
     // output data of each row
-    while($row = $result->fetch_assoc()) {
-        $response[] = $row;
-        echo json_encode($row);
-    }
+    // while($row = $result->fetch_assoc()) {
+    //     $response[] = $row;
+      
+    // }
+      echo 'false';
 } else {
    //  insert data
-    $query = "insert into user(pid,fname,lname,tname,bdate,email,tel, flag_id, now_date,rcode_id,index1,index2) values 
-    ($pid,'$fname','$lname','$tname','$bdate','$email','$tel', '$flag_id', '$now_date','$rcode_id','$index1','$index2')";
-    $result = $conn->query($query);
-    echo json_encode($result);
+   $query = "insert into user(pid,fname,lname,tname,bdate,email,tel, flag_id, now_date,rcode_id,index1,index2,branch_id) values 
+   ($pid,'".$fname."','".$lname."','".$tname."','".$bdate."','".$email."','".$tel."', '".$flag_id."', '".$now_date."','".$rcode_id."','".$index1."','".$index2."','".$branch_id."')";
+   $result = $conn->query($query);
+   echo json_encode($result);
 }
 
 

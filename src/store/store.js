@@ -13,6 +13,7 @@ const staticState = {
   msgLogin: null,
   msgSuscessLogin: null,
   msgErrorLogin: null,
+  msgSave: null,
 }
 console.log(staticState)
 

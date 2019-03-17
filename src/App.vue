@@ -74,6 +74,7 @@ import Menu from './views/menu.vue'
 import request from './views/Request.vue'
 import Register from './views/Register.vue'
 import chart from './views/Chart.vue'
+import User from './views/User.vue'
 
 // import LineChart from './lineChart'
 // import SnackBar from './views/SnackBar.vue'
@@ -114,6 +115,7 @@ export default {
     Menu,
     moment,
     Register,
+    User,
 
   },
   mounted() {
@@ -127,6 +129,7 @@ export default {
       if (this.login === 'Register') { this.z = 'Register' }
       if (this.login === 'LoginApp') { this.z = 'LoginApp' }
       if (this.login === 'chart') { this.z = 'chart' }
+      if (this.login === 'User') { this.z = 'User' }
     },
   },
   methods: {

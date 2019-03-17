@@ -20,7 +20,7 @@ const funcs = {
     const response = await Axios.post(api, params)
     // eslint-disable-next-line no-unused-vars
     store.state.msgLogin = response.data
-    // alert(msg,'js')
+    console.log(response.data, 'js')
   },
   search() {
     return new Promise((resolve, reject) => {
@@ -62,21 +62,22 @@ const funcs = {
     params.append('lname', data.lname)
     params.append('tname', data.tname)
     params.append('pid', data.pid)
-
-    // params.append('flag_id', data.flag_id)
-    // params.append('now_date', data.now_date)
-    // params.append('rcode_id', data.rcode_id)
+    params.append('flag_id', data.flag_id)
+    params.append('now_date', data.now_date)
+    params.append('rcode_id', data.rcode_id)
     // params.append('tel', data.tel)
 
-    console.log('params', params.toString())
+    // console.log('params', params.toString())
     const response = await Axios.post(api, params)
-    console.log('response', response)
+    // console.log('response', response.data)
+    store.state.msgSave = response.data
+    console.log('store.state.msgSave', store.state.msgSave)
     // if (response.data === true) {
-    //   const msgSuscessLogin = ('บันทึกสำเร็จ');
+    //   const msgSuscessLogin = (true);
     //   store.state.msgLogin = msgSuscessLogin
     //   // return 'บันทึกสำเร็จ'
     // } if (response.data === false) {
-    //   const msgErrorLogin = ('บันทึกล้มเหลวกรุณาตรวจสอบ');
+    //   const msgErrorLogin = (false);
     //   store.state.msgErrorLogin = msgErrorLogin
     //   // alert('บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล');
     //   // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'

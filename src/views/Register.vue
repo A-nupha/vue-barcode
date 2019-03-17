@@ -1,4 +1,5 @@
 <template>
+<div>
   <v-container>
     <v-layout row v-if="error">
       <v-flex xs12 sm6 offset-sm3>
@@ -95,6 +96,19 @@
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
+                <v-layout row>
+                  <v-flex xs12>
+                    <v-text-field
+                    prepend-icon="mdi-account-card-details"
+
+                      label="id branch"
+
+                      v-model="branch"
+
+                      mask="##"
+                      required></v-text-field>
+                  </v-flex>
+                </v-layout>
               <v-layout wrap>
               <v-flex xs12>
 
@@ -107,10 +121,17 @@
               </v-flex>
               </v-layout>
               <v-layout>
-                  <v-flex xs12>
-                    <v-btn color="blue" dark large block :loading="loadingbtn"
+                <v-radio-group v-model="select" row>
+                  <v-radio required prepend-icon=" "  color="blue" label="Manager" value="01"/>
+                  <v-radio required prepend-icon=" "  color="blue" label="Empooyee" value="02"/>
+                </v-radio-group>
+              </v-layout>
+              <v-layout ma-0>
+                  <v-flex xs12 ma-0>
+                    <v-btn color="blue" dark large block :loading='loadingbtn'
                     type="submit" @click="dataInsert()">Register</v-btn>
                   </v-flex>
+                  <!-- {{loadingbtn}} -->
                 </v-layout>
                 <v-flex xs12>
                 </v-flex>
@@ -119,8 +140,40 @@
           </v-card-text>
         </v-card>
       </v-flex>
+
     </v-layout>
   </v-container>
+  <!-- <v-snackbar
+    :vertical="true"
+    v-model="snackฺฺฺBarBool"
+    color="orange"
+    :timeout="timeout"
+    bottom>
+    <v-flex headline>{{msgSnackBar}}</v-flex>
+  </v-snackbar> -->
+  <v-layout row justify-center>
+      <v-dialog v-model="snackฺฺฺBarBool" persistent max-width="400px">
+        <v-card>
+          <v-flex>
+           <v-card-title
+          :class='color'
+          primary-title
+          flat>
+           <v-icon class="mr-3" color="white">mdi-information</v-icon> <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
+        </v-card-title>
+          <v-card-title>
+            <v-layout justify-center><span class="headline">{{msgSnackBar}}</span></v-layout>
+          </v-card-title>
+          </v-flex>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="snackฺฺฺBarBool = false">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click="snackฺฺฺBarBool = false">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
+</div>
 </template>
 
 <script>
@@ -130,12 +183,23 @@ import {
 import {
   sync,
 } from 'vuex-pathify'
+import moment from 'moment'
 import controlData from './getApiData/controlData'
 import store from '../store/store'
+import functions from '../plugins/functions'
+
 
 export default {
   data() {
     return {
+      color: '',
+      snackฺฺฺBarBool: null,
+      timeout: 10000,
+      select: '02',
+      items: [
+        'Empooyee',
+        'Manager',
+      ],
       selected: '',
       confirmPassword: '',
       LastName: '',
@@ -145,8 +209,12 @@ export default {
       fname: '',
       lname: '',
       tname: 'Mr.',
+      branch: '',
       pid: '',
+      msgSnackBar: '',
       loadingbtn: null,
+      // nowDate: functions.moment('YYYYMMDD'),
+      nowDate: functions.moment(moment().format('YYYYMMDD')),
     }
   },
   computed: {
@@ -181,9 +249,8 @@ export default {
     onDismissed() {
       this.$store.dispatch('clearError')
     },
-    dataInsert() {
+    async dataInsert() {
       this.loadingbtn = true
-      console.log('this.loading ', this.loadingbtn )
       const obj = {
         username: this.username,
         password: this.password,
@@ -192,22 +259,30 @@ export default {
         lname: this.lname,
         tname: this.tname,
         pid: this.pid,
+        flag_id: this.select,
+        now_date: this.nowDate,
+        rcode_id: this.branch,
       }
       console.log('obj', obj)
-      controlData.save(obj)
-      console.log('store.state.msgErrorLogin', store.state.msgErrorLogin)
-      if (store.state.msgErrorLogin == 'บันทึกล้มเหลวกรุณาตรวจสอบ') {
-        // console.log('store.state.msgErrorLogin')
-        // const menu = 'LoginApp'
-        // this.setDataLogin(menu);
-        alert('บันทึกล้มเหลวกรุณาตรวจสอบ')
+      await controlData.save(obj)
+
+      await this.awitData()
+    },
+    awitData() {
+      if (store.state.msgSave == false) {
+        console.log('msgErrorLogin', store.state.msgSave)
         this.loadingbtn = false
+        this.snackฺฺฺBarBool = true
+        this.msgSnackBar = 'unsuccessful'
+        this.color = 'red'
       } else {
-        console.log('else')
+        console.log('msgSave', store.state.msgSave)
         this.loadingbtn = false
-        // this.loading = false
+        this.snackฺฺฺBarBool = true
+        this.msgSnackBar = 'success'
+        this.color = 'green'
+        
       }
-      // "bdate=undefined&email=scvsd%40gmail.com&flag_id=undefined&fname=anupha&index1=dfbdfb&index2=123&lname=ssdsfff&now_date=undefined&pid=1759900252522&rcode_id=undefined&tel=undefined&tname=Mr."
     },
   },
 }

@@ -10,28 +10,29 @@
                                 <v-toolbar flat color="white">
                                     <v-toolbar-title>
                                         <v-flex xs12 subheader class="blue--text" ma-1>
-                                            การแจ้งสินค้ามีปัญหา
+                                            USER
                                         </v-flex>
                                     </v-toolbar-title>
                                     <v-divider class="mx-2" inset vertical></v-divider>
                                     <v-spacer></v-spacer>
                                 </v-toolbar>
-                                <v-data-table :headers="headers" :items="desserts" class="elevation-1">
+                                <v-data-table :headers="headers"
+                                :items="user" class="elevation-1">
                                     <template slot="items" slot-scope="props">
-                                        <td class="text-xs-center">{{ props.item.Barcode }}</td>
-                                        <!-- <td class="text-xs-center">{{ props.item.calories }}</td> -->
-                                        <td class="text-xs-center">{{ props.item.fat }}</td>
-                                        <!-- <td class="text-xs-center">{{ props.item.carbs }}</td> -->
-                                        <td class="text-xs-center">{{ props.item.carbs }}</td>
+                                        <td class="text-xs-center">{{  digit.getFormat(props.item.pid, DigitType.PID, FormatType.AUTO) }}</td>
+                                        <td class="text-xs-center">{{ props.item.fname }}</td>
+                                        <td class="text-xs-center">{{ props.item.branch_id }}</td>
                                         <td class="text-xs-center">
                                             <v-btn icon>
-                                            <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon>
+                                            <v-icon color="orange"
+                                            @click="editItem(props.item)">mdi-border-color</v-icon>
                                             </v-btn>
                                         </td>
 
                                         <td class="text-xs-center">
                                            <v-btn icon>
-                                            <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
+                                            <v-icon color="red"
+                                            @click="deleteItem(props.item)">mdi-delete</v-icon>
                                             </v-btn>
                                         </td>
 
@@ -70,20 +71,25 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="editedItem.Barcode" label="Barcode"></v-text-field>
+                            <v-text-field disabled v-model="getdataTable.pid"
+                            label="pid"></v-text-field>
+                        </v-flex>
+                         <v-flex xs12 sm6 md4>
+                            <v-text-field v-model="getdataTable.fname"
+                            label="name"></v-text-field>
+                        </v-flex>
+                        <!--<v-flex xs12 sm6 md4>
+                            <v-text-field disabled v-model="editedItem.fat"
+                            label="Status"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="editedItem.calories" label="Branch"></v-text-field>
+                            <v-text-field  v-model="editedItem.carbs"
+                            label="Quanity"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="editedItem.fat" label="Status"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                            <v-text-field  v-model="editedItem.carbs" label="Quanity"></v-text-field>
-                        </v-flex>
-                        <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="editedItem.protein" label="Name"></v-text-field>
-                        </v-flex>
+                            <v-text-field disabled v-model="editedItem.protein"
+                            label="Name"></v-text-field>
+                        </v-flex> -->
                     </v-layout>
                 </v-container>
             </v-card-text>
@@ -122,64 +128,74 @@
 </template>
 
 <script>
+import digit, {
+  DigitType,
+  FormatType,
+} from '@cdglib/js-moi-xid'
+import controlData from './getApiData/controlData'
+
 export default {
   name: 'Request',
   components: {
     // tab,
   },
-  data: () => ({
-    confirm: false,
-    snackฺฺฺBarBool: '',
-    msgSnackBar: '',
-    dialog: false,
-    headers: [{
-      text: 'Barcode',
-      align: 'center',
-      sortable: false,
-      value: 'name',
-    },
-    {
-      text: 'Status',
-      value: 'fat',
-      sortable: false,
-      align: 'center',
-    },
-    {
-      text: 'Qty',
-      value: 'protein',
-      align: 'center',
-      sortable: false,
-    },
-    {
-      text: 'Edit',
-      value: 'name',
-      sortable: false,
-      align: 'center',
-    },
-    {
-      text: 'Delete',
-      value: 'name',
-      sortable: false,
-      align: 'center',
-    },
-    ],
-    desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
-    defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
-  }),
+  data() {
+    return {
+    // DigitType,
+    // test: digit.getFormat(props.item.pid, DigitType.PID, FormatType.AUTO),
+    // FormatType,
+      DigitType,
+      FormatType,
+      digit,
+      confirm: false,
+      snackฺฺฺBarBool: '',
+      msgSnackBar: '',
+      dialog: false,
+      headers: [{
+        text: 'User',
+        align: 'center',
+        sortable: false,
+        value: 'name',
+      },
+      {
+        text: 'name',
+        value: 'fat',
+        sortable: false,
+        align: 'center',
+      },
+      {
+        text: 'branch',
+        value: 'protein',
+        align: 'center',
+        sortable: false,
+      },
+      {
+        text: 'Edit',
+        value: 'name',
+        sortable: false,
+        align: 'center',
+      },
+      {
+        text: 'Delete',
+        value: 'name',
+        sortable: false,
+        align: 'center',
+      },
+      ],
+      desserts: [],
+      editedIndex: -1,
+      editedItem: null,
+      defaultItem: {
+        name: '',
+        calories: 0,
+        fat: 0,
+        carbs: 0,
+        protein: 0,
+      },
+      user: null,
+      getdataTable: [],
+    }
+},
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
@@ -192,6 +208,17 @@ export default {
   },
   created() {
     this.initialize()
+    controlData.search().then((response) => {
+      const retData = response.data
+      this.user = retData
+      //   retData.forEach((k, v) => {
+      //     let pid = k.pid
+      //     console.log(pid)
+      if (retData.length < 0) {
+        alert('ไม่พบผู้ใช้งานนี้ในระบบ')
+      }
+    //   });
+    });
   },
   methods: {
     initialize() {
@@ -233,6 +260,8 @@ export default {
       ]
     },
     editItem(item) {
+      this.getdataTable = item
+      console.log('this.getdataTable', this.getdataTable)
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
@@ -274,7 +303,7 @@ export default {
 .theme--light .v-datatable thead th.column.sortable.active i {
     color: white;
     background-color: #0091ea;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .table.v-table thead td:not(:nth-child(1)),

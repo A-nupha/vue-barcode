@@ -20,9 +20,9 @@
                   </v-layout>
                   <v-card-actions>
                     <v-btn color="blue" :loading="loading"  dark large block @click="login()">Login</v-btn>
-                    <v-btn color="red" dark large block @click="Register()">Register</v-btn>
+                    <!-- <v-btn color="red" dark large block @click="Register()">Register</v-btn> -->
                   </v-card-actions>
-                  <li>{{userName}}</li>
+                  <!-- <li>{{userName}}</li> -->
                   <!-- <li>{{msg}}</li> -->
                   <!-- {{store.state.msgSnackBar}} -->
                 </v-form>
@@ -50,7 +50,7 @@ import {
 import {
   sync,
 } from 'vuex-pathify'
-import controlData from './getApiData/controlData.js'
+import controlData from './getApiData/controlData'
 import store from '../store/store'
 
 export default {
@@ -117,7 +117,7 @@ export default {
         const boolmsg = true
         this.msgSnackBar = textmsg
         this.snackฺฺฺBarBool = boolmsg
-        console.log(store.state)
+        console.log(store.state.msgLogin)
         // console.log(textmsg, boolmsg)
         this.loading = false
       }
