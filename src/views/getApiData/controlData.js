@@ -83,5 +83,27 @@ const funcs = {
     //   // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
     // }
   },
+
+  async deleteUser(data) {
+    console.log('data', data.pid)
+    var api = 'https://a-nuphasupit58.000webhostapp.com/php/deleteuser.php';
+    var params = new URLSearchParams();
+    params.append('pid', data.pid)
+    const response = await Axios.post(api, params)
+    store.state.msgSave = response.data
+    console.log('store.state.msgSave', store.state.msgSave)
+    // if (response.data === true) {
+    //   const msgSuscessLogin = (true);
+    //   store.state.msgLogin = msgSuscessLogin
+    //   // return 'บันทึกสำเร็จ'
+    // } if (response.data === false) {
+    //   const msgErrorLogin = (false);
+    //   store.state.msgErrorLogin = msgErrorLogin
+    //   // alert('บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล');
+    //   // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
+    // }
+  },
+
+
 }
 export default funcs

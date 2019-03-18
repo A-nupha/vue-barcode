@@ -150,7 +150,7 @@ export default {
 }
 </script>
 <style>
-/* #app {
+#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -183,5 +183,5 @@ color: #0D47A1 ;
 .selectTest .v-menu__content {
   top: 35px !important;
   left: 0px !important;
-} */
+}
 </style>

@@ -265,6 +265,7 @@ export default {
       }
       console.log('obj', obj)
       await controlData.save(obj)
+      console.log()
 
       await this.awitData()
     },

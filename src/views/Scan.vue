@@ -40,7 +40,17 @@
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Qty" v-model="qty" required/>
+        <v-text-field prepend-icon=" " v-model="price" suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs10>
+        <v-text-field prepend-icon=" " v-model="cost" suffix="Baht"  name="input-7-4" label="Cost"></v-text-field>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs10>
+        <v-text-field prepend-icon=" " label="Qty" suffix="Piece" v-model="qty" required/>
       </v-flex>
     </v-layout>
     <v-layout>
@@ -48,6 +58,7 @@
         <v-textarea prepend-icon=" " v-model="detailItems" box name="input-7-4" label="Description" auto-grow></v-textarea>
       </v-flex>
     </v-layout>
+    
             </v-flex>
           </v-layout>
         </v-card-actions>
@@ -71,11 +82,12 @@ export default {
   name: 'VueBarcodeTest',
   data() {
     return {
+      cost: null,
+      price: null,
       qty: null,
       detailItems: null,
       dialogScan: false,
       model: 'tab-2',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       decoder: {
         readers: ['ean_reader', 'ean_8_reader', 'code_39_reader', 'code_39_vin_reader', 'codabar_reader', 'upc_reader', 'upc_e_reader', 'i2of5_reader', '2of5_reader', 'code_93_reader'],
       },
@@ -99,13 +111,15 @@ export default {
     },
     putdata() {
       const databarcode = this.databarcode
-      const dataScan = store.state.dataScan
+      const dataScan = this.$store.state.dataScan
       console.log('databarcode', databarcode)
       console.log('dataScan', dataScan);
       const obj = {
         databarcode: this.databarcode,
         qty: this.qty,
         detailItems: this.detailItems,
+        price: this.price,
+        cost: this.cost,
       }
       dataScan.push(obj)
       this.dialogScan = false

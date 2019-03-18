@@ -95,7 +95,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
+                <v-btn color="blue darken-1" flat @click="dialog = false">Cancel</v-btn>
 
             </v-card-actions>
         </v-card>
@@ -121,8 +121,6 @@
       >
         yes
       </v-btn></v-flex></v-layout>
-
-
   </v-snackbar>
 </div>
 </template>
@@ -137,13 +135,10 @@ import controlData from './getApiData/controlData'
 export default {
   name: 'Request',
   components: {
-    // tab,
   },
   data() {
     return {
-    // DigitType,
-    // test: digit.getFormat(props.item.pid, DigitType.PID, FormatType.AUTO),
-    // FormatType,
+      timeout: 10000,
       DigitType,
       FormatType,
       digit,
@@ -184,113 +179,125 @@ export default {
       ],
       desserts: [],
       editedIndex: -1,
-      editedItem: null,
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
-      },
-      user: null,
+      editedItem: {},
+      // defaultItem: {
+      //   name: '',
+      //   calories: 0,
+      //   fat: 0,
+      //   carbs: 0,
+      //   protein: 0,
+      // },
+      user: [],
       getdataTable: [],
     }
-},
+  },
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
     },
   },
   watch: {
-    dialog(val) {
-      val || this.close()
-    },
+    // dialog(val) {
+    //   val || this.close()
+    // },
   },
   created() {
-    this.initialize()
+    // this.initialize()
     controlData.search().then((response) => {
       const retData = response.data
       this.user = retData
       //   retData.forEach((k, v) => {
       //     let pid = k.pid
       //     console.log(pid)
-      if (retData.length < 0) {
-        alert('ไม่พบผู้ใช้งานนี้ในระบบ')
-      }
+      // if (retData.length < 0) {
+      //   alert('ไม่พบผู้ใช้งานนี้ในระบบ')
+      // }
     //   });
     });
   },
   methods: {
-    initialize() {
-      this.desserts = [{
-        Barcode: '12345678910115',
-        calories: 'งามวงวาล',
-        fat: 'ชำรุด',
-        carbs: 24,
-        protein: 'โค๊ก',
-      },
-      {
-        Barcode: '12365498798788',
-        calories: 'พญาไท',
-        fat: 'สูญหาย',
-        carbs: 37,
-        protein: 'น้ำเปล่า',
-      },
-      {
-        Barcode: '12365498798788',
-        calories: 'ดินแดง',
-        fat: 'สูญหาย',
-        carbs: 23,
-        protein: 'ดินสอ',
-      },
-      {
-        Barcode: '12365412398788',
-        calories: 'สุขุมวิท',
-        fat: 'ชำรุด',
-        carbs: 67,
-        protein: 'เมาส์',
-      },
-      {
-        Barcode: '12367892398118',
-        calories: 'อโศก',
-        fat: 'ชำรุด',
-        carbs: 49,
-        protein: 'ปากกา',
-      },
-      ]
-    },
+    // initialize() {
+    //   this.desserts = [{
+    //     Barcode: '12345678910115',
+    //     calories: 'งามวงวาล',
+    //     fat: 'ชำรุด',
+    //     carbs: 24,
+    //     protein: 'โค๊ก',
+    //   },
+    //   {
+    //     Barcode: '12365498798788',
+    //     calories: 'พญาไท',
+    //     fat: 'สูญหาย',
+    //     carbs: 37,
+    //     protein: 'น้ำเปล่า',
+    //   },
+    //   {
+    //     Barcode: '12365498798788',
+    //     calories: 'ดินแดง',
+    //     fat: 'สูญหาย',
+    //     carbs: 23,
+    //     protein: 'ดินสอ',
+    //   },
+    //   {
+    //     Barcode: '12365412398788',
+    //     calories: 'สุขุมวิท',
+    //     fat: 'ชำรุด',
+    //     carbs: 67,
+    //     protein: 'เมาส์',
+    //   },
+    //   {
+    //     Barcode: '12367892398118',
+    //     calories: 'อโศก',
+    //     fat: 'ชำรุด',
+    //     carbs: 49,
+    //     protein: 'ปากกา',
+    //   },
+    //   ]
+    // },
     editItem(item) {
       this.getdataTable = item
-      console.log('this.getdataTable', this.getdataTable)
-      this.editedIndex = this.desserts.indexOf(item)
+      // console.log('this.getdataTable', this.getdataTable)
+      this.editedIndex = this.user.indexOf(item)
+      console.log('editedIndex====>', this.editedIndex)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
     deleteItem(item) {
       this.getdataTable = item
+      console.log('getdataTable', this.getdataTable.pid)
       this.msgSnackBar = 'Are you sure you want to delete this item?'
       this.snackฺฺฺBarBool = true
     },
     deleteItemS() {
-      const index = this.desserts.indexOf(this.getdataTable)
-      this.desserts.splice(index, 1)
+      const index = this.user.indexOf(this.getdataTable)
+      // console.log('this.getdataTable==>deletimems', index)
+      this.user.splice(index, 1)
       this.snackฺฺฺBarBool = false
     },
 
-    close() {
-      this.dialog = false
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      }, 300)
-    },
-    save() {
+    async save() {
+      console.log('เข้าฟังชั่นsave')
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        Object.assign(this.user[this.editedIndex], this.getdataTable)
+        console.log('if')
+        // console.log('this.getdataTable.pid', this.getdataTable.pid)
+        // const obj = {
+        //   pid: this.getdataTable.pid,
+        // }
+        // console.log('obj', obj)
+        // await controlData.deleteUser(obj)
+        // console.log(this.Stors.msgSave)
       } else {
-        this.desserts.push(this.editedItem)
+        console.log('else')
+        // const obj = {
+        //   pid: this.getdataTable.pid,
+        // }
+        // console.log('obj', obj)
+        // await controlData.deleteUser(obj)
+        // console.log(this.Stors.msgSave)
+
+        this.user.push(this.getdataTable)
       }
-      this.close()
     },
   },
 }
