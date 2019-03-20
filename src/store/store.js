@@ -14,6 +14,7 @@ const staticState = {
   msgSuscessLogin: null,
   msgErrorLogin: null,
   msgSave: null,
+  dataUserApi: [],
 }
 console.log(staticState)
 

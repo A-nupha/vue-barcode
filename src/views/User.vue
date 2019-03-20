@@ -17,9 +17,10 @@
                                     <v-spacer></v-spacer>
                                 </v-toolbar>
                                 <v-data-table :headers="headers"
-                                :items="user" class="elevation-1">
+                                :items="dataUserApi" class="elevation-1">
                                     <template slot="items" slot-scope="props">
-                                        <td class="text-xs-center">{{  digit.getFormat(props.item.pid, DigitType.PID, FormatType.AUTO) }}</td>
+                                        <!-- <td class="text-xs-center">{{  digit.getFormat(props.item.pid, DigitType.PID, FormatType.AUTO) }}</td> -->
+                                        <td></td>
                                         <td class="text-xs-center">{{ props.item.fname }}</td>
                                         <td class="text-xs-center">{{ props.item.branch_id }}</td>
                                         <td class="text-xs-center">
@@ -27,31 +28,7 @@
                                             <v-icon color="orange"
                                             @click="editItem(props.item)">mdi-border-color</v-icon>
                                             </v-btn>
-                                        </td>
-
-                                        <td class="text-xs-center">
-                                           <v-btn icon>
-                                            <v-icon color="red"
-                                            @click="deleteItem(props.item)">mdi-delete</v-icon>
-                                            </v-btn>
-                                        </td>
-
-
-                                    </template>
-                                    <template slot="no-data">
-                                        <v-btn color="primary" @click="initialize">
-                                            Reset</v-btn>
-                                    </template>
-                                </v-data-table>
-                            </div>
-                        </v-card>
-                    </v-container>
-                </v-flex>
-            </v-layout>
-        </v-container>
-    </v-content>
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-
+                                            <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-toolbar dark color="blue">
             <v-btn slot="activator" color="blue" dark class="mb-2">
                 <v-icon>mdi-close</v-icon>
@@ -71,11 +48,11 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="getdataTable.pid"
+                            <v-text-field disabled v-model="props.item.pid"
                             label="pid"></v-text-field>
                         </v-flex>
                          <v-flex xs12 sm6 md4>
-                            <v-text-field v-model="getdataTable.fname"
+                            <v-text-field v-model="props.item.fname"
                             label="name"></v-text-field>
                         </v-flex>
                         <!--<v-flex xs12 sm6 md4>
@@ -100,7 +77,30 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
-    <v-snackbar
+                                        </td>
+
+                                        <td class="text-xs-center">
+                                           <v-btn icon>
+                                            <v-icon color="red"
+                                            >mdi-delete</v-icon>
+                                            </v-btn>
+                                        </td>
+
+
+                                    </template>
+                                    <template slot="no-data">
+                                        <v-btn color="primary" @click="initialize">
+                                            Reset</v-btn>
+                                    </template>
+                                </v-data-table>
+                            </div>
+                        </v-card>
+                    </v-container>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-content>
+    <!-- <v-snackbar
     :vertical="true"
     v-model="snackฺฺฺBarBool"
     color="orange"
@@ -121,7 +121,8 @@
       >
         yes
       </v-btn></v-flex></v-layout>
-  </v-snackbar>
+  </v-snackbar> -->
+  {{dataUserApi}}
 </div>
 </template>
 
@@ -130,6 +131,9 @@ import digit, {
   DigitType,
   FormatType,
 } from '@cdglib/js-moi-xid'
+import {
+  sync,
+} from 'vuex-pathify'
 import controlData from './getApiData/controlData'
 
 export default {
@@ -177,127 +181,37 @@ export default {
         align: 'center',
       },
       ],
-      desserts: [],
-      editedIndex: -1,
-      editedItem: {},
-      // defaultItem: {
-      //   name: '',
-      //   calories: 0,
-      //   fat: 0,
-      //   carbs: 0,
-      //   protein: 0,
-      // },
-      user: [],
-      getdataTable: [],
+
     }
   },
   computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    },
+    ...sync('*'),
   },
   watch: {
-    // dialog(val) {
-    //   val || this.close()
-    // },
   },
   created() {
-    // this.initialize()
     controlData.search().then((response) => {
       const retData = response.data
-      this.user = retData
-      //   retData.forEach((k, v) => {
-      //     let pid = k.pid
-      //     console.log(pid)
-      // if (retData.length < 0) {
-      //   alert('ไม่พบผู้ใช้งานนี้ในระบบ')
-      // }
-    //   });
+      this.dataUserApi = retData
+      for (let i = 0; i < this.dataUserApi.length; i += 1) {
+        this.$set(this.dataUserApi, i, { ...this.dataUserApi[i], indexLog: i })
+      }
     });
   },
   methods: {
-    // initialize() {
-    //   this.desserts = [{
-    //     Barcode: '12345678910115',
-    //     calories: 'งามวงวาล',
-    //     fat: 'ชำรุด',
-    //     carbs: 24,
-    //     protein: 'โค๊ก',
-    //   },
-    //   {
-    //     Barcode: '12365498798788',
-    //     calories: 'พญาไท',
-    //     fat: 'สูญหาย',
-    //     carbs: 37,
-    //     protein: 'น้ำเปล่า',
-    //   },
-    //   {
-    //     Barcode: '12365498798788',
-    //     calories: 'ดินแดง',
-    //     fat: 'สูญหาย',
-    //     carbs: 23,
-    //     protein: 'ดินสอ',
-    //   },
-    //   {
-    //     Barcode: '12365412398788',
-    //     calories: 'สุขุมวิท',
-    //     fat: 'ชำรุด',
-    //     carbs: 67,
-    //     protein: 'เมาส์',
-    //   },
-    //   {
-    //     Barcode: '12367892398118',
-    //     calories: 'อโศก',
-    //     fat: 'ชำรุด',
-    //     carbs: 49,
-    //     protein: 'ปากกา',
-    //   },
-    //   ]
-    // },
-    editItem(item) {
-      this.getdataTable = item
-      // console.log('this.getdataTable', this.getdataTable)
-      this.editedIndex = this.user.indexOf(item)
-      console.log('editedIndex====>', this.editedIndex)
-      this.editedItem = Object.assign({}, item)
+
+    editItem() {
       this.dialog = true
     },
-    deleteItem(item) {
-      this.getdataTable = item
-      console.log('getdataTable', this.getdataTable.pid)
-      this.msgSnackBar = 'Are you sure you want to delete this item?'
-      this.snackฺฺฺBarBool = true
+    deleteItem() {
+
     },
     deleteItemS() {
-      const index = this.user.indexOf(this.getdataTable)
-      // console.log('this.getdataTable==>deletimems', index)
-      this.user.splice(index, 1)
-      this.snackฺฺฺBarBool = false
+
     },
 
-    async save() {
-      console.log('เข้าฟังชั่นsave')
-      if (this.editedIndex > -1) {
-        Object.assign(this.user[this.editedIndex], this.getdataTable)
-        console.log('if')
-        // console.log('this.getdataTable.pid', this.getdataTable.pid)
-        // const obj = {
-        //   pid: this.getdataTable.pid,
-        // }
-        // console.log('obj', obj)
-        // await controlData.deleteUser(obj)
-        // console.log(this.Stors.msgSave)
-      } else {
-        console.log('else')
-        // const obj = {
-        //   pid: this.getdataTable.pid,
-        // }
-        // console.log('obj', obj)
-        // await controlData.deleteUser(obj)
-        // console.log(this.Stors.msgSave)
+    save() {
 
-        this.user.push(this.getdataTable)
-      }
     },
   },
 }
