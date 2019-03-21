@@ -62,10 +62,6 @@
             </v-toolbar-items>
         </v-toolbar>
         <v-card>
-            <v-card-title>
-                <span class="blue--text subheadline">{{ formTitle }}</span>
-            </v-card-title>
-
             <v-card-text>
                 <v-container grid-list-md>
                     <v-layout wrap>
@@ -181,9 +177,6 @@ export default {
     },
   }),
   computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    },
   },
   watch: {
     dialog(val) {
