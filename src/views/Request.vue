@@ -30,7 +30,7 @@
                                         </td>
 
                                         <td class="text-xs-center">
-                                           <v-btn icon>
+                                          <v-btn icon>
                                             <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
                                             </v-btn>
                                         </td>

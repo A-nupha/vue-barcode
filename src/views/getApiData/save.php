@@ -27,6 +27,7 @@ $username = "id3526601_anupha";
 $password = "ok223201";
 $dbname = "id3526601_projest_vue_barcode";
 
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
