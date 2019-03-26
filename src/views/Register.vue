@@ -109,6 +109,14 @@
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
+                <v-layout>
+                  <v-combobox
+                    v-model="select"
+                    :items="items"
+                    chips
+                    label="I use chips"
+                  ></v-combobox>
+                </v-layout>
               <v-layout wrap>
               <v-flex xs12>
 
