@@ -1,15 +1,26 @@
 <template>
   <div>
     <v-layout>
-      <v-flex xs10>
-        <v-text-field prepend-icon=" " label="barcode" v-model="databarcode" />
-      </v-flex>
       <!-- {{dialogScan}}
       {{databarcode}} -->
-      {{dataScan}}
-      <v-btn icon @click="openQuagga()">
+      <!-- {{dataScan}} -->
+      <!-- <v-btn icon @click="openQuagga()">
         <v-icon color="blue">mdi-barcode-scan</v-icon>
-      </v-btn>
+      </v-btn> -->
+
+
+ <v-btn
+      large
+      block
+      color="blue-grey"
+      class="white--text"
+      @click="openQuagga()"
+    >
+      Scan
+      <v-icon right dark>mdi-barcode-scan</v-icon>
+    </v-btn>
+
+
     </v-layout>
 <v-dialog v-model="dialogScan"  fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-toolbar dark color="blue">
@@ -40,6 +51,11 @@
     </v-layout>
     <v-layout>
       <v-flex xs10>
+        <v-text-field prepend-icon=" " label="Name" v-model="name" />
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs10>
         <v-text-field prepend-icon=" " v-model="price" suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
       </v-flex>
     </v-layout>
@@ -55,10 +71,19 @@
     </v-layout>
     <v-layout>
       <v-flex xs10>
+        <v-combobox
+          v-model="select"
+          :items="items"
+          prepend-icon=" "
+          label="Event"
+        ></v-combobox>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs10>
         <v-textarea prepend-icon=" " v-model="detailItems" box name="input-7-4" label="Description" auto-grow></v-textarea>
       </v-flex>
     </v-layout>
-    
             </v-flex>
           </v-layout>
         </v-card-actions>
@@ -72,7 +97,7 @@ import {
   QuaggaScanner,
 } from 'vue-quaggajs';
 import Quagga from 'quagga';
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
 import { sync } from 'vuex-pathify'
 import store from '../store/store'
 
@@ -82,6 +107,12 @@ export default {
   name: 'VueBarcodeTest',
   data() {
     return {
+      select: 'ขาย',
+      items: [
+        'ขาย',
+        'สูญหาย',
+        'ชำรุด',
+      ],
       cost: null,
       price: null,
       qty: null,
@@ -107,7 +138,7 @@ export default {
   },
   methods: {
     bottonNext() {
-      this.$router.push(`/${  this.items[indexMenu].click}`)
+      this.$router.push(`/${this.items[indexMenu].click}`)
     },
     putdata() {
       const databarcode = this.databarcode
@@ -117,6 +148,8 @@ export default {
       const obj = {
         databarcode: this.databarcode,
         qty: this.qty,
+        name: this.name,
+        Event: this.select,
         detailItems: this.detailItems,
         price: this.price,
         cost: this.cost,

@@ -32,7 +32,7 @@
               <img src="https://image.ibb.co/mwBrhf/13123.jpg">
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>A-nupha.sup</v-list-tile-title>
+              <v-list-tile-title>{{userName}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -75,6 +75,7 @@ import request from './views/Request.vue'
 import Register from './views/Register.vue'
 import chart from './views/Chart.vue'
 import User from './views/User.vue'
+import Stork from './views/CheckStork.vue'
 
 // import LineChart from './lineChart'
 // import SnackBar from './views/SnackBar.vue'
@@ -116,6 +117,7 @@ export default {
     moment,
     Register,
     User,
+    Stork,
 
   },
   mounted() {
@@ -130,6 +132,7 @@ export default {
       if (this.login === 'LoginApp') { this.z = 'LoginApp' }
       if (this.login === 'chart') { this.z = 'chart' }
       if (this.login === 'User') { this.z = 'User' }
+      if (this.login === 'Stork') { this.z = 'Stork' }
     },
   },
   methods: {
@@ -138,6 +141,7 @@ export default {
       store.state.passWord = null
       const menu = 'LoginApp'
       this.setDataLogin(menu);
+      this.$store.commit('resetState');
     },
     ...mapActions({
       setDataLogin: 'getApi/setDataLogin',

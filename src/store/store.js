@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import getApi from './modules/getApi'
 import pathify from "vuex-pathify"
 import { make } from "vuex-pathify"
-pathify.options.mapping = "simple"
+import getApi from './modules/getApi'
 
-const staticState = {
+pathify.options.mapping = 'simple'
+
+const getDefaultState = () => ({
   userName: null,
   passWord: null,
   dataSelect: [],
@@ -15,21 +16,15 @@ const staticState = {
   msgErrorLogin: null,
   msgSave: null,
   dataUserApi: [],
-}
-console.log(staticState)
+})
+console.log(getDefaultState)
 
-// initial state
-const state = Object.assign(staticState)
-// console.log(staticState.msgLogin)
+const state = Object.assign(getDefaultState())
 
 const mutations = make.mutations(state)
 const resetMutation = {
   resetState(state) {
     Object.assign(state, getDefaultState());
-    // state = {
-    //   ...state,
-    //   ...getDefaultState()
-    // }
   },
 }
 Object.assign(mutations, resetMutation);

@@ -17,7 +17,7 @@ header('Content-type: application/json');
    $rcode_id = $_POST['rcode_id'];
    $index1 = $_POST['index1'];
    $index2 = $_POST['index2'];
-//    $index2 = $_POST['index2'];
+   $role_id = $_POST['role_id'];
 
 
 
@@ -47,9 +47,8 @@ if ($result->num_rows > 0) {
     // }
       echo 'false';
 } else {
-   //  insert data
-   $query = "insert into user(pid,fname,lname,tname,bdate,email,tel, flag_id, now_date,rcode_id,index1,index2,branch_id) values 
-   ($pid,'".$fname."','".$lname."','".$tname."','".$bdate."','".$email."','".$tel."', '".$flag_id."', '".$now_date."','".$rcode_id."','".$index1."','".$index2."','".$branch_id."')";
+   $query = "insert into user(pid,fname,lname,tname,bdate,email,tel, flag_id, now_date,rcode_id,index1,index2,branch_id,role_id) values 
+   ($pid,'".$fname."','".$lname."','".$tname."','".$bdate."','".$email."','".$tel."', '".$flag_id."', '".$now_date."','".$rcode_id."','".$index1."','".$index2."','".$branch_id."','".$role_id."')";
    $result = $conn->query($query);
    echo json_encode($result);
 }

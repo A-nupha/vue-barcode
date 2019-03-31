@@ -14,8 +14,6 @@
               <form @submit.prevent="onSignup">
                 <v-layout row>
                   <v-flex xs12>
-                    <!-- <v-select class="selectTest" :items="items">
-                    </v-select> -->
                     <v-text-field
                       prepend-icon="mdi-account-box"
                       name="Username"
@@ -109,14 +107,13 @@
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
-                <v-layout>
-                  <v-combobox
-                    v-model="select"
-                    :items="items"
-                    chips
-                    label="I use chips"
-                  ></v-combobox>
-                </v-layout>
+                <!-- <v-layout>
+                   <v-combobox
+                      v-model="select"
+                      :items="items"
+                      label="Select a favorite activity or create a new one"
+                    ></v-combobox>
+                </v-layout> -->
               <v-layout wrap>
               <v-flex xs12>
 
@@ -163,11 +160,12 @@
       <v-dialog v-model="snackฺฺฺBarBool" persistent max-width="400px">
         <v-card>
           <v-flex>
-           <v-card-title
+          <v-card-title
           :class='color'
           primary-title
           flat>
-           <v-icon class="mr-3" color="white">mdi-information</v-icon> <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
+          <v-icon class="mr-3" color="white">mdi-information</v-icon>
+          <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
         </v-card-title>
           <v-card-title>
             <v-layout justify-center><span class="headline">{{msgSnackBar}}</span></v-layout>
@@ -175,8 +173,8 @@
           </v-flex>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="snackฺฺฺBarBool = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="snackฺฺฺBarBool = false">Save</v-btn>
+            <v-btn color="blue darken-1" flat @click="success()">Close</v-btn>
+            <!-- <v-btn color="blue darken-1" flat @click="snackฺฺฺBarBool = false">Save</v-btn> -->
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -270,6 +268,7 @@ export default {
         flag_id: this.select,
         now_date: this.nowDate,
         rcode_id: this.branch,
+        role_id: this.select,
       }
       console.log('obj', obj)
       await controlData.save(obj)
@@ -278,20 +277,24 @@ export default {
       await this.awitData()
     },
     awitData() {
-      if (store.state.msgSave == false) {
+      if (Boolean(store.state.msgSave) === false) {
         console.log('msgErrorLogin', store.state.msgSave)
         this.loadingbtn = false
         this.snackฺฺฺBarBool = true
         this.msgSnackBar = 'unsuccessful'
         this.color = 'red'
       } else {
-        console.log('msgSave', store.state.msgSave)
+        // console.log('msgSave', store.state.msgSave)
         this.loadingbtn = false
         this.snackฺฺฺBarBool = true
         this.msgSnackBar = 'success'
         this.color = 'green'
-        
       }
+    },
+    success() {
+      this.snackฺฺฺBarBool = false
+      const menu = 'Menu'
+      this.setDataLogin(menu);
     },
   },
 }

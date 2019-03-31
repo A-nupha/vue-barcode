@@ -44,7 +44,6 @@
                         <v-icon style="font-size:100px;">mdi-account-edit</v-icon>
                         <p class="text-xs-center menuLabel">edit user</p>
               </v-card></v-flex>
-              
                 </v-form>
               </v-card>
             </v-container>
@@ -52,7 +51,6 @@
         </v-layout>
       </v-container>
       </v-content>
-             </v-flex>
     </v-flex>
     <v-flex v-else>
     <v-content>
@@ -81,9 +79,8 @@
                         </div>
                         <v-icon style="font-size:100px;">mdi-truck</v-icon>
                         <p class="text-xs-center menuLabel">ADD</p>
-
               </v-card>
-             </v-flex>
+              </v-flex>
                     <v-flex xs6 pa-2>
                       <v-card
                         dark
@@ -140,6 +137,41 @@
                       </v-card>
                     </v-flex>
                   </v-layout>
+
+
+
+
+
+                  <v-layout wrap>
+                    <v-flex xs12 pa-2>
+                      <v-card
+                        dark
+                        color="#1565C0"
+                        class="text-xs-center menuCard"
+                        clickable
+                        style="position:relative;"
+                        @click.native="click=setStork()"
+                        height="100%"
+                      >
+                        <div class="background-icon">
+                          <v-icon class="icon">mdi-calendar-edit</v-icon>
+                        </div>
+                        <v-icon style="font-size:100px;">mdi-calendar-edit</v-icon>
+                        <p class="text-xs-center menuLabel">Check Stork</p>
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+
+
+
+
+
+
+
+
+
+
+
                 </v-form>
               </v-card>
             </v-container>
@@ -158,7 +190,7 @@ import {
 import {
   sync,
 } from 'vuex-pathify'
-import store from '../store/store'
+// import store from '../store/store'
 
 export default {
   data() {
@@ -193,6 +225,10 @@ export default {
     },
     setUser() {
       const menu = 'User'
+      this.setDataLogin(menu);
+    },
+    setStork() {
+      const menu = 'Stork'
       this.setDataLogin(menu);
     },
   },

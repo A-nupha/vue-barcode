@@ -28,7 +28,8 @@
                                                 <v-icon color="orange"
                                                 @click="editItem(props.item)">mdi-pencil</v-icon>
                                             </v-btn>
-                                            <v-dialog v-model="dialog" fullscreen>
+                                            <v-dialog v-model="dialog" fullscreen hide-overlay
+                                            transition="dialog-bottom-transition">
                                                 <v-toolbar dark color="blue">
                                                     <v-spacer></v-spacer>
                                                     <v-toolbar-items>
@@ -79,6 +80,12 @@
                                                     </v-card-actions>
                                                 </v-card>
                                             </v-dialog>
+                                        </td>
+                                        <td>
+                                          <v-btn slot="activator" icon>
+                                                <v-icon color="red"
+                                                >mdi-delete</v-icon>
+                                            </v-btn>
                                         </td>
                                     </template>
                                 </v-data-table>
@@ -146,6 +153,7 @@ export default {
     controlData.search().then((response) => {
       const retData = response.data
       this.Store.dataUserApi = retData
+      console.log('daTAaPIsERCH', this.Store.dataUserApi)
       for (let i = 0; i < this.Store.dataUserApi.length; i += 1) {
         this.$set(this.Store.dataUserApi, i, {
           ...this.Store.dataUserApi[i],

@@ -27,9 +27,9 @@ const funcs = {
       const api = 'https://a-nuphasupit58.000webhostapp.com/php/select.php';
       Axios.get(api)
         .then((response) => {
-          // const retData = response.data
-          // console.log('value', retData)
-          // store.state.dataSelect = retData
+          const retData = response.data
+          console.log('value', retData)
+          store.state.dataSelect = retData
           resolve(response);
           console.log(response)
         // retData.forEach((value) => {
@@ -65,7 +65,7 @@ const funcs = {
     params.append('flag_id', data.flag_id)
     params.append('now_date', data.now_date)
     params.append('rcode_id', data.rcode_id)
-    // params.append('tel', data.tel)
+    params.append('role_id', data.role_id)
 
     // console.log('params', params.toString())
     const response = await Axios.post(api, params)

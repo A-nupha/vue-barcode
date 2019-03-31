@@ -109,6 +109,7 @@ export default {
       // console.log('store.state.msgLogin', store.state.msgLogin.)
       if (store.state.msgLogin[0].index1 == userName) {
         // alert('ถูกต้อง')
+        console.log('data login', store.state.msgLogin)
         const menu = 'Menu'
         this.setDataLogin(menu);
         this.loading = false

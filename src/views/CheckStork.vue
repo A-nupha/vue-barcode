@@ -10,7 +10,7 @@
                                 <v-toolbar flat color="white">
                                     <v-toolbar-title>
                                         <v-flex xs12 subheader class="blue--text" ma-1>
-                                            การแจ้งสินค้ามีปัญหา
+                                            Stork
                                         </v-flex>
                                     </v-toolbar-title>
                                     <v-divider class="mx-2" inset vertical></v-divider>
@@ -23,16 +23,14 @@
                                         <td class="text-xs-center">{{ props.item.carbs }}</td>
                                         <td class="text-xs-center">
                                             <v-btn icon>
-                                            <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon>
+                                                <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon>
                                             </v-btn>
                                         </td>
-
                                         <td class="text-xs-center">
-                                          <v-btn icon>
-                                            <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
+                                            <v-btn icon>
+                                                <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
                                             </v-btn>
                                         </td>
-
 
                                     </template>
                                     <template slot="no-data">
@@ -48,12 +46,10 @@
         </v-container>
     </v-content>
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-
         <v-toolbar dark color="blue">
             <v-btn slot="activator" color="blue" dark class="mb-2">
                 <v-icon>mdi-close</v-icon>
             </v-btn>
-
             <v-spacer></v-spacer>
             <v-toolbar-items>
                 <v-btn dark flat @click="dialog = false;save()">Save</v-btn>
@@ -73,7 +69,7 @@
                             <v-text-field disabled v-model="editedItem.fat" label="Status"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field  v-model="editedItem.carbs" label="Quanity"></v-text-field>
+                            <v-text-field v-model="editedItem.carbs" label="Quanity"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
                             <v-text-field disabled v-model="editedItem.protein" label="Name"></v-text-field>
@@ -88,30 +84,22 @@
             </v-card-actions>
         </v-card>
     </v-dialog>
-    <v-snackbar
-    :vertical="true"
-    v-model="snackฺฺฺBarBool"
-    color="orange"
-    :timeout="timeout"
-    bottom>
-    <v-flex >{{msgSnackBar}}</v-flex>
-    <v-layout><v-flex><v-btn
-        color="white"
-        flat
-        @click="snackฺฺฺBarBool = false "
-      >
-        no
-      </v-btn></v-flex>
-    <v-flex><v-btn
-        color="white"
-        flat
-        @click="deleteItemS()"
-      >
-        yes
-      </v-btn></v-flex></v-layout>
+    <v-snackbar :vertical="true" v-model="snackฺฺฺBarBool" color="orange" :timeout="timeout" bottom>
+        <v-flex>{{msgSnackBar}}</v-flex>
+        <v-layout>
+            <v-flex>
+                <v-btn color="white" flat @click="snackฺฺฺBarBool = false ">
+                    no
+                </v-btn>
+            </v-flex>
+            <v-flex>
+                <v-btn color="white" flat @click="deleteItemS()">
+                    yes
+                </v-btn>
+            </v-flex>
+        </v-layout>
 
-
-  </v-snackbar>
+    </v-snackbar>
 </div>
 </template>
 
@@ -178,8 +166,7 @@ export default {
       protein: 0,
     },
   }),
-  computed: {
-  },
+  computed: {},
   watch: {
     dialog(val) {
       val || this.close()
@@ -191,9 +178,9 @@ export default {
   methods: {
     ...mapActions({
       // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
-      setDataLogin: 'getApi/setDataLogin' 
-}),
-      
+      setDataLogin: 'getApi/setDataLogin',
+    }),
+
     initialize() {
       this.desserts = [{
         Barcode: '12345678910115',
