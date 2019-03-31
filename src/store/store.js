@@ -16,11 +16,10 @@ const getDefaultState = () => ({
   msgErrorLogin: null,
   msgSave: null,
   dataUserApi: [],
+  editUser: null,
 })
 console.log(getDefaultState)
-
 const state = Object.assign(getDefaultState())
-
 const mutations = make.mutations(state)
 const resetMutation = {
   resetState(state) {

@@ -20,7 +20,7 @@
                                 rows-per-page-text="จำนวนต่อหน้า"
                                 class="elevation-1">
                                     <template slot="items" slot-scope="props">
-                                        <td class="text-xs-center"> {{props.item.index2Edit}}</td>
+                                        <td class="text-xs-center"> {{props.item.index1}}</td>
                                         <td class="text-xs-center">{{ props.item.fname }}</td>
                                         <td class="text-xs-center">{{ props.item.branch_id }}</td>
                                         <td class="text-xs-center">
@@ -34,6 +34,7 @@
                                                     <v-spacer></v-spacer>
                                                     <v-toolbar-items>
                                                         <v-btn dark flat
+                                                        :loading="loading"
                                                         @click="save()">Save</v-btn>
                                                     </v-toolbar-items>
                                                 </v-toolbar>
@@ -84,6 +85,7 @@
                                         <td>
                                           <v-btn slot="activator" icon>
                                                 <v-icon color="red"
+                                                @click="deleteUser(props.item)"
                                                 >mdi-delete</v-icon>
                                             </v-btn>
                                         </td>
@@ -96,7 +98,43 @@
             </v-layout>
         </v-container>
     </v-content>
-    {{Store.dataUserApi}}
+     <v-snackbar
+    :vertical="true"
+    v-model="Store.editUser"
+    color="orange"
+    :timeout="timeout"
+    bottom>
+    <v-flex headline>{{snackฺฺฺBar}}</v-flex>
+    <v-btn
+        color="pink"
+        flat
+        @click="Store.editUser = false"
+      >
+        Close
+      </v-btn>
+  </v-snackbar>
+   <v-snackbar
+    :vertical="true"
+    v-model="Snac"
+    color="orange"
+    :timeout="timeout"
+    bottom>
+    <v-flex headline>{{snackฺฺฺBarBool}}</v-flex>
+    <v-layout><v-flex><v-btn
+        color="white"
+        flat
+        @click="Snac = false "
+      >
+        no
+      </v-btn></v-flex>
+    <v-flex><v-btn
+        color="white"
+        flat
+        @click="deleteItemS()"
+      >
+        yes
+      </v-btn></v-flex></v-layout>
+  </v-snackbar>
 </div>
 </template>
 
@@ -108,12 +146,16 @@ export default {
   components: {},
   data() {
     return {
+      loading: false,
+      Snac: false,
+      getdataTable: [],
       Store: this.$store.state,
       timeout: 10000,
       index: '',
       confirm: false,
+      snackฺฺฺBar: '',
       snackฺฺฺBarBool: '',
-      msgSnackBar: '',
+      msgSnackBar: 'success',
       dialog: false,
       headers: [{
         text: 'User',
@@ -148,8 +190,9 @@ export default {
     }
   },
   computed: {},
-  watch: {},
-  created() {
+  watch: {
+  },
+  mounted() {
     controlData.search().then((response) => {
       const retData = response.data
       this.Store.dataUserApi = retData
@@ -167,17 +210,38 @@ export default {
       console.log(this.Store.dataUserApi)
     });
   },
+  created() {
+
+  },
   methods: {
     editItem(value) {
-      console.log('เข้า', value.indexLog);
+      // console.log('เข้า', value.indexLog);
       this.index = value
       this.dialog = true
+      // await controlData.save(obj)
     },
-    save() {
-      console.log('this.Store.dataUserApi[this.index.indexLog].index2Edit=>', this.Store.dataUserApi[this.index.indexLog])
+    async save() {
+      this.loading = true
       this.Store.dataUserApi[this.index.indexLog].index2Edit = this.index.index2Edit
-      console.log('this.Store.dataUserApi[this.index.indexLog].index2Edit=>', this.Store.dataUserApi[this.index.indexLog])
+      const obj = {
+        pid: this.Store.dataUserApi[this.index.indexLog].pid,
+        Password: this.Store.dataUserApi[this.index.indexLog].index2Edit,
+      }
+      console.log('obj', obj)
+      await controlData.editUser(obj)
+      this.loading = false
+      this.snackฺฺฺBar = 'success'
       this.dialog = false;
+    },
+    deleteUser(item) {
+      this.getdataTable = item
+      this.snackฺฺฺBarBool = 'Are you sure you want to delete this User?'
+      this.Snac = true
+    },
+    deleteItemS() {
+      const index = this.Store.dataUserApi.indexOf(this.getdataTable)
+      this.Store.dataUserApi.splice(index, 1)
+      this.Snac = false
     },
   },
 }

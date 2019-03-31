@@ -26,14 +26,11 @@
                                             <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon>
                                             </v-btn>
                                         </td>
-
                                         <td class="text-xs-center">
                                           <v-btn icon>
                                             <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
                                             </v-btn>
                                         </td>
-
-
                                     </template>
                                     <template slot="no-data">
                                         <v-btn color="primary" @click="initialize">

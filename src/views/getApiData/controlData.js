@@ -6,6 +6,18 @@ import store from '../../store/store'
 
 const funcs = {
 
+  async editUser(data) {
+    console.log(data.pid, data.Password, 'test')
+    var api = 'https://a-nuphasupit58.000webhostapp.com/php/deleteuser.php';
+    var params = new URLSearchParams();
+    params.append('pid', data.pid)
+    params.append('index2', data.Password)
+    const response = await Axios.post(api, params)
+    // eslint-disable-next-line no-unused-vars
+    store.state.editUser = response.data
+    console.log(response.data, 'test')
+  },
+
   async login(userName, passWord) {
     console.log('data', userName);
     // eslint-disable-next-line no-var
