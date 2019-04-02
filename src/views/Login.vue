@@ -43,7 +43,7 @@
   </div>
 </template>
 <script>
-
+import Axios from 'axios';
 import {
   mapActions,
 } from 'vuex'
@@ -52,6 +52,7 @@ import {
 } from 'vuex-pathify'
 import controlData from './getApiData/controlData'
 import store from '../store/store'
+
 
 export default {
   name: 'Login',
@@ -82,12 +83,95 @@ export default {
         index1: '1234',
         index2: '1234',
       },
+      desserts: [
+        {
+          name: 'Frozen Yogurt',
+          calories: 159,
+          fat: 6.0,
+          carbs: 24,
+          protein: 4.0,
+          iron: '1%',
+        },
+        {
+          name: 'Ice cream sandwich',
+          calories: 237,
+          fat: 9.0,
+          carbs: 37,
+          protein: 4.3,
+          iron: '1%',
+        },
+        {
+          name: 'Eclair',
+          calories: 262,
+          fat: 16.0,
+          carbs: 23,
+          protein: 6.0,
+          iron: '7%',
+        },
+        {
+          name: 'Cupcake',
+          calories: 305,
+          fat: 3.7,
+          carbs: 67,
+          protein: 4.3,
+          iron: '8%',
+        },
+        {
+          name: 'Gingerbread',
+          calories: 356,
+          fat: 16.0,
+          carbs: 49,
+          protein: 3.9,
+          iron: '16%',
+        },
+        {
+          name: 'Jelly bean',
+          calories: 375,
+          fat: 0.0,
+          carbs: 94,
+          protein: 0.0,
+          iron: '0%',
+        },
+        {
+          name: 'Lollipop',
+          calories: 392,
+          fat: 0.2,
+          carbs: 98,
+          protein: 0,
+          iron: '2%',
+        },
+        {
+          name: 'Honeycomb',
+          calories: 408,
+          fat: 3.2,
+          carbs: 87,
+          protein: 6.5,
+          iron: '45%',
+        },
+        {
+          name: 'Donut',
+          calories: 452,
+          fat: 25.0,
+          carbs: 51,
+          protein: 4.9,
+          iron: '22%',
+        },
+        {
+          name: 'KitKat',
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7,
+          iron: '6%',
+        },
+      ],
     }
   },
   computed: {
     ...sync('*'),
   },
   created() {
+    this.insert()
     // controlData.search().then((response) => {
     //   let retData = response.data
     //   retData.forEach((k, v) => {
@@ -99,6 +183,37 @@ export default {
     // });
   },
   methods: {
+    async insert() {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/test.php';
+      const fromData = new FormData();
+      for (let i = 0; i < this.desserts.length; i++) {
+        fromData.append('data[]', JSON.stringify(this.desserts[i]))
+      }
+      await Axios.post(api, fromData)
+        .then((response) => {
+          console.log(response.data);
+        })
+    },
+
+
+    async getUser() {
+      // await controlData.search().then((response) => {
+      //   const retData = response.data
+      //   console.log('daTAaPIsERCH', retData)
+      //   for (let i = 0; i < retData.length; i += 1) {
+      //
+      //   //   this.$set(this.Store.dataUserApi, i, {
+      //   //     ...this.Store.dataUserApi[i],
+      //   //     indexLog: i,
+      //   //   })
+      //   //   this.$set(this.Store.dataUserApi, i, {
+      //   //     ...this.Store.dataUserApi[i],
+      //   //     index2Edit: this.Store.dataUserApi[i].index2,
+      //   //   })
+      //   }
+      //   // console.log(this.Store.dataUserApi)
+      // });
+    },
     async login() {
       this.loading = true
       const userName = store.state.userName
@@ -107,18 +222,19 @@ export default {
       console.log(passWord)
       await controlData.login(userName, passWord)
       // console.log('store.state.msgLogin', store.state.msgLogin.)
-      if (store.state.msgLogin[0].index1 == userName) {
+      if (store.state.dataLogin[0].index1 == userName) {
         // alert('ถูกต้อง')
-        console.log('data login', store.state.msgLogin)
+        console.log('data login', store.state.dataLogin)
         const menu = 'Menu'
         this.setDataLogin(menu);
+        this.getUser()
         this.loading = false
-      } if (store.state.msgLogin == 'password is incorrect') {
+      } if (String(store.state.dataLogin) === 'password is incorrect') {
         const textmsg = 'รหัสผ่านไม่ถูกต้อง'
         const boolmsg = true
         this.msgSnackBar = textmsg
         this.snackฺฺฺBarBool = boolmsg
-        console.log(store.state.msgLogin)
+        console.log(store.state.dataLogin)
         // console.log(textmsg, boolmsg)
         this.loading = false
       }
@@ -127,7 +243,7 @@ export default {
       setDataLogin: 'getApi/setDataLogin',
     }),
     async setData(data) {
-      controlData.save(data) // เอาไว้เทสดาต้า
+      controlData.save(data)
       const menu = 'Menu'
       this.setDataLogin(menu);
       // await this.validatePassword()

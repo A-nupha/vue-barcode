@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 } 
 
 //chk pid
-$query = "SELECT index1 FROM user WHERE index1 = '$index1' And index2 = '$index2'";
+$query = "SELECT * FROM user WHERE index1 = '$index1' And index2 = '$index2'";
 $result = $conn->query($query);
 
 $response = array();

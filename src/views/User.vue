@@ -22,7 +22,7 @@
                                     <template slot="items" slot-scope="props">
                                         <td class="text-xs-center"> {{props.item.index1}}</td>
                                         <td class="text-xs-center">{{ props.item.fname }}</td>
-                                        <td class="text-xs-center">{{ props.item.branch_id }}</td>
+                                        <td class="text-xs-center">{{ props.item.rcode_id }}</td>
                                         <td class="text-xs-center">
                                             <v-btn slot="activator" icon>
                                                 <v-icon color="orange"
@@ -97,6 +97,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
+        <!-- {{Store.dataUserApi}} -->
     </v-content>
      <v-snackbar
     :vertical="true"
@@ -113,17 +114,18 @@
         Close
       </v-btn>
   </v-snackbar>
-   <v-snackbar
+
+  <v-snackbar
     :vertical="true"
-    v-model="Snac"
+    v-model="Store.SnacbarDeleteUser"
     color="orange"
     :timeout="timeout"
     bottom>
-    <v-flex headline>{{snackฺฺฺBarBool}}</v-flex>
+    <v-flex >{{snackฺฺฺBarBool}}</v-flex>
     <v-layout><v-flex><v-btn
         color="white"
         flat
-        @click="Snac = false "
+        @click="Store.SnacbarDeleteUser = false"
       >
         no
       </v-btn></v-flex>
@@ -135,6 +137,7 @@
         yes
       </v-btn></v-flex></v-layout>
   </v-snackbar>
+
 </div>
 </template>
 
@@ -234,14 +237,13 @@ export default {
       this.dialog = false;
     },
     deleteUser(item) {
-      this.getdataTable = item
+      this.Store.getdataTableDelte = item
       this.snackฺฺฺBarBool = 'Are you sure you want to delete this User?'
-      this.Snac = true
+      this.Store.SnacbarDeleteUser = true
     },
-    deleteItemS() {
-      const index = this.Store.dataUserApi.indexOf(this.getdataTable)
-      this.Store.dataUserApi.splice(index, 1)
-      this.Snac = false
+    async deleteItemS() {
+      console.log('this.getdataTable.pid', this.Store.getdataTableDelte.pid)
+      await controlData.deleteUser(this.Store.getdataTableDelte.pid)
     },
   },
 }

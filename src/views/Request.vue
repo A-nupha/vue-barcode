@@ -81,7 +81,6 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
-
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -106,8 +105,6 @@
       >
         yes
       </v-btn></v-flex></v-layout>
-
-
   </v-snackbar>
 </div>
 </template>

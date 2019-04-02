@@ -5,9 +5,22 @@ import Axios from 'axios';
 import store from '../../store/store'
 
 const funcs = {
+  async deleteUser(data) {
+    console.log(data, 'test')
+    var api = 'https://a-nuphasupit58.000webhostapp.com/php/deleteusers.php';
+    var params = new URLSearchParams();
+    params.append('pid', data)
+    const response = await Axios.post(api, params)
+    if (response.data === true) {
+      const index = store.state.dataUserApi.indexOf(store.state.getdataTableDelte)
+      store.state.dataUserApi.splice(index, 1)
+      store.state.SnacbarDeleteUser = false
+    } else {
+      console.log('response.data', response.data)
+    }
+  },
 
   async editUser(data) {
-    console.log(data.pid, data.Password, 'test')
     var api = 'https://a-nuphasupit58.000webhostapp.com/php/deleteuser.php';
     var params = new URLSearchParams();
     params.append('pid', data.pid)
@@ -31,7 +44,7 @@ const funcs = {
     console.log('params', passWord)
     const response = await Axios.post(api, params)
     // eslint-disable-next-line no-unused-vars
-    store.state.msgLogin = response.data
+    store.state.dataLogin = response.data
     console.log(response.data, 'js')
   },
   search() {
@@ -96,25 +109,7 @@ const funcs = {
     // }
   },
 
-  async deleteUser(data) {
-    console.log('data', data.pid)
-    var api = 'https://a-nuphasupit58.000webhostapp.com/php/deleteuser.php';
-    var params = new URLSearchParams();
-    params.append('pid', data.pid)
-    const response = await Axios.post(api, params)
-    store.state.msgSave = response.data
-    console.log('store.state.msgSave', store.state.msgSave)
-    // if (response.data === true) {
-    //   const msgSuscessLogin = (true);
-    //   store.state.msgLogin = msgSuscessLogin
-    //   // return 'บันทึกสำเร็จ'
-    // } if (response.data === false) {
-    //   const msgErrorLogin = (false);
-    //   store.state.msgErrorLogin = msgErrorLogin
-    //   // alert('บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล');
-    //   // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
-    // }
-  },
+  
 
 
 }

@@ -12,11 +12,14 @@ const getDefaultState = () => ({
   dataSelect: [],
   dataScan: [],
   msgLogin: null,
+  dataLogin: [],
   msgSuscessLogin: null,
   msgErrorLogin: null,
   msgSave: null,
   dataUserApi: [],
   editUser: null,
+  getdataTableDelte: null,
+  SnacbarDeleteUser: null,
 })
 console.log(getDefaultState)
 const state = Object.assign(getDefaultState())

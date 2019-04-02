@@ -108,8 +108,9 @@
                         color="#1565C0"
                         class="text-xs-center menuCard"
                         clickable
+                        :disabled="validateRole()"
                         style="position:relative;"
-                        @click.native="click=setMenuRequest()"
+                        @click="setMenuRequest()"
                         height="100%"
                       >
                         <div class="background-icon">
@@ -165,6 +166,7 @@
       </v-container>
     </v-content>
      </v-flex>
+     {{validateRole()}}
   </div>
 </template>
 
@@ -181,9 +183,13 @@ export default {
   data() {
     return {
       click: null,
+      Store: this.$store.state,
     }
   },
   mounted() {},
+  created() {
+    this.validateRole()
+  },
   computed: {
     ...sync('*'),
   },
@@ -192,6 +198,12 @@ export default {
       // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
       setDataLogin: 'getApi/setDataLogin',
     }),
+    validateRole() {
+      if (Number(this.Store.dataLogin.role_id) === 1) {
+        return false
+      }
+      return true
+    },
     setMenuRequest() {
       const menu = 'request'
       this.setDataLogin(menu);

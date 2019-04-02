@@ -35,9 +35,11 @@
   </div>
 </template>
 <script>
+
 import Scan from './Scan.vue'
 import Branch from './Branch.vue'
 import Syn from './Syn.vue'
+// import controlData from './getApiData/controlData'
 
 
 export default {
@@ -46,6 +48,7 @@ export default {
     return {
       active: 0,
       button: 'ถัดไป',
+      
     }
   },
   components: {
@@ -56,7 +59,7 @@ export default {
   },
   watch: {
     active() {
-      if (this.active == 2) {
+      if (Number(this.active) === 2) {
         this.button = 'บันทึก'
       } else {
         this.button = 'ถัดไป'
@@ -65,10 +68,10 @@ export default {
   },
   methods: {
     next() {
-      const active = parseInt(this.active);
-
-      if (this.active == 2) {
-        alert('5555')
+      const active = Number(this.active);
+      if (Number(this.active === 2)) {
+        // alert('5555')
+        
       } else {
         this.active = active + 1;
       }
