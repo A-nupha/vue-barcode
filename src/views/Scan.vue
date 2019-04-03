@@ -1,14 +1,9 @@
 <template>
   <div>
     <v-layout>
-      <!-- {{dialogScan}}
-      {{databarcode}} -->
-      <!-- {{dataScan}} -->
-      <!-- <v-btn icon @click="openQuagga()">
-        <v-icon color="blue">mdi-barcode-scan</v-icon>
-      </v-btn> -->
-
-
+<v-layout>
+  <v-flex ma-4>
+  <v-flex ma-5 pa-5>
  <v-btn
       large
       block
@@ -19,7 +14,9 @@
       Scan
       <v-icon right dark>mdi-barcode-scan</v-icon>
     </v-btn>
-
+    </v-flex>
+    </v-flex>
+</v-layout>
 
     </v-layout>
 <v-dialog v-model="dialogScan"  fullscreen hide-overlay transition="dialog-bottom-transition">
@@ -46,7 +43,7 @@
             <v-flex>
               <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Barcode" v-model="databarcode" />
+        <v-text-field type="number" prepend-icon=" " label="Barcode" v-model="databarcode" />
       </v-flex>
     </v-layout>
     <v-layout>
@@ -70,14 +67,17 @@
       </v-flex>
     </v-layout>
     <v-layout>
-      <v-flex xs10>
+      
+      <!-- <v-flex xs10>
         <v-combobox
+          disabled
           v-model="select"
           :items="items"
           prepend-icon=" "
           label="Event"
         ></v-combobox>
-      </v-flex>
+      </v-flex> -->
+    
     </v-layout>
     <v-layout>
       <v-flex xs10>
@@ -137,14 +137,13 @@ export default {
     ...sync('*'),
   },
   methods: {
-    bottonNext() {
-      this.$router.push(`/${this.items[indexMenu].click}`)
-    },
+    // bottonNext() {
+    //   this.$router.push(`/${this.items[indexMenu].click}`)
+    // },
     putdata() {
-      const databarcode = this.databarcode
-      const dataScan = this.$store.state.dataScan
-      console.log('databarcode', databarcode)
-      console.log('dataScan', dataScan);
+      // const databarcode = this.databarcode
+      // console.log('databarcode', databarcode)
+      // console.log('dataScan', dataScan);
       const obj = {
         databarcode: this.databarcode,
         qty: this.qty,
@@ -153,8 +152,9 @@ export default {
         detailItems: this.detailItems,
         price: this.price,
         cost: this.cost,
+
       }
-      dataScan.push(obj)
+      this.$store.state.dataScan.push(obj)
       this.dialogScan = false
     },
     openQuagga() {

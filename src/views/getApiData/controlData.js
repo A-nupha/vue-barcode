@@ -75,11 +75,7 @@ const funcs = {
     console.log('data', data.username)
     // eslint-disable-next-line no-var
     var api = 'https://a-nuphasupit58.000webhostapp.com/php/save.php';
-    // eslint-disable-next-line no-var
-
     var params = new URLSearchParams();
-    // params.append('bdate', data.bdate)
-
     params.append('index1', data.username)
     params.append('index2', data.password)
     params.append('email', data.email)
@@ -108,9 +104,27 @@ const funcs = {
     //   // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
     // }
   },
-
-  
-
-
+  async selectBranch(data) {
+    console.log('data==>branch', data);
+    // eslint-disable-next-line no-var
+    var api = 'https://a-nuphasupit58.000webhostapp.com/php/selectBranch.php';
+    // eslint-disable-next-line no-var
+    // eslint-disable-next-line vars-on-top
+    var params = new URLSearchParams();
+    params.append('branch_id', data)
+    const response = await Axios.post(api, params)
+    // eslint-disable-next-line no-unused-vars
+    store.state.dataBranch = response.data
+  },
+  async insertBranchName(data) {
+    console.log('insert==>branch', data);
+    var api = 'https://a-nuphasupit58.000webhostapp.com/php/insertBranchName.php';
+    var params = new URLSearchParams();
+    params.append('branch_id', data.branch)
+    params.append('branch_name', data.branchName)
+    const response = await Axios.post(api, params)
+    store.state.dataBranch = response.data
+  },
 }
+
 export default funcs

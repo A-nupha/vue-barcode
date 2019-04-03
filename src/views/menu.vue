@@ -59,9 +59,6 @@
           <v-flex class="grey lighten-4">
             <v-container>
               <v-card flat class="elevation-5">
-                <v-card-title primary-title>
-                  <v-flex class="blue--text" title><div>User : {{userName}}</div></v-flex>
-                </v-card-title>
                 <v-form>
                   <v-layout wrap>
                     <v-flex xs6 pa-2>
@@ -88,7 +85,7 @@
                         class="text-xs-center menuCard"
                         clickable
                         style="position:relative;"
-                        @click.native="click=setMenuTab()"
+                        @click.native="click=setdeleteStork()"
                         height="100%"
                       >
                         <div class="background-icon">
@@ -100,15 +97,14 @@
 
                     </v-flex>
                   </v-layout>
+                  <div v-if="validateRole() == false">
                   <v-layout wrap>
-
                     <v-flex xs6 pa-2>
                       <v-card
                         dark
                         color="#1565C0"
                         class="text-xs-center menuCard"
                         clickable
-                        :disabled="validateRole()"
                         style="position:relative;"
                         @click="setMenuRequest()"
                         height="100%"
@@ -138,6 +134,7 @@
                       </v-card>
                     </v-flex>
                   </v-layout>
+                  </div>
                   <v-layout wrap>
                     <v-flex xs12 pa-2>
                       <v-card
@@ -166,7 +163,7 @@
       </v-container>
     </v-content>
      </v-flex>
-     {{validateRole()}}
+     <!-- {{validateRole()}} -->
   </div>
 </template>
 
@@ -199,7 +196,8 @@ export default {
       setDataLogin: 'getApi/setDataLogin',
     }),
     validateRole() {
-      if (Number(this.Store.dataLogin.role_id) === 1) {
+      console.log(this.Store.dataLogin[0].role_id)
+      if (Number(this.Store.dataLogin[0].role_id) === 1) {
         return false
       }
       return true
@@ -226,6 +224,10 @@ export default {
     },
     setStork() {
       const menu = 'Stork'
+      this.setDataLogin(menu);
+    },
+    setdeleteStork() {
+      const menu = 'deleteStork'
       this.setDataLogin(menu);
     },
   },

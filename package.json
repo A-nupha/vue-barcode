@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
     "@cdglib/js-moi-xid": "^2.0.0",
+    "@cdglib/js-pdfmake-custom": "^2.2.10",
     "@cdglib/js-popst": "^0.1.5",
     "@cdglib/js-system-date": "^1.0.1",
     "@cdglib/js-title-print": "^0.1.15",

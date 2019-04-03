@@ -70,7 +70,7 @@ export default {
     next() {
       const active = Number(this.active);
       if (Number(this.active === 2)) {
-        // alert('5555')
+        alert('ยังไม่เสร็จ')
         
       } else {
         this.active = active + 1;
