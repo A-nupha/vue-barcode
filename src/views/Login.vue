@@ -182,14 +182,16 @@ export default {
     //   });
     // });
   },
+
   methods: {
     async insert() {
       const api = 'https://a-nuphasupit58.000webhostapp.com/php/test.php';
-      const fromData = new FormData();
-      for (let i = 0; i < this.desserts.length; i++) {
-        fromData.append('data[]', JSON.stringify(this.desserts[i]))
-      }
-      await Axios.post(api, fromData)
+      // const fromData = new FormData();
+      const Empparams = new URLSearchParams();
+      const az = JSON.stringify(this.desserts)
+      console.log('data', az)
+      Empparams.append('dataarr', az)
+      await Axios.post(api, Empparams)
         .then((response) => {
           console.log(response.data);
         })
