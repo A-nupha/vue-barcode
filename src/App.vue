@@ -7,9 +7,14 @@
     >
    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     <v-toolbar-title>
-      <!-- <v-flex>{{time}}</v-flex> -->
       <!-- <span>{{ moment().format('MMMM Do YYYY, h:mm:ss a') }}</span> -->
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-icon>mdi-account</v-icon>
+      <div>{{userName}}</div>
+      <v-btn icon>
+      <v-icon>mdi-dots-vertical</v-icon>
+    </v-btn>
    </v-toolbar>
    <!-- <LoginApp/> -->
    <transition name="component-fade" mode="out-in">
@@ -28,9 +33,11 @@
       >
         <v-list class="pa-1">
           <v-list-tile avatar>
-            <v-list-tile-avatar>
-              <img src="https://image.ibb.co/mwBrhf/13123.jpg">
-            </v-list-tile-avatar>
+            <!-- <v-list-tile-avatar> -->
+              <v-avatar color="blue">
+              <span class="white--text headline">{{String(userName).substring(0,1)}}</span>
+              </v-avatar>
+            <!-- </v-list-tile-avatar> -->
             <v-list-tile-content>
               <v-list-tile-title>{{userName}}</v-list-tile-title>
             </v-list-tile-content>
@@ -55,6 +62,7 @@
 
       </v-navigation-drawer>
     </v-layout>
+    
     <!-- <SnackBar/> -->
   </div>
 </template>
@@ -76,6 +84,7 @@ import Register from './views/Register.vue'
 import chart from './views/Chart.vue'
 import User from './views/User.vue'
 import Stork from './views/CheckStork.vue'
+import deleteStork from './views/deleteStock.vue'
 
 // import LineChart from './lineChart'
 // import SnackBar from './views/SnackBar.vue'
@@ -85,6 +94,7 @@ export default {
   name: 'Profile',
   data() {
     return {
+      Store: this.$store.state,
       z: 'LoginApp',
       tab: 'tab',
       active: null,
@@ -118,10 +128,9 @@ export default {
     Register,
     User,
     Stork,
-
+    deleteStork,
   },
   mounted() {
-
   },
   watch: {
     login() {
@@ -133,6 +142,7 @@ export default {
       if (this.login === 'chart') { this.z = 'chart' }
       if (this.login === 'User') { this.z = 'User' }
       if (this.login === 'Stork') { this.z = 'Stork' }
+      if (this.login === 'deleteStork') { this.z = 'deleteStork' }
     },
   },
   methods: {
@@ -147,8 +157,11 @@ export default {
       setDataLogin: 'getApi/setDataLogin',
     }),
     navigationtab() {
-      const menu = 'Menu'
-      this.setDataLogin(menu);
+      console.log('this.Store.dataLogin[0].rcode_id', this.Store.dataLogin[0].rcode_id)
+      if (this.Store.dataLogin[0].rcode_id !== null || this.Store.dataLogin[0] !== '') {
+        const menu = 'Menu'
+        this.setDataLogin(menu);
+      }
     },
   },
 }

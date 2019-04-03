@@ -21,17 +21,6 @@
                                         <td class="text-xs-center">{{ props.item.Barcode }}</td>
                                         <td class="text-xs-center">{{ props.item.fat }}</td>
                                         <td class="text-xs-center">{{ props.item.carbs }}</td>
-                                        <td class="text-xs-center">
-                                            <v-btn icon>
-                                                <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon>
-                                            </v-btn>
-                                        </td>
-                                        <td class="text-xs-center">
-                                            <v-btn icon>
-                                                <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
-                                            </v-btn>
-                                        </td>
-
                                     </template>
                                     <template slot="no-data">
                                         <v-btn color="primary" @click="initialize">
@@ -136,18 +125,18 @@ export default {
       align: 'center',
       sortable: false,
     },
-    {
-      text: 'Edit',
-      value: 'name',
-      sortable: false,
-      align: 'center',
-    },
-    {
-      text: 'Delete',
-      value: 'name',
-      sortable: false,
-      align: 'center',
-    },
+    // {
+    //   text: 'Edit',
+    //   value: 'name',
+    //   sortable: false,
+    //   align: 'center',
+    // },
+    // {
+    //   text: 'Delete',
+    //   value: 'name',
+    //   sortable: false,
+    //   align: 'center',
+    // },
     ],
     desserts: [],
     editedIndex: -1,

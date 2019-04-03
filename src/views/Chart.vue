@@ -11,7 +11,7 @@
 
 <script>
 import Raphael from 'raphael/raphael'
-
+// import cerprint from './cer.vue'
 
 import { DonutChart } from 'vue-morris'
 
@@ -20,6 +20,7 @@ global.Raphael = Raphael
 export default {
   name: 'VueChartJS',
   components: {
+    // cerprint,
     DonutChart,
   },
   data() {

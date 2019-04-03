@@ -9,21 +9,50 @@
       <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.databarcode }}</td>
+        <td class="text-xs-center">{{ props.item.name }}</td>
         <td class="text-xs-center">{{ props.item.qty }}</td>
-        <td class="text-xs-center">{{ props.item.detailItems }}</td>
+        <td><v-btn icon>
+            <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
+            </v-btn></td>
       </template>
     </v-data-table>
     {{dataScan}}
+    <v-snackbar
+    :vertical="true"
+    v-model="snackฺฺฺBarBool"
+    color="orange"
+    :timeout="timeout"
+    bottom>
+    <v-flex >{{msgSnackBar}}</v-flex>
+    <v-layout><v-flex><v-btn
+        color="white"
+        flat
+        @click="snackฺฺฺBarBool = false "
+      >
+        no
+      </v-btn></v-flex>
+    <v-flex><v-btn
+        color="white"
+        flat
+        @click="deleteItemS()"
+      >
+        yes
+      </v-btn></v-flex></v-layout>
+  </v-snackbar>
     </div>
 </template>
 <script>
 import { sync } from 'vuex-pathify'
-import controlData from './getApiData/controlData.js'
-import store from '../store/store'
+// import controlData from './getApiData/controlData.js'
+// import store from '../store/store'
 
 export default {
   data() {
     return {
+      Store: this.$store.state,
+      msgSnackBar: '',
+      snackฺฺฺBarBool: false,
+      getdataTable: [],
       headers: [
         {
           text: 'Barcode',
@@ -31,76 +60,40 @@ export default {
           sortable: false,
           value: 'name',
         },
-        { text: 'QTY', value: 'calories', align: 'center' },
-        { text: 'Delete', value: 'calories', align: 'center' },
-       
-      ],
-      desserts: [
         {
-          value: false,
-          name: '8851019010137',
-          calories: 2,
-         
+          text: 'name', value: 'calories', align: 'center', sortable: false,
         },
         {
-          value: false,
-          name: '8854747474747',
-          calories: 1,
-        
+          text: 'QTY', value: 'calories', align: 'center', sortable: false,
         },
         {
-          value: false,
-          name: '8854747854037',
-          calories: 1,
-         
-        },
-        {
-          value: false,
-          name: '8851019010137',
-          calories: 3,
-        
-        },
-        {
-          value: false,
-          name: '8851019010137',
-          calories: 1,
-      
-        },
-        {
-          value: false,
-          name: '8851019010137',
-          calories: 375,
-      
-        },
-        {
-          value: false,
-          name: '8851019010137',
-          calories: 392,
-       
-        },
-        {
-          value: false,
-          name: '8851019010137',
-          calories: 408,
-        
-        },
-        {
-          value: false,
-          name: '8851019010137',
-          calories: 452,
-        
-        },
-        {
-          value: false,
-          name: '8851019010137',
-          calories: 518,
-         
+          text: 'Delete', value: 'calories', align: 'center', sortable: false,
         },
       ],
     }
   },
   computed: {
     ...sync('*'),
+  },
+  created() {
+    this.addIndex()
+  },
+  methods: {
+    addIndex() {
+      for (let i = 0; i < this.Store.dataScan.length; i += 1) {
+        this.$set(this.Store.dataScan, i, { ...this.Store.dataScan[i], index: i })
+      }
+    },
+    deleteItem(item) {
+      this.getdataTable = item
+      this.msgSnackBar = 'Are you sure you want to delete this item?'
+      this.snackฺฺฺBarBool = true
+    },
+    deleteItemS() {
+      const index = this.Store.dataScan.indexOf(this.getdataTable)
+      this.Store.dataScan.splice(index, 1)
+      this.snackฺฺฺBarBool = false
+    },
   },
 
 }

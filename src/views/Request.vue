@@ -23,7 +23,8 @@
                                         <td class="text-xs-center">{{ props.item.carbs }}</td>
                                         <td class="text-xs-center">
                                             <v-btn icon>
-                                            <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon>
+                                            <v-icon color="green" @click="Confirm(props.item)">mdi-check</v-icon>
+                                            <!-- <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon> -->
                                             </v-btn>
                                         </td>
                                         <td class="text-xs-center">
@@ -44,13 +45,11 @@
             </v-layout>
         </v-container>
     </v-content>
-    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-
+    <!-- <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-toolbar dark color="blue">
             <v-btn slot="activator" color="blue" dark class="mb-2">
                 <v-icon>mdi-close</v-icon>
             </v-btn>
-
             <v-spacer></v-spacer>
             <v-toolbar-items>
                 <v-btn dark flat @click="dialog = false;save()">Save</v-btn>
@@ -83,7 +82,7 @@
                 <v-btn color="blue darken-1" flat @click="close">Cancel</v-btn>
             </v-card-actions>
         </v-card>
-    </v-dialog>
+    </v-dialog> -->
     <v-snackbar
     :vertical="true"
     v-model="snackฺฺฺBarBool"
@@ -226,10 +225,8 @@ export default {
       },
       ]
     },
-    editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
+    Confirm() {
+      alert('ยังไม่เสร็จ')
     },
     deleteItem(item) {
       this.getdataTable = item

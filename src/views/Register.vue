@@ -11,7 +11,7 @@
         <v-card>
           <v-card-text>
             <v-container>
-              <form @submit.prevent="onSignup">
+              <form>
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
@@ -37,9 +37,7 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon= "mdi-alert-octagon"
-
                       label="Validate Password"
-
                       v-model="confirmPassword"
                       type="password"
                       :rules="[comparePasswords]"></v-text-field>
@@ -49,9 +47,7 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon="mdi-email"
-
                       label="Your E-mail"
-
                       v-model="email"
                       type="email"
                       required></v-text-field>
@@ -73,9 +69,7 @@
                   <v-flex xs12>
                     <v-text-field
                       prepend-icon=" "
-
                       label="LastName"
-
                       v-model="lname"
                       type="text"
                       required></v-text-field>
@@ -85,11 +79,8 @@
                   <v-flex xs12>
                     <v-text-field
                     prepend-icon="mdi-account-card-details"
-
                       label="Pid"
-
                       v-model="pid"
-
                       mask="#-####-#####-##-#"
                       required></v-text-field>
                   </v-flex>
@@ -98,22 +89,21 @@
                   <v-flex xs12>
                     <v-text-field
                     prepend-icon="mdi-account-card-details"
-
                       label="id branch"
-
                       v-model="branch"
-
-                      mask="##"
+                      mask="####"
                       required></v-text-field>
                   </v-flex>
                 </v-layout>
-                <!-- <v-layout>
-                   <v-combobox
-                      v-model="select"
-                      :items="items"
-                      label="Select a favorite activity or create a new one"
-                    ></v-combobox>
-                </v-layout> -->
+                <v-layout>
+                  <v-flex>
+                 <v-text-field
+                    prepend-icon="mdi-account-card-details"
+                      label="Name branch"
+                      v-model="branchName"
+                      required></v-text-field>
+                  </v-flex>
+                </v-layout>
               <v-layout wrap>
               <v-flex xs12>
 
@@ -134,9 +124,8 @@
               <v-layout ma-0>
                   <v-flex xs12 ma-0>
                     <v-btn color="blue" dark large block :loading='loadingbtn'
-                    type="submit" @click="dataInsert()">Register</v-btn>
+                    @click="dataInsert()">Register</v-btn>
                   </v-flex>
-                  <!-- {{loadingbtn}} -->
                 </v-layout>
                 <v-flex xs12>
                 </v-flex>
@@ -145,17 +134,8 @@
           </v-card-text>
         </v-card>
       </v-flex>
-
     </v-layout>
   </v-container>
-  <!-- <v-snackbar
-    :vertical="true"
-    v-model="snackฺฺฺBarBool"
-    color="orange"
-    :timeout="timeout"
-    bottom>
-    <v-flex headline>{{msgSnackBar}}</v-flex>
-  </v-snackbar> -->
   <v-layout row justify-center>
       <v-dialog v-model="snackฺฺฺBarBool" persistent max-width="400px">
         <v-card>
@@ -168,13 +148,12 @@
           <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
         </v-card-title>
           <v-card-title>
-            <v-layout justify-center><span class="headline">{{msgSnackBar}}</span></v-layout>
+            <v-layout justify-center><span>{{msgSnackBar}}</span></v-layout>
           </v-card-title>
           </v-flex>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="success()">Close</v-btn>
-            <!-- <v-btn color="blue darken-1" flat @click="snackฺฺฺBarBool = false">Save</v-btn> -->
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -199,6 +178,7 @@ export default {
   data() {
     return {
       color: '',
+      branchName: '',
       snackฺฺฺBarBool: null,
       timeout: 10000,
       select: '02',
@@ -256,35 +236,43 @@ export default {
       this.$store.dispatch('clearError')
     },
     async dataInsert() {
-      this.loadingbtn = true
-      const obj = {
-        username: this.username,
-        password: this.password,
-        email: this.email,
-        fname: this.fname,
-        lname: this.lname,
-        tname: this.tname,
-        pid: this.pid,
-        flag_id: this.select,
-        now_date: this.nowDate,
-        rcode_id: this.branch,
-        role_id: this.select,
+      if (this.username || this.password || this.fname || this.pid) {
+        this.loadingbtn = true
+        const obj = {
+          username: this.username,
+          password: this.password,
+          email: this.email,
+          fname: this.fname,
+          lname: this.lname,
+          tname: this.tname,
+          pid: this.pid,
+          flag_id: this.select,
+          now_date: this.nowDate,
+          rcode_id: this.branch,
+          role_id: this.select,
+        }
+        console.log('obj', obj)
+        await controlData.save(obj)
+        const objBranch = {
+          branchName: this.branchName,
+          branch: this.branch,
+        }
+        await controlData.insertBranchName(objBranch)
+        await this.awitData()
+      } else {
+        this.snackฺฺฺBarBool = true
+        this.msgSnackBar = 'กรุณากรอกให้ครบสิคะ ไปทำมาใหม่นะ'
+        this.color = 'red'
       }
-      console.log('obj', obj)
-      await controlData.save(obj)
-      console.log()
-
-      await this.awitData()
     },
     awitData() {
-      if (Boolean(store.state.msgSave) === false) {
+      if (Boolean(store.state.msgSave) === false && Boolean(store.state.msginsertBranch) === false) {
         console.log('msgErrorLogin', store.state.msgSave)
         this.loadingbtn = false
         this.snackฺฺฺBarBool = true
         this.msgSnackBar = 'unsuccessful'
         this.color = 'red'
       } else {
-        // console.log('msgSave', store.state.msgSave)
         this.loadingbtn = false
         this.snackฺฺฺBarBool = true
         this.msgSnackBar = 'success'
