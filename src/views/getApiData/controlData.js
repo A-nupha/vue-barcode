@@ -70,6 +70,20 @@ const funcs = {
         })
     })
   },
+  getCate() {
+    return new Promise((resolve, reject) => {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/getCate.php';
+      Axios.get(api)
+        .then((response) => {
+          const retData = response.data
+          console.log('dataCate', retData)
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
 
   async save(data) {
     console.log('data', data.username)

@@ -10,8 +10,8 @@
       <!-- <span>{{ moment().format('MMMM Do YYYY, h:mm:ss a') }}</span> -->
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-icon>mdi-account</v-icon>
-      <div>{{userName}}</div>
+      <!-- <v-icon>mdi-account</v-icon>
+      <div>{{userName}}</div> -->
       <v-btn icon>
       <v-icon>mdi-dots-vertical</v-icon>
     </v-btn>
@@ -32,6 +32,7 @@
         temporary
       >
         <v-list class="pa-1">
+          <img src="https://client.pona.app/img/logo.6c7979fd.svg" class="drawer-logo">
           <v-list-tile avatar>
             <!-- <v-list-tile-avatar> -->
               <v-avatar color="blue">
@@ -39,7 +40,7 @@
               </v-avatar>
             <!-- </v-list-tile-avatar> -->
             <v-list-tile-content>
-              <v-list-tile-title>{{userName}}</v-list-tile-title>
+              <v-list-tile-title>{{role}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -51,7 +52,7 @@
         </v-list-tile-action>
         <v-list-tile-title>Menu</v-list-tile-title>
       </v-list-tile>
-
+<v-divider/>
 <v-list-tile @click="logout()" ripple>
         <v-list-tile-action>
           <v-icon>mdi-logout</v-icon>
@@ -62,7 +63,7 @@
 
       </v-navigation-drawer>
     </v-layout>
-    
+
     <!-- <SnackBar/> -->
   </div>
 </template>
@@ -105,6 +106,7 @@ export default {
         { title: 'Logout', icon: 'mdi-logout' },
       ],
       time: 'Inventory Control',
+      role: '',
 
     }
   },
@@ -131,6 +133,7 @@ export default {
     deleteStork,
   },
   mounted() {
+
   },
   watch: {
     login() {
@@ -144,8 +147,27 @@ export default {
       if (this.login === 'Stork') { this.z = 'Stork' }
       if (this.login === 'deleteStork') { this.z = 'deleteStork' }
     },
+
+  },
+  created() {
+    // this.validate()
   },
   methods: {
+    // validate() {
+    //   console.log('test', this.Store.dataLogin[0].role_id)
+    //   if (String(this.Store.dataLogin[0].role_id) === '01') {
+    //     this.role = 'Manager'
+    //   }
+    //   if (String(this.Store.dataLogin[0].role_id) === '02') {
+    //     this.role = 'empoyee'
+    //   }
+    //   if (String(this.Store.dataLogin[0].role_id) === '00') {
+    //     this.role = 'empoyee'
+    //   }
+    //   if (String(this.Store.dataLogin[0].role_id) !== String) {
+    //     this.role = 'nan'
+    //   }
+    // },
     logout() {
       store.state.userName = null
       store.state.passWord = null

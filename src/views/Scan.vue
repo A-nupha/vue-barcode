@@ -53,12 +53,14 @@
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " v-model="price" suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
+        <v-text-field prepend-icon=" " v-model="price"
+        suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " v-model="cost" suffix="Baht"  name="input-7-4" label="Cost"></v-text-field>
+        <v-text-field prepend-icon=" " v-model="cost"
+        suffix="Baht"  name="input-7-4" label="Cost"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout>
@@ -67,7 +69,13 @@
       </v-flex>
     </v-layout>
     <v-layout>
-      
+      <v-combobox
+      :items="getCate[0].cate_name"
+      prepend-icon=" "
+      label="category"
+      >
+      </v-combobox>
+
       <!-- <v-flex xs10>
         <v-combobox
           disabled
@@ -77,11 +85,12 @@
           label="Event"
         ></v-combobox>
       </v-flex> -->
-    
+
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-textarea prepend-icon=" " v-model="detailItems" box name="input-7-4" label="Description" auto-grow></v-textarea>
+        <v-textarea prepend-icon=" " v-model="detailItems"
+        box name="input-7-4" label="Description" auto-grow></v-textarea>
       </v-flex>
     </v-layout>
             </v-flex>
@@ -89,6 +98,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    {{getCate}}
   </div>
 </template>
 
@@ -99,7 +109,8 @@ import {
 import Quagga from 'quagga';
 // import swal from 'sweetalert';
 import { sync } from 'vuex-pathify'
-import store from '../store/store'
+// import store from '../store/store'
+import controlData from './getApiData/controlData'
 
 // import js from './js/index.js';
 // import Quagga from 'quagga';
@@ -128,6 +139,7 @@ export default {
         height: 100,
       },
       detecteds: [],
+      getCate: null,
     };
   },
   components: {
@@ -136,14 +148,18 @@ export default {
   computed: {
     ...sync('*'),
   },
+  mounted() {
+    console.log('test')
+    controlData.getCate().then((response) => {
+      const retData = response.data
+      this.getCate = retData
+      console.log('daTAaPIsERCH', this.getCate)
+    });
+  },
+  created() {
+  },
   methods: {
-    // bottonNext() {
-    //   this.$router.push(`/${this.items[indexMenu].click}`)
-    // },
     putdata() {
-      // const databarcode = this.databarcode
-      // console.log('databarcode', databarcode)
-      // console.log('dataScan', dataScan);
       const obj = {
         databarcode: this.databarcode,
         qty: this.qty,
@@ -163,52 +179,7 @@ export default {
       Quagga.start()
     },
     logIt(data) {
-      // console.log('detectedbarcode', data.codeResult.code)
-      // alert(data.codeResult.code)
       this.databarcode = data.codeResult.code
-      // swal({
-      //   title: this.databarcode,
-      //   icon: 'success',
-      //   buttons: {
-      //     next: {
-      //       text: 'ถัดไป',
-      //       value: 'next',
-      //     },
-      //     el: {
-      //       text: 'ยกเลิก',
-      //       value: 'cancel',
-      //       color: 'red',
-      //     },
-      //   },
-      // })
-      //   .then((res) => {
-      //     Quagga.stop();
-      //     switch (res) {
-      //       case 'next':
-      //         // this.setemp(data);
-      //         this.dialogScan = false
-      //         this.putdata();
-      //         break;
-      //       case 'cancel':
-      //         // this.setemp(data);
-      //         alert("res")
-      //         this.dialogScan = false
-      //         break;
-
-      //       default:
-      //         this.dialog = false;
-      //     }
-      //     // if (willDelete) {
-      //     //   swal('success', {
-      //     //     icon: 'success',
-      //     //   });
-      //     //   Quagga.stop();
-      //     //   this.dialogScan = false
-      //     // } else {
-      //     //   this.databarcode = null;
-      //     //   // Quagga.start()
-      //     // }
-      //   });
     },
   },
 }
