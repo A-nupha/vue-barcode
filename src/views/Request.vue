@@ -16,20 +16,22 @@
                                     <v-divider class="mx-2" inset vertical></v-divider>
                                     <v-spacer></v-spacer>
                                 </v-toolbar>
-                                <v-data-table :headers="headers" :items="desserts" class="elevation-1">
+                                <v-data-table :headers="headers"
+                                :items="desserts" class="elevation-1">
                                     <template slot="items" slot-scope="props">
                                         <td class="text-xs-center">{{ props.item.Barcode }}</td>
                                         <td class="text-xs-center">{{ props.item.fat }}</td>
                                         <td class="text-xs-center">{{ props.item.carbs }}</td>
                                         <td class="text-xs-center">
                                             <v-btn icon>
-                                            <v-icon color="green" @click="Confirm(props.item)">mdi-check</v-icon>
-                                            <!-- <v-icon color="orange" @click="editItem(props.item)">mdi-border-color</v-icon> -->
+                                            <v-icon color="green"
+                                            @click="Confirm(props.item)">mdi-check</v-icon>
                                             </v-btn>
                                         </td>
                                         <td class="text-xs-center">
                                           <v-btn icon>
-                                            <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
+                                            <v-icon color="red"
+                                            @click="deleteItem(props.item)">mdi-delete</v-icon>
                                             </v-btn>
                                         </td>
                                     </template>
@@ -60,19 +62,23 @@
                 <v-container grid-list-md>
                     <v-layout wrap>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="editedItem.Barcode" label="Barcode"></v-text-field>
+                            <v-text-field disabled
+                            v-model="editedItem.Barcode" label="Barcode"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="editedItem.calories" label="Branch"></v-text-field>
+                            <v-text-field disabled
+                            v-model="editedItem.calories" label="Branch"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="editedItem.fat" label="Status"></v-text-field>
+                            <v-text-field disabled
+                            v-model="editedItem.fat" label="Status"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field  v-model="editedItem.carbs" label="Quanity"></v-text-field>
+                            <v-text-field v-model="editedItem.carbs" label="Quanity"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                            <v-text-field disabled v-model="editedItem.protein" label="Name"></v-text-field>
+                            <v-text-field disabled
+                            v-model="editedItem.protein" label="Name"></v-text-field>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -174,9 +180,9 @@ export default {
   computed: {
   },
   watch: {
-    dialog(val) {
-      val || this.close()
-    },
+    // dialog(val) {
+    //   val || this.close()
+    // },
   },
   created() {
     this.initialize()
@@ -184,9 +190,8 @@ export default {
   methods: {
     ...mapActions({
       // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
-      setDataLogin: 'getApi/setDataLogin' 
-}),
-      
+      setDataLogin: 'getApi/setDataLogin',
+    }),
     initialize() {
       this.desserts = [{
         Barcode: '12345678910115',

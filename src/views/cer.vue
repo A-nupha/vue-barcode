@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="green" @click="print">พิมพ์</v-btn>
+  <v-btn color="blue" class="white--text" @click="print">report</v-btn>
 </template>
 <script>
 import pdfmakeCustom from '@cdglib/js-pdfmake-custom/src/plugin/pdfmake-custom';

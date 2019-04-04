@@ -196,6 +196,7 @@ export default {
   watch: {
   },
   mounted() {
+    
     controlData.search().then((response) => {
       const retData = response.data
       this.Store.dataUserApi = retData
