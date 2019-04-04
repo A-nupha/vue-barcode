@@ -38,7 +38,7 @@
     color="orange"
     :timeout="timeout"
     bottom>
-    <v-flex headline>{{msgSnackBar}}</v-flex>
+    <v-flex >{{msgSnackBar}}</v-flex>
   </v-snackbar>
   </div>
 </template>
@@ -232,10 +232,8 @@ export default {
         this.getUser()
         this.loading = false
       } if (String(store.state.dataLogin) === 'password is incorrect') {
-        const textmsg = 'รหัสผ่านไม่ถูกต้อง'
-        const boolmsg = true
-        this.msgSnackBar = textmsg
-        this.snackฺฺฺBarBool = boolmsg
+        this.msgSnackBar = 'password is incorrect'
+        this.snackฺฺฺBarBool = true
         console.log(store.state.dataLogin)
         // console.log(textmsg, boolmsg)
         this.loading = false
