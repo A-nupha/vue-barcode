@@ -14,8 +14,8 @@
                 <v-form>
                   <v-layout>
                     <v-flex ma-1 pr-5  >
-                      <v-text-field prepend-icon="mdi-account" name="Username" label="Username" v-model="inputUserName"></v-text-field>
-                      <v-text-field prepend-icon="mdi-lock" name="Password" label="Password" type="password" v-model="inputPassword"></v-text-field>
+                      <v-text-field prepend-icon="mdi-account" name="Username" label="Username" v-model="userName"></v-text-field>
+                      <v-text-field prepend-icon="mdi-lock" name="Password" label="Password" type="password" v-model="passWord"></v-text-field>
                     </v-flex>
                   </v-layout>
                   <v-card-actions>
@@ -220,18 +220,13 @@ export default {
     },
     async login() {
       this.loading = true
-      // const userName = store.state.userName
-      // const passWord = store.state.passWord
-      // console.log(userName)
-      // console.log(passWord)
-
-      await controlData.login(this.inputUserName, this.inputPassword)
-      console.log("inputUserNam",this.inputUserName)
-      this.Store.userName = this.inputUserName
-      this.Store.passWord = this.inputPassword
-      console.log('store.state.dataLogin[0].index1', store.state.dataLogin[0].index1)
-      // console.log('store.state.msgLogin', store.state.msgLogin.)
-      if (String(store.state.dataLogin[0].index1).toLowerCase() === String(this.inputUserName).toLowerCase()) {
+      // eslint-disable-next-line prefer-destructuring
+      const userName = store.state.userName
+      // eslint-disable-next-line prefer-destructuring
+      const passWord = store.state.passWord
+      await controlData.login(userName, passWord)
+      if (String(store.state.dataLogin[0].index1)
+        .toLowerCase() === String(userName).toLowerCase()) {
         // alert('ถูกต้อง')
         console.log('data login', store.state.dataLogin)
         const menu = 'Menu'
