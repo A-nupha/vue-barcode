@@ -49,6 +49,7 @@ import { sync } from 'vuex-pathify'
 export default {
   data() {
     return {
+      timeout: 5000,
       Store: this.$store.state,
       msgSnackBar: '',
       snackฺฺฺBarBool: false,

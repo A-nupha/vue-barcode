@@ -32,7 +32,6 @@
         temporary
       >
         <v-list class="pa-1">
-          <img src="https://client.pona.app/img/logo.6c7979fd.svg" class="drawer-logo">
           <v-list-tile avatar>
             <!-- <v-list-tile-avatar> -->
               <v-avatar color="blue">
@@ -40,7 +39,7 @@
               </v-avatar>
             <!-- </v-list-tile-avatar> -->
             <v-list-tile-content>
-              <v-list-tile-title>{{role}}</v-list-tile-title>
+              <v-list-tile-title>{{userName}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>

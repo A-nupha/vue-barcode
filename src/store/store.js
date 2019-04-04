@@ -7,8 +7,8 @@ import getApi from './modules/getApi'
 pathify.options.mapping = 'simple'
 
 const getDefaultState = () => ({
-  userName: null,
-  passWord: null,
+  userName: '',
+  passWord: '',
   dataSelect: [],
   dataScan: [],
   msgLogin: null,

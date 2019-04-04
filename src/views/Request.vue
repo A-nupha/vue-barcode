@@ -125,6 +125,7 @@ export default {
     // tab,
   },
   data: () => ({
+    timeout: 5000,
     confirm: false,
     snackฺฺฺBarBool: '',
     msgSnackBar: '',

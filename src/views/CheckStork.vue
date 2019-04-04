@@ -20,7 +20,9 @@
                                     <template slot="items" slot-scope="props">
                                         <td class="text-xs-center">{{ props.item.Barcode }}</td>
                                         <td class="text-xs-center">{{ props.item.protein }}</td>
+                                        <td class="text-xs-center">{{ props.item.fat }}</td>
                                         <td class="text-xs-center">{{ props.item.carbs }}</td>
+                                        
                                     </template>
                                     <template slot="no-data">
                                         <v-btn color="primary" @click="initialize">
@@ -64,6 +66,7 @@ export default {
     // tab,
   },
   data: () => ({
+    timeout: 5000,
     confirm: false,
     snackฺฺฺBarBool: '',
     msgSnackBar: '',
@@ -81,17 +84,17 @@ export default {
       align: 'center',
     },
     {
+      text: 'Category',
+      value: 'name',
+      sortable: false,
+      align: 'center',
+    },
+    {
       text: 'Qty',
       value: 'protein',
       align: 'center',
       sortable: false,
     },
-    // {
-    //   text: 'Edit',
-    //   value: 'name',
-    //   sortable: false,
-    //   align: 'center',
-    // },
     // {
     //   text: 'Delete',
     //   value: 'name',
@@ -135,35 +138,35 @@ export default {
       this.desserts = [{
         Barcode: '12345678910115',
         calories: 'งามวงวาล',
-        fat: 'ชำรุด',
+        fat: 'อาหารและเครื่องดืม',
         carbs: 24,
         protein: 'โค๊ก',
       },
       {
         Barcode: '12365498798788',
         calories: 'พญาไท',
-        fat: 'สูญหาย',
+        fat: 'อาหารและเครื่องดืม',
         carbs: 37,
         protein: 'น้ำเปล่า',
       },
       {
         Barcode: '12365498798788',
         calories: 'ดินแดง',
-        fat: 'สูญหาย',
+        fat: 'อาหารและเครื่องดืม',
         carbs: 23,
         protein: 'ดินสอ',
       },
       {
         Barcode: '12365412398788',
-        calories: 'สุขุมวิท',
-        fat: 'ชำรุด',
+        calories: 'เสื้อผ้า',
+        fat: 'เสื้อผ้า',
         carbs: 67,
         protein: 'เมาส์',
       },
       {
         Barcode: '12367892398118',
-        calories: 'อโศก',
-        fat: 'ชำรุด',
+        calories: 'เสื้อผ้า',
+        fat: 'เสื้อผ้า',
         carbs: 49,
         protein: 'ปากกา',
       },

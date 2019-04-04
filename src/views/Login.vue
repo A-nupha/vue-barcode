@@ -61,6 +61,7 @@ export default {
   },
   data() {
     return {
+      Store: this.$Store.state,
       snackฺฺฺBarBool: null,
       msgSnackBar: null,
       timeout: 5000,
@@ -226,6 +227,8 @@ export default {
 
       await controlData.login(this.inputUserName, this.inputPassword)
       console.log("inputUserNam",this.inputUserName)
+      this.Store.userName = this.inputUserName
+      this.Store.passWord = this.inputPassword
       console.log('store.state.dataLogin[0].index1', store.state.dataLogin[0].index1)
       // console.log('store.state.msgLogin', store.state.msgLogin.)
       if (String(store.state.dataLogin[0].index1).toLowerCase() === String(this.inputUserName).toLowerCase()) {

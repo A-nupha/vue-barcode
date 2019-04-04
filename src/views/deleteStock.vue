@@ -154,6 +154,7 @@ export default {
   name: 'VueBarcodeTest',
   data() {
     return {
+      timeout: 5000,
       select: 'ขาย',
       items: [
         'ขาย',
