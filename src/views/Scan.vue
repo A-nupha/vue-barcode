@@ -69,23 +69,18 @@
       </v-flex>
     </v-layout>
     <v-layout>
-      <v-combobox
-      :items="getCate[0].cate_name"
-      prepend-icon=" "
-      label="category"
-      >
-      </v-combobox>
-
-      <!-- <v-flex xs10>
-        <v-combobox
-          disabled
-          v-model="select"
-          :items="items"
-          prepend-icon=" "
-          label="Event"
-        ></v-combobox>
-      </v-flex> -->
-
+      <v-flex xs10>
+      <v-select
+                :items="getCate"
+                prepend-icon=" "
+                key="cate_name"
+                v-model="cate_name"
+                item-text="cate_name"
+                label="category"
+                single-line
+                return-object
+                />
+      </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
