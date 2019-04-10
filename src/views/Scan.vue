@@ -54,18 +54,21 @@
     <v-layout>
       <v-flex xs10>
         <v-text-field prepend-icon=" " v-model="price"
+        type="number"
         suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
         <v-text-field prepend-icon=" " v-model="cost"
+        type="number"
         suffix="Baht"  name="input-7-4" label="Cost"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Qty" suffix="Piece" v-model="qty" required/>
+        <v-text-field type="number"
+        prepend-icon=" " label="Qty" suffix="Piece" v-model="qty" required/>
       </v-flex>
     </v-layout>
     <v-layout>
@@ -93,7 +96,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    {{getCate}}
   </div>
 </template>
 
@@ -102,23 +104,26 @@ import {
   QuaggaScanner,
 } from 'vue-quaggajs';
 import Quagga from 'quagga';
+import moment from 'moment'
 // import swal from 'sweetalert';
 import { sync } from 'vuex-pathify'
 // import store from '../store/store'
 import controlData from './getApiData/controlData'
+import functions from '../plugins/functions'
 
-// import js from './js/index.js';
-// import Quagga from 'quagga';
 export default {
   name: 'VueBarcodeTest',
   data() {
     return {
-      select: 'ขาย',
+      time: moment().format('hmmssa'),
+      nowDate: functions.moment(moment().format('YYYYMMDD')),
+      select: '1',
       items: [
         'ขาย',
         'สูญหาย',
         'ชำรุด',
       ],
+      Store: this.$store.state,
       cost: null,
       price: null,
       qty: null,
@@ -144,7 +149,6 @@ export default {
     ...sync('*'),
   },
   mounted() {
-    console.log('test')
     controlData.getCate().then((response) => {
       const retData = response.data
       this.getCate = retData
@@ -156,16 +160,30 @@ export default {
   methods: {
     putdata() {
       const obj = {
-        databarcode: this.databarcode,
-        qty: this.qty,
+        barcode: this.databarcode,
         name: this.name,
-        Event: this.select,
-        detailItems: this.detailItems,
+        desc: this.detailItems,
+        cate_id: 1,
         price: this.price,
         cost: this.cost,
-
+        remark: '',
+        branch_id: this.Store.dataBranch[0].branch_id,
+        quantity_in: this.qty,
+        date_in: this.nowDate,
+        add_time: this.time,
+        status_id: this.select,
+        approve_id: '01',
+        pid_user: this.Store.dataBranch[0].pid,
+        pid_approve: this.Store.dataBranch[0].pid,
       }
       this.$store.state.dataScan.push(obj)
+
+
+
+    
+
+
+      console.log('this.$store.state.dataScan',this.$store.state.dataScan)
       this.dialogScan = false
     },
     openQuagga() {

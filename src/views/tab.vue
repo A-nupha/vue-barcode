@@ -35,10 +35,11 @@
   </div>
 </template>
 <script>
-
+import Axios from 'axios';
 import Scan from './Scan.vue'
 import Branch from './Branch.vue'
 import Syn from './Syn.vue'
+
 // import controlData from './getApiData/controlData'
 
 
@@ -48,7 +49,7 @@ export default {
     return {
       active: 0,
       button: 'ถัดไป',
-      
+      Store: this.$store.state,
     }
   },
   components: {
@@ -67,11 +68,22 @@ export default {
     },
   },
   methods: {
+    insert() {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/insertItems.php';
+      const dataParams = new URLSearchParams();
+      const dataInsert = JSON.stringify(this.Store.dataScan)
+      dataParams.append('dataInsert', dataInsert)
+      Axios.post(api, dataParams)
+        .then((response) => {
+          console.log('-=-=-==-')
+          console.log(response.data)
+        })
+    },
     next() {
       const active = Number(this.active);
       if (Number(this.active === 2)) {
         alert('ยังไม่เสร็จ')
-        
+        this.insert()
       } else {
         this.active = active + 1;
       }

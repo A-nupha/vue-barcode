@@ -57,13 +57,6 @@ const funcs = {
           store.state.dataSelect = retData
           resolve(response);
           console.log(response)
-        // retData.forEach((value) => {
-        //   // console.log(value.pid)
-        //   // console.log(retData[0].pid);
-        //   // const data = store.state
-        //   // store.state.userName = value.index1
-        //   // store.state.password = value.index2
-        // })
         })
         .catch((error) => {
           reject(error)
@@ -87,7 +80,6 @@ const funcs = {
 
   async save(data) {
     console.log('data', data.username)
-    // eslint-disable-next-line no-var
     var api = 'https://a-nuphasupit58.000webhostapp.com/php/save.php';
     var params = new URLSearchParams();
     params.append('index1', data.username)
@@ -101,22 +93,9 @@ const funcs = {
     params.append('now_date', data.now_date)
     params.append('rcode_id', data.rcode_id)
     params.append('role_id', data.role_id)
-
-    // console.log('params', params.toString())
     const response = await Axios.post(api, params)
-    // console.log('response', response.data)
     store.state.msgSave = response.data
     console.log('store.state.msgSave', store.state.msgSave)
-    // if (response.data === true) {
-    //   const msgSuscessLogin = (true);
-    //   store.state.msgLogin = msgSuscessLogin
-    //   // return 'บันทึกสำเร็จ'
-    // } if (response.data === false) {
-    //   const msgErrorLogin = (false);
-    //   store.state.msgErrorLogin = msgErrorLogin
-    //   // alert('บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล');
-    //   // return 'บันทึกล้มเหลว กรุณาตรวจสอบข้อมูล'
-    // }
   },
   async selectBranch(data) {
     console.log('data==>branch', data);

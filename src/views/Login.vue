@@ -237,7 +237,6 @@ export default {
         this.msgSnackBar = 'password is incorrect'
         this.snackฺฺฺBarBool = true
         console.log(store.state.dataLogin)
-        // console.log(textmsg, boolmsg)
         this.loading = false
       }
     },
