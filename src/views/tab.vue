@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     insert() {
-      const api = 'https://a-nuphasupit58.000webhostapp.com/php/insertItems.php';
+      const api = 'https://a-nuphasupit58.000webhostapp.com/Edit_feen_20190405.php';
       const dataParams = new URLSearchParams();
       const dataInsert = JSON.stringify(this.Store.dataScan)
       console.log('this.Store.dataScan', this.Store.dataScan)
@@ -105,7 +105,7 @@ export default {
     next() {
       const active = Number(this.active);
       if (Number(this.active === 2)) {
-        alert('ยังไม่เสร็จ')
+        // alert('ยังไม่เสร็จ')
         // this.openDialog = true
         this.insert()
         // รีเซ็ตดาต้าแสกน

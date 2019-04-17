@@ -72,7 +72,7 @@ export default {
       donutData: [
         { label: 'Input', value: 50 },
         { label: 'Output', value: 40 },
-        { label: 'Stork', value: 40 },
+        { label: 'Stock', value: 40 },
       ],
     }
   },
