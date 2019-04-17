@@ -12,7 +12,7 @@
       <v-spacer></v-spacer>
       <!-- <v-icon>mdi-account</v-icon>
       <div>{{userName}}</div> -->
-      <v-btn icon>
+      <v-btn icon @click="drawerS = true">
       <v-icon>mdi-dots-vertical</v-icon>
     </v-btn>
    </v-toolbar>
@@ -60,8 +60,43 @@
       </v-list-tile>
 
 
-      </v-navigation-drawer>
+      </v-navigation-drawer >
     </v-layout>
+    <v-navigation-drawer v-model="drawerS" absolute
+        temporary fixed right height="100%"
+        width ='200'>
+      <v-list dense>
+        <v-list-tile @click="openDialogContext()" ripple>
+        <v-list-tile-action>
+          <v-icon>mdi-settings-outline</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title>contact</v-list-tile-title>
+      </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-dialog v-model="openDialog" persistent max-width="400px">
+        <v-card>
+          <v-flex>
+          <v-card-title
+          :class="'blue'"
+          primary-title
+          flat>
+          <v-icon class="mr-3" color="white">mdi-information</v-icon>
+          <v-flex class=""><v-flex class="white--text">contact</v-flex></v-flex>
+        </v-card-title>
+          <v-card-title>
+            <v-layout justify-center><span>Line:@inventoryControl</span></v-layout>
+            <v-layout justify-center><img src="./assets/about.jpg" contain width="220" height="250"></v-layout>
+             <!-- <v-layout justify-center><span>Line:@inventoryControl</span></v-layout> -->
+          </v-card-title>
+          </v-flex>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="openDialog = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
 
     <!-- <SnackBar/> -->
   </div>
@@ -94,6 +129,8 @@ export default {
   name: 'Profile',
   data() {
     return {
+      openDialog: false,
+      drawerS: false,
       Store: this.$store.state,
       z: 'LoginApp',
       tab: 'tab',
@@ -152,6 +189,13 @@ export default {
     // this.validate()
   },
   methods: {
+    openDialogContext() {
+      // this.drawerS = false
+      this.openDialog = true
+    },
+    toggleNavigationDrawer() {
+      this.drawer = !this.drawer;
+    },
     // validate() {
     //   console.log('test', this.Store.dataLogin[0].role_id)
     //   if (String(this.Store.dataLogin[0].role_id) === '01') {
