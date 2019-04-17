@@ -50,8 +50,8 @@ export default {
     await this.getBranch()
   },
   methods: {
-    async getBranch() {
-      await controlData.selectBranch(Number(this.Store.dataLogin[0].rcode_id))
+    getBranch() {
+      controlData.selectBranch(Number(this.Store.dataLogin[0].rcode_id))
     },
     moment() {
       return moment();
@@ -59,15 +59,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.bg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: red;
-    transform: scale(1.1);
-  }
-</style>
