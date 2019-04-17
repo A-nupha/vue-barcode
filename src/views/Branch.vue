@@ -13,7 +13,7 @@
           </v-layout>
           <v-layout align-center justify-center>
             <v-flex xs10>
-              <v-text-field prepend-icon="mdi-check-circle-outline"
+              <v-text-field prepend-icon="mdi-package-variant-closed"
               name="batch" label="batch"></v-text-field>
             </v-flex>
           </v-layout>

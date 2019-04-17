@@ -10,7 +10,7 @@
                                 <v-toolbar flat color="white">
                                     <v-toolbar-title>
                                         <v-flex xs12 subheader class="blue--text" ma-1>
-                                            การแจ้งสินค้ามีปัญหา
+                                            Items has a problem
                                         </v-flex>
                                     </v-toolbar-title>
                                     <v-divider class="mx-2" inset vertical></v-divider>
@@ -149,7 +149,7 @@ export default {
       sortable: false,
     },
     {
-      text: 'Edit',
+      text: 'Approved',
       value: 'name',
       sortable: false,
       align: 'center',
@@ -231,8 +231,11 @@ export default {
       },
       ]
     },
-    Confirm() {
+    Confirm(item) {
       alert('ยังไม่เสร็จ')
+      this.getdataTable = item
+      this.msgSnackBar = 'Are you sure you want to Approved this item?'
+      this.snackฺฺฺBarBool = true
     },
     deleteItem(item) {
       this.getdataTable = item

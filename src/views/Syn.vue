@@ -16,7 +16,7 @@
             </v-btn></td>
       </template>
     </v-data-table>
-    {{dataScan}}
+    <!-- {{dataScan}} -->
     <v-snackbar
     :vertical="true"
     v-model="snackฺฺฺBarBool"

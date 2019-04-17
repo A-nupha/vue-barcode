@@ -8,7 +8,15 @@
               <v-card flat>
                 <v-card-title>
                   <v-toolbar color="blue lighten-2" dark>
-                    <v-toolbar-title>Login</v-toolbar-title>
+                    <v-layout><v-icon>mdi-login</v-icon></v-layout>
+                    <v-layout>
+                      <v-flex caption>
+                        
+                        Enter your usename and password to log on
+                        </v-flex>
+                        </v-layout>
+                    
+                    
                   </v-toolbar>
                 </v-card-title>
                 <v-form>
@@ -25,7 +33,10 @@
                   <!-- <li>{{userName}}</li> -->
                   <!-- <li>{{msg}}</li> -->
                   <!-- {{store.state.msgSnackBar}} -->
+                  
+
                 </v-form>
+                
               </v-card>
             </v-container>
           </v-flex>
@@ -40,6 +51,7 @@
     bottom>
     <v-flex >{{msgSnackBar}}</v-flex>
   </v-snackbar>
+  <!-- {{snackฺฺฺBarBool}} -->
   </div>
 </template>
 <script>
@@ -61,13 +73,13 @@ export default {
   },
   data() {
     return {
-      Store: this.$Store.state,
-      snackฺฺฺBarBool: null,
+      Store: this.$store.state,
+      snackฺฺฺBarBool: false,
       msgSnackBar: null,
       timeout: 5000,
       inputUserName: null,
       inputPassword: null,
-
+      test: 'testdata',
       data: [],
       z: '',
       loading: false,
@@ -233,10 +245,11 @@ export default {
         this.setDataLogin(menu);
         this.getUser()
         this.loading = false
-      } if (String(store.state.dataLogin) === 'password is incorrect') {
+      } if (String(await store.state.dataLogin) === 'password is incorrect') {
+        console.log('test')
         this.msgSnackBar = 'password is incorrect'
         this.snackฺฺฺBarBool = true
-        console.log(store.state.dataLogin)
+        console.log(typeof store.state.dataLogin)
         this.loading = false
       }
     },

@@ -31,6 +31,27 @@
 
     </v-layout>
     <v-flex><v-btn dark large @click="next()" block color="blue" >{{button}}</v-btn></v-flex>
+     <v-dialog v-model="openDialog" persistent max-width="400px">
+        <v-card>
+          <v-flex>
+          <v-card-title
+          :class="'green'"
+          primary-title
+          flat>
+          <v-icon class="mr-3" color="white">mdi-information</v-icon>
+          <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
+        </v-card-title>
+          <v-card-title>
+            <v-layout justify-center><span>success</span></v-layout>
+          </v-card-title>
+          </v-flex>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="openDialog = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
     </v-card>
   </div>
 </template>
@@ -47,6 +68,7 @@ export default {
   name: 'tab',
   data() {
     return {
+      openDialog: false,
       active: 0,
       button: 'ถัดไป',
       Store: this.$store.state,
@@ -83,7 +105,9 @@ export default {
       const active = Number(this.active);
       if (Number(this.active === 2)) {
         alert('ยังไม่เสร็จ')
+        this.openDialog = true
         this.insert()
+        // รีเซ็ตดาต้าแสกน
       } else {
         this.active = active + 1;
       }

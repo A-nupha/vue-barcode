@@ -7,6 +7,7 @@ import getApi from './modules/getApi'
 pathify.options.mapping = 'simple'
 
 const getDefaultState = () => ({
+  test: 'test',
   userName: null,
   passWord: null,
   dataSelect: [],
@@ -23,8 +24,10 @@ const getDefaultState = () => ({
   editUser: null,
   getdataTableDelte: null,
   SnacbarDeleteUser: null,
+  aDateIn: '',
+  aDateOut: '',
 })
-console.log(getDefaultState)
+// console.log(getDefaultState)
 const state = Object.assign(getDefaultState())
 const mutations = make.mutations(state)
 const resetMutation = {

@@ -78,16 +78,16 @@
         <v-text-field prepend-icon=" " label="Name" v-model="name" />
       </v-flex>
     </v-layout>
-    <v-layout>
+    <!-- <v-layout>
       <v-flex xs10>
         <v-text-field prepend-icon=" " v-model="price" suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
       </v-flex>
-    </v-layout>
-    <v-layout>
+    </v-layout> -->
+    <!-- <v-layout>
       <v-flex xs10>
         <v-text-field prepend-icon=" " v-model="cost" suffix="Baht"  name="input-7-4" label="Cost"></v-text-field>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
     <v-layout>
       <v-flex xs10>
         <v-text-field prepend-icon=" " label="Qty" suffix="Piece" v-model="qty" required/>
@@ -113,6 +113,26 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+     <v-dialog v-model="openDialog" persistent max-width="400px">
+        <v-card>
+          <v-flex>
+          <v-card-title
+          :class="'green'"
+          primary-title
+          flat>
+          <v-icon class="mr-3" color="white">mdi-information</v-icon>
+          <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
+        </v-card-title>
+          <v-card-title>
+            <v-layout justify-center><span>success</span></v-layout>
+          </v-card-title>
+          </v-flex>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="openDialog = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     <v-snackbar
     :vertical="true"
     v-model="snackฺฺฺBarBool"
@@ -135,7 +155,7 @@
         yes
       </v-btn></v-flex></v-layout>
   </v-snackbar>
-    {{dataScanOut}}
+    <!-- {{dataScanOut}} -->
   </div>
 </template>
 
@@ -156,6 +176,7 @@ export default {
     return {
       timeout: 5000,
       select: 'ขาย',
+      openDialog: false,
       items: [
         'ขาย',
         'สูญหาย',
@@ -242,6 +263,7 @@ export default {
       this.snackฺฺฺBarBool = false
     },
     confirm() {
+      this.openDialog = true
       alert('นี้ก็ยังม่ายเสร็จ')
     },
   },

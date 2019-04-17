@@ -6,7 +6,7 @@ const state = {
 const actions = {
   setDataLogin({ commit, state }, payload) {
     commit('SET_LOGIN', payload)
-    console.log('state in store', state)
+    // console.log('state in store', state)
   },
 }
 const mutations = {

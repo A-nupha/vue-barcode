@@ -99,21 +99,28 @@
         </v-container>
         <!-- {{Store.dataUserApi}} -->
     </v-content>
-     <v-snackbar
-    :vertical="true"
-    v-model="Store.editUser"
-    color="orange"
-    :timeout="timeout"
-    bottom>
-    <v-flex headline>{{snackฺฺฺBar}}</v-flex>
-    <v-btn
-        color="pink"
-        flat
-        @click="Store.editUser = false"
-      >
-        Close
-      </v-btn>
-  </v-snackbar>
+  <v-layout row justify-center>
+      <v-dialog v-model="Store.editUser" persistent max-width="400px">
+        <v-card>
+          <v-flex>
+          <v-card-title
+          :class="'green'"
+          primary-title
+          flat>
+          <v-icon class="mr-3" color="white">mdi-information</v-icon>
+          <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
+        </v-card-title>
+          <v-card-title>
+            <v-layout justify-center><span>{{snackฺฺฺBar}}</span></v-layout>
+          </v-card-title>
+          </v-flex>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="Store.editUser = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
 
   <v-snackbar
     :vertical="true"

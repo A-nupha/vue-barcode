@@ -13,10 +13,16 @@
                                             Stork
                                         </v-flex>
                                     </v-toolbar-title>
-                                    <v-divider class="mx-2" inset vertical></v-divider>
                                     <v-spacer></v-spacer>
+                              <v-text-field
+                                v-model="search"
+                                append-icon="mdi-magnify"
+                                label="Search"
+                                single-line
+                                hide-details
+                              ></v-text-field>
                                 </v-toolbar>
-                                <v-data-table :headers="headers" :items="desserts" class="elevation-1">
+                                <v-data-table :headers="headers" :items="desserts" :search="search" class="elevation-1">
                                     <template slot="items" slot-scope="props">
                                         <td class="text-xs-center">{{ props.item.Barcode }}</td>
                                         <td class="text-xs-center">{{ props.item.protein }}</td>
@@ -66,9 +72,10 @@ export default {
     // tab,
   },
   data: () => ({
+    search: '',
     timeout: 5000,
     confirm: false,
-    snackฺฺฺBarBool: '',
+    snackฺฺฺBarBool: false,
     msgSnackBar: '',
     dialog: false,
     headers: [{

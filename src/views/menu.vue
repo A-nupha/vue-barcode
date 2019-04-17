@@ -111,7 +111,7 @@
                       >
                         <div class="background-icon">
                           <v-icon class="icon">mdi-sync-alert</v-icon>
-                        </div>                   
+                        </div>
                         <v-icon style="font-size:100px;">mdi-sync-alert</v-icon>
                         <p class="text-xs-center menuLabel">Request</p>
                       </v-card>

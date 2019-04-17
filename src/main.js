@@ -9,8 +9,10 @@ import VueMoment from 'vue-moment';
 // import moment from 'moment-timezone'
 import 'chart.js'
 import 'hchs-vue-charts'
+import GlobalDate from './views/GlobalDate.vue'
 
 Vue.use(window.VueCharts)
+Vue.component(GlobalDate.name, GlobalDate);
 
 Vue.config.productionTip = false;
 
