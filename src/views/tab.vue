@@ -91,9 +91,10 @@ export default {
   },
   methods: {
     insert() {
-      const api = 'https://a-nuphasupit58.000webhostapp.com/insertItems.php';
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/insertItems.php';
       const dataParams = new URLSearchParams();
       const dataInsert = JSON.stringify(this.Store.dataScan)
+      console.log('this.Store.dataScan', this.Store.dataScan)
       dataParams.append('dataInsert', dataInsert)
       Axios.post(api, dataParams)
         .then((response) => {
@@ -105,7 +106,7 @@ export default {
       const active = Number(this.active);
       if (Number(this.active === 2)) {
         alert('ยังไม่เสร็จ')
-        this.openDialog = true
+        // this.openDialog = true
         this.insert()
         // รีเซ็ตดาต้าแสกน
       } else {

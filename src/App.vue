@@ -62,8 +62,9 @@
 
       </v-navigation-drawer >
     </v-layout>
-    <v-navigation-drawer v-model="drawerS" absolute
-        temporary fixed right height="100%"
+    <!-- <v-navigation-drawer v-model="drawerS" absolute
+        temporary
+        right
         width ='200'>
       <v-list dense>
         <v-list-tile @click="openDialogContext()" ripple>
@@ -73,7 +74,7 @@
         <v-list-tile-title>contact</v-list-tile-title>
       </v-list-tile>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
     <v-dialog v-model="openDialog" persistent max-width="400px">
         <v-card>
           <v-flex>
@@ -196,21 +197,6 @@ export default {
     toggleNavigationDrawer() {
       this.drawer = !this.drawer;
     },
-    // validate() {
-    //   console.log('test', this.Store.dataLogin[0].role_id)
-    //   if (String(this.Store.dataLogin[0].role_id) === '01') {
-    //     this.role = 'Manager'
-    //   }
-    //   if (String(this.Store.dataLogin[0].role_id) === '02') {
-    //     this.role = 'empoyee'
-    //   }
-    //   if (String(this.Store.dataLogin[0].role_id) === '00') {
-    //     this.role = 'empoyee'
-    //   }
-    //   if (String(this.Store.dataLogin[0].role_id) !== String) {
-    //     this.role = 'nan'
-    //   }
-    // },
     logout() {
       store.state.userName = null
       store.state.passWord = null

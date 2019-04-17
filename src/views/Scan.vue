@@ -96,10 +96,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <!-- {{Store.dataLogin[0].pid}} -->
   </div>
 </template>
 
 <script>
+import { toNumber } from 'lodash'
 import {
   QuaggaScanner,
 } from 'vue-quaggajs';
@@ -111,13 +113,14 @@ import { sync } from 'vuex-pathify'
 import controlData from './getApiData/controlData'
 import functions from '../plugins/functions'
 
+
 export default {
   name: 'VueBarcodeTest',
   data() {
     return {
       time: moment().format('hmmssa'),
       nowDate: functions.moment(moment().format('YYYYMMDD')),
-      select: '1',
+      select: '01',
       items: [
         'ขาย',
         'สูญหาย',
@@ -159,30 +162,25 @@ export default {
   },
   methods: {
     putdata() {
+      console.log('this.Store.dataBranch[0].pid', this.Store.dataBranch[0].pid)
       const obj = {
-        barcode: this.databarcode,
-        name: this.name,
-        desc: this.detailItems,
+        barcode: String(this.databarcode),
+        name: String(this.name),
+        desc: String(this.detailItems),
         cate_id: 1,
-        price: this.price,
-        cost: this.cost,
+        price: toNumber(this.price),
+        cost: toNumber(this.cost),
         remark: '',
-        branch_id: this.Store.dataBranch[0].branch_id,
-        quantity_in: this.qty,
+        branch_id: toNumber(this.Store.dataBranch[0].branch_id),
+        quantity_in: toNumber(this.qty),
         date_in: this.nowDate,
         add_time: this.time,
-        status_id: this.select,
+        status_id: String(this.select),
         approve_id: '01',
-        pid_user: this.Store.dataBranch[0].pid,
-        pid_approve: this.Store.dataBranch[0].pid,
+        pid_user: String(this.Store.dataLogin[0].pid),
+        pid_approve: String(this.Store.dataLogin[0].pid),
       }
       this.$store.state.dataScan.push(obj)
-
-
-
-    
-
-
       console.log('this.$store.state.dataScan',this.$store.state.dataScan)
       this.dialogScan = false
     },

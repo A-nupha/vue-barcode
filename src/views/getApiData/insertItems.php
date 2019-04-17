@@ -9,8 +9,9 @@ $servername = "localhost";
 $username = "id3526601_anupha";
 $password = "ok223201";
 $dbname = "id3526601_projest_vue_barcode";
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
+$barcode = array();
+$barcode = $_POST['dataInsert'];
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -30,13 +31,9 @@ else
 echo "Error";
 
 }
-echo "select=";
-echo json_encode($dataItems);
 
-$response = array();
-if ($result->num_rows > 0) {
-    
-    $barcode = $_POST['dataInsert'];
+// $response = array();
+// if ($result->num_rows > 0) {
     // Array(
     // 0 => Array (
     //         "barcode"=> 0000156,
@@ -57,7 +54,6 @@ if ($result->num_rows > 0) {
     //         "status_id" => 01,
     //         "add_time"=> 120102,
     //         "add_date"=> 25620304,
-
     //     ),
     // 1 => Array(
     //     "barcode"=> 00000123,
@@ -100,21 +96,6 @@ if ($result->num_rows > 0) {
     //     "add_date"=> 25620304,
     //     )
     // );
-    // function insertItems($data) {
-    //     $query = "insert into items(barcode, name, desc, price, cost, remark) values ('$data['barcode]', '$data['name]', '$data['desc]', '$data['price]', '$data['cost]', '$data['remark]')";
-    //     $result = $conn->query($query);
-    // }
-
-  //   function updateStock($quantity_in, $branch_id, $barcode_stock) {
-  //     $query = "update stock set quantity_in = '$quantity_in' where branch_id = '$branch_id' and barcode = '$barcode_stock'";
-  //     $result = $conn->query($query);
-  // }
-
-  //   function insertStock($data) {
-  //     $query = "insert into stock(barcode, branch_id, quantity_in, quantity_out, date_in, remark) values ('$data['barcode]', '$data['branch_id]', '$data['quantity_in]', '$data['quantity_out]', '$data['date_in]', '$data['remark]')";
-  //     $result = $conn->query($query);
-  //   }
-
     function SearchArray($dataItems,$barcode)
     {
         $servername = "localhost";
