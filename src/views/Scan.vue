@@ -76,8 +76,9 @@
       <v-select
                 :items="getCate"
                 prepend-icon=" "
+                tem-value="cate_id"
                 key="cate_name"
-                v-model="cate_name"
+                v-model="cate_value"
                 item-text="cate_name"
                 label="category"
                 single-line
@@ -96,6 +97,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    {{cate_value.cate_id}}
     <!-- {{Store.dataLogin[0].pid}} -->
   </div>
 </template>
@@ -118,6 +120,7 @@ export default {
   name: 'VueBarcodeTest',
   data() {
     return {
+      cate_value: '',
       time: moment().format('hmmssa'),
       nowDate: functions.moment(moment().format('YYYYMMDD')),
       select: '01',
@@ -162,17 +165,17 @@ export default {
   },
   methods: {
     putdata() {
-      console.log('this.Store.dataBranch[0].pid', this.Store.dataBranch[0].pid)
+      // console.log('this.Store.dataBranch[0].pid', this.Store.dataBranch[0].pid)
       const obj = {
         barcode: String(this.databarcode),
         name: String(this.name),
         desc: String(this.detailItems),
-        cate_id: 1,
+        cate_id: this.cate_value.cate_id,
         price: toNumber(this.price),
         cost: toNumber(this.cost),
         remark: '',
         branch_id: toNumber(this.Store.dataBranch[0].branch_id),
-        quantity_in: toNumber(this.qty),
+        quantity_stock: toNumber(this.qty),
         date_in: this.nowDate,
         add_time: this.time,
         status_id: String(this.select),
@@ -181,7 +184,7 @@ export default {
         pid_approve: String(this.Store.dataLogin[0].pid),
       }
       this.$store.state.dataScan.push(obj)
-      console.log('this.$store.state.dataScan',this.$store.state.dataScan)
+      console.log('this.$store.state.dataScan', this.$store.state.dataScan)
       this.dialogScan = false
     },
     openQuagga() {

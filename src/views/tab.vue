@@ -42,12 +42,12 @@
           <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
         </v-card-title>
           <v-card-title>
-            <v-layout justify-center><span>success</span></v-layout>
+            <v-layout justify-center><span>{{msg}}</span></v-layout>
           </v-card-title>
           </v-flex>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="openDialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click="setMenuRequest()">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -56,6 +56,9 @@
   </div>
 </template>
 <script>
+import {
+  mapActions,
+} from 'vuex'
 import Axios from 'axios';
 import Scan from './Scan.vue'
 import Branch from './Branch.vue'
@@ -72,6 +75,8 @@ export default {
       active: 0,
       button: 'ถัดไป',
       Store: this.$store.state,
+      msg: '',
+      color: '',
     }
   },
   components: {
@@ -90,6 +95,15 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
+      setDataLogin: 'getApi/setDataLogin',
+    }),
+    setMenuRequest() {
+      const menu = 'Menu'
+      this.setDataLogin(menu);
+      this.Store.dataScan = ''
+    },
     insert() {
       const api = 'https://a-nuphasupit58.000webhostapp.com/Edit_feen_20190405.php';
       const dataParams = new URLSearchParams();
@@ -99,16 +113,23 @@ export default {
       Axios.post(api, dataParams)
         .then((response) => {
           console.log('-=-=-==-')
-          console.log(response.data)
+          this.insertsuccess = response.data
+          if (Boolean(this.insertsuccess) === true) {
+            alert('สำเร็จ')
+            this.msg = 'success'
+            this.color = 'green'
+            this.openDialog = true
+          } else {
+            this.msg = 'unsuccessful'
+            this.color = 'red'
+            this.openDialog = true
+          }
         })
     },
     next() {
       const active = Number(this.active);
       if (Number(this.active === 2)) {
-        // alert('ยังไม่เสร็จ')
-        // this.openDialog = true
         this.insert()
-        // รีเซ็ตดาต้าแสกน
       } else {
         this.active = active + 1;
       }

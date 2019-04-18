@@ -184,6 +184,7 @@ export default {
       if (this.login === 'Stork') { this.z = 'Stork' }
       if (this.login === 'deleteStork') { this.z = 'deleteStork' }
     },
+    
 
   },
   created() {
