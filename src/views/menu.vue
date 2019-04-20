@@ -154,7 +154,6 @@
                       </v-card>
                     </v-flex>
                   </v-layout>
-
                 </v-form>
               </v-card>
             </v-container>

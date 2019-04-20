@@ -48,13 +48,13 @@
     </v-layout>
 <v-dialog v-model="dialogScan"  fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-toolbar dark color="blue">
-            <v-btn icon dark @click="dialogScan = false">
+            <v-btn icon dark @click="closeDialogScan()">
               <v-icon>mdi-close</v-icon>
             </v-btn>
             <v-toolbar-title>Settings</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark flat @click="putdata()">Save</v-btn>
+              <v-btn dark flat @click="putdata()" :disabled="!valid">Save</v-btn>
             </v-toolbar-items>
             </v-toolbar>
       <v-card>
@@ -75,7 +75,7 @@
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Name" v-model="name" />
+        <v-text-field prepend-icon=" " label="Name" v-model="nameItems" />
       </v-flex>
     </v-layout>
     <!-- <v-layout>
@@ -90,7 +90,14 @@
     </v-layout> -->
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Qty" suffix="Piece" v-model="qty" required/>
+        <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
+    {{valid}}
+        <v-text-field prepend-icon=" " label="Qty" suffix="Piece" v-model="qty" :rules="rules" required/>
+        </v-form>
       </v-flex>
     </v-layout>
     <v-layout>
@@ -155,25 +162,26 @@
         yes
       </v-btn></v-flex></v-layout>
   </v-snackbar>
-    <!-- {{dataScanOut}} -->
+  {{Store.dataBranch}}
+
   </div>
 </template>
 
 <script>
+import Axios from 'axios';
 import {
   QuaggaScanner,
 } from 'vue-quaggajs';
 import Quagga from 'quagga';
-// import swal from 'sweetalert';
 import { sync } from 'vuex-pathify'
-// import store from '../store/store'
+import functions from '../plugins/functions'
+import controlData from './getApiData/controlData'
 
-// import js from './js/index.js';
-// import Quagga from 'quagga';
 export default {
-  name: 'VueBarcodeTest',
   data() {
     return {
+      valid: true,
+      nameItems: '',
       timeout: 5000,
       select: 'ขาย',
       openDialog: false,
@@ -215,33 +223,85 @@ export default {
       snackฺฺฺBarBool: false,
       Store: this.$store.state,
       confirmData: '',
+      qtyBase: '',
+      getDataBarcode: [],
+      disble: false,
     };
   },
   components: {
     QuaggaScanner,
   },
+  async created() {
+    await this.getBranch()
+  },
   computed: {
     ...sync('*'),
+    rules() {
+      const rules = []
+      if (Number(this.qtyBase)) {
+        const rule = v => (Number(this.qtyBase)) >= Number(this.qty) || 'Values do not match'
+        rules.push(rule)
+      }
+      return rules
+    },
+
+  },
+  watch: {
+
+    async databarcode() {
+      if (this.databarcode.length !== 0) {
+        console.log('this.Store.dataBranch[0].branch_id', this.Store.dataBranch[0].branch_id)
+        // await controlData.getDataBarcode(this.databarcode, this.Store.dataBranch[0].branch_id).then((response) => {
+        //   console.log(response.data)
+        // });
+        const api = 'https://a-nuphasupit58.000webhostapp.com/php/getDataBarcode.php';
+        const params = new URLSearchParams();
+        params.append('barcode', this.databarcode)
+        console.log('this.Store.dataBranch[0].branch_id', this.Store.dataBranch[0].branch_id)
+        params.append('branch_id', this.Store.dataBranch[0].branch_id)
+        const response = await Axios.post(api, params)
+        console.log('response', response)
+        this.nameItems = response.data[0].name
+        this.detailItems = response.data[0].desc
+        this.qtyBase = response.data[0].quantity_stock
+      }
+    },
+
   },
   methods: {
+    getBranch() {
+      controlData.selectBranch(Number(this.Store.dataLogin[0].rcode_id))
+    },
+    closeDialogScan() {
+      this.dialogScan = false
+      this.nameItems = ''
+      this.databarcode = ''
+      this.detailItems = ''
+      this.qty = ''
+    },
     putdata() {
-      if (String(this.select) === 'สูญหาย' || String(this.select) === 'ชำรุด') {
-        this.confirmData = '99'
-      }
-      if (String(this.select) === 'ขาย') {
-        this.confirmData = '00'
-      }
+      // if (String(this.select) === 'สูญหาย' || String(this.select) === 'ชำรุด') {
+      //   this.confirmData = '99'
+      // }
+      // if (String(this.select) === 'ขาย') {
+      //   this.confirmData = '00'
+      // }
       const obj = {
         databarcode: this.databarcode,
+        branch_id: this.Store.dataBranch[0].branch_id,
         qty: this.qty,
-        name: this.name,
-        Event: this.select,
+        name: this.nameItems,
+        status_id: this.select,
+        approve_id: functions.tranStatusCode(String(this.select)),
         detailItems: this.detailItems,
         price: this.price,
         cost: this.cost,
-        confirm: Number(this.confirmData),
       }
       this.$store.state.dataScanOut.push(obj)
+      this.nameItems = ''
+      this.databarcode = ''
+      this.detailItems = ''
+      this.qty = ''
       this.dialogScan = false
     },
     openQuagga() {
@@ -264,7 +324,46 @@ export default {
     },
     confirm() {
       this.openDialog = true
-      alert('นี้ก็ยังม่ายเสร็จ')
+      const dataError = []
+      const dataSecess = []
+      for (let i = 0; i < this.dataScanOut.length; i += 1) {
+        if (String(this.dataScanOut[i].status_id) === 'สูญหาย' || String(this.dataScanOut[i].status_id) === 'ชำรุด') {
+          dataError.push(this.dataScanOut[i])
+        } else {
+          dataSecess.push(this.dataScanOut[i])
+        }
+      }
+      console.log('dataError', dataError)
+      console.log('dataSecess', dataSecess)
+      if (dataError) {
+        this.insertError(dataError)
+      }
+    },
+    insertError(data) {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/20190405.php';
+      const dataParams = new URLSearchParams();
+      const dataInsert = JSON.stringify(data)
+      console.log('this.Store.dataScan', data)
+      dataParams.append('dataInsertError', dataInsert)
+      Axios.post(api, dataParams)
+        .then((response) => {
+          console.log(response.data)
+        })
+    },
+    insertSecess(data) {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/20190405.php';
+      const dataParams = new URLSearchParams();
+      const dataInsert = JSON.stringify(data)
+      console.log('this.Store.dataScan', data)
+      dataParams.append('dataInsertError', dataInsert)
+      Axios.post(api, dataParams)
+        .then((response) => {
+          console.log(response.data)
+        })
+    },
+
+    validateField() {
+      this.$refs.form.validate()
     },
   },
 }

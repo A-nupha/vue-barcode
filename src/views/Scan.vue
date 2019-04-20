@@ -183,8 +183,10 @@ export default {
         pid_user: String(this.Store.dataLogin[0].pid),
         pid_approve: String(this.Store.dataLogin[0].pid),
       }
-      this.$store.state.dataScan.push(obj)
-      console.log('this.$store.state.dataScan', this.$store.state.dataScan)
+      console.log(obj)
+      this.Store.dataScan.push(obj)
+      
+      // console.log('this.$store.state.dataScan', this.$store.state.dataScan)
       this.dialogScan = false
     },
     openQuagga() {
