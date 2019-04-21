@@ -1,5 +1,5 @@
 <template>
-  
+
     <v-layout row>
       <v-flex xs12>
         <v-tabs
@@ -28,12 +28,12 @@
       </v-flex >
     </v-layout>
 
-    
 
 </template>
 
 <script>
 // ประวัติส่วนตัว
+import { mapState, mapGetters, mapActions } from 'vuex'
 import Person from './Person.vue'
 // การศึกษา
 import Edu from './edu.vue'
@@ -44,27 +44,26 @@ import Import from './Important.vue'
 // ข้อมูลคู่สมรส
 import Son from './Marryy.vue'
 // vuex
-import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Profile',
-  data () {
+  data() {
     return {
       active: null,
-      button: 'ถัดไป'
+      button: 'ถัดไป',
     }
   },
   computed: {
     ...mapState({
-      Pid: store => store.XUser.pid
-    })
+      Pid: store => store.XUser.pid,
+    }),
   },
   components: {
     Person,
     Edu,
     Career,
     Import,
-    Son
+    Son,
   },
   // mounted() {
   //   let url = "../marry.json";
@@ -82,14 +81,14 @@ export default {
   //     });
   // },
   methods: {
-    handleTabClick (e) {
+    handleTabClick(e) {
       console.log(e)
     },
-    submit () {
+    submit() {
       alert('333')
     },
 
-    next () {
+    next() {
       const active = parseInt(this.active)
       // alert(active);
       if (active === 1) {
@@ -101,7 +100,7 @@ export default {
       } else {
         this.active = active + 1
       }
-    }
-  }
+    },
+  },
 }
 </script>

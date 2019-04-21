@@ -204,7 +204,7 @@ export default {
     if (data === 'สูญหาย' || data === 'ชำรุด') {
       str = 'ไม่อนุมัติ'
     } else {
-      str = ''
+      str = 'ปกติ'
     }
     return str;
   },

@@ -10,7 +10,7 @@
       <template slot="items" slot-scope="props">
         <td>{{ props.item.barcode }}</td>
         <td class="text-xs-center">{{ props.item.name }}</td>
-        <td class="text-xs-center">{{ props.item.quantity_in }}</td>
+        <td class="text-xs-center">{{ props.item.quantity_stock }}</td>
         <td><v-btn icon>
             <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
             </v-btn></td>

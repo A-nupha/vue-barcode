@@ -22,8 +22,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
- }
-   echo "true";
+}
+echo "true";
 // Check connection
 
 
@@ -157,7 +157,7 @@ function SearchArray($dataItems,$barcode,$conn)
             }
 
             $querytransac = "insert into transaction_in(id, barcode, add_date, add_time, branch_id, quantity, status_id, approve_id, pid_user, pid_approve, remark)
-            values (NULL,'".$barcode[$i]['barcode']."', CURRENT_DATE(), CURRENT_TIME(), '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."')";
+            values (NULL,'".$barcode[$i]['barcode']."', '".$barcode[$i]['date_in']."', '".$barcode[$i]['add_time']."', '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."')";
             $result3 = $conn->query($querytransac);
             if($result3)
             {

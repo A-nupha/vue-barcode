@@ -21,7 +21,7 @@
     </v-layout>
 <v-dialog v-model="dialogScan"  fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-toolbar dark color="blue">
-            <v-btn icon dark @click="dialogScan = false">
+            <v-btn icon dark @click="closeDialog()">
               <v-icon>mdi-close</v-icon>
             </v-btn>
             <v-toolbar-title>Settings</v-toolbar-title>
@@ -97,7 +97,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    {{cate_value.cate_id}}
     <!-- {{Store.dataLogin[0].pid}} -->
   </div>
 </template>
@@ -107,6 +106,7 @@ import { toNumber } from 'lodash'
 import {
   QuaggaScanner,
 } from 'vue-quaggajs';
+import Axios from 'axios';
 import Quagga from 'quagga';
 import moment from 'moment'
 // import swal from 'sweetalert';
@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       cate_value: '',
-      time: moment().format('hmmssa'),
+      time: moment().format('hmmss'),
       nowDate: functions.moment(moment().format('YYYYMMDD')),
       select: '01',
       items: [
@@ -151,6 +151,27 @@ export default {
   components: {
     QuaggaScanner,
   },
+  watch: {
+    async databarcode() {
+      if (this.databarcode.length !== 0) {
+        console.log('this.Store.dataBranch[0].branch_id', this.Store.dataBranch[0].branch_id)
+        // await controlData.getDataBarcode(this.databarcode, this.Store.dataBranch[0].branch_id).then((response) => {
+        //   console.log(response.data)
+        // });
+        const api = 'https://a-nuphasupit58.000webhostapp.com/php/getDataBarcodeScan.php';
+        const params = new URLSearchParams();
+        params.append('barcode', this.databarcode)
+        const response = await Axios.post(api, params)
+        console.log('response', response)
+        this.name = response.data[0].name
+        this.detailItems = response.data[0].desc
+        this.cate_value = response.data[0].cate_name
+        this.cost = response.data[0].cost
+        this.price = response.data[0].price
+      }
+    },
+
+  },
   computed: {
     ...sync('*'),
   },
@@ -164,7 +185,17 @@ export default {
   created() {
   },
   methods: {
+    closeDialog() {
+      this.name = ''
+      this.detailItems = ''
+      this.cate_value = ''
+      this.cost = ''
+      this.price = ''
+      this.dialogScan = false
+    },
     putdata() {
+      console.log('date', this.nowDate)
+      console.log('time', this.time)
       // console.log('this.Store.dataBranch[0].pid', this.Store.dataBranch[0].pid)
       const obj = {
         barcode: String(this.databarcode),
@@ -176,8 +207,8 @@ export default {
         remark: '',
         branch_id: toNumber(this.Store.dataBranch[0].branch_id),
         quantity_stock: toNumber(this.qty),
-        date_in: this.nowDate,
-        add_time: this.time,
+        date_in: functions.moment(moment().format('YYYYMMDD')),
+        add_time: moment().format('hmmss'),
         status_id: String(this.select),
         approve_id: '01',
         pid_user: String(this.Store.dataLogin[0].pid),
@@ -185,7 +216,7 @@ export default {
       }
       console.log(obj)
       this.Store.dataScan.push(obj)
-      
+
       // console.log('this.$store.state.dataScan', this.$store.state.dataScan)
       this.dialogScan = false
     },

@@ -37,7 +37,7 @@
       <template slot="items" slot-scope="props">
         <td>{{ props.item.databarcode }}</td>
         <td class="text-xs-center">{{ props.item.name }}</td>
-        <td class="text-xs-center">{{ props.item.qty }}</td>
+        <td class="text-xs-center">{{ props.item.quantity }}</td>
         <td><v-btn icon>
         <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>            </v-btn></td>
       </template>
@@ -136,7 +136,7 @@
           </v-flex>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="openDialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click="setMenuRequest()">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -162,13 +162,17 @@
         yes
       </v-btn></v-flex></v-layout>
   </v-snackbar>
-  {{Store.dataBranch}}
-
+  {{dataScanOut}}
   </div>
 </template>
 
 <script>
+import {
+  mapActions,
+} from 'vuex'
 import Axios from 'axios';
+import { toNumber } from 'lodash'
+import moment from 'moment'
 import {
   QuaggaScanner,
 } from 'vue-quaggajs';
@@ -180,6 +184,7 @@ import controlData from './getApiData/controlData'
 export default {
   data() {
     return {
+      nowDate: functions.moment(moment().format('YYYYMMDD')),
       valid: true,
       nameItems: '',
       timeout: 5000,
@@ -226,6 +231,7 @@ export default {
       qtyBase: '',
       getDataBarcode: [],
       disble: false,
+      time: moment().format('hmmss'),
     };
   },
   components: {
@@ -247,7 +253,6 @@ export default {
 
   },
   watch: {
-
     async databarcode() {
       if (this.databarcode.length !== 0) {
         console.log('this.Store.dataBranch[0].branch_id', this.Store.dataBranch[0].branch_id)
@@ -269,6 +274,17 @@ export default {
 
   },
   methods: {
+    ...mapActions({
+    // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
+      setDataLogin: 'getApi/setDataLogin',
+    }),
+    setMenuRequest() {
+      this.openDialog = false
+      const menu = 'Menu'
+      this.setDataLogin(menu);
+      this.Store.dataScanOut = ''
+
+    },
     getBranch() {
       controlData.selectBranch(Number(this.Store.dataLogin[0].rcode_id))
     },
@@ -280,22 +296,18 @@ export default {
       this.qty = ''
     },
     putdata() {
-      // if (String(this.select) === 'สูญหาย' || String(this.select) === 'ชำรุด') {
-      //   this.confirmData = '99'
-      // }
-      // if (String(this.select) === 'ขาย') {
-      //   this.confirmData = '00'
-      // }
       const obj = {
         databarcode: this.databarcode,
-        branch_id: this.Store.dataBranch[0].branch_id,
-        qty: this.qty,
+        add_date: functions.moment(moment().format('YYYYMMDD')),
+        add_time: moment().format('hmmss'),
+        branch_id: toNumber(this.Store.dataBranch[0].branch_id),
+        quantity: this.qty,
         name: this.nameItems,
         status_id: this.select,
         approve_id: functions.tranStatusCode(String(this.select)),
+        pid_user: String(this.Store.dataLogin[0].pid),
+        pid_approve: String(this.Store.dataLogin[0].pid),
         detailItems: this.detailItems,
-        price: this.price,
-        cost: this.cost,
       }
       this.$store.state.dataScanOut.push(obj)
       this.nameItems = ''
@@ -335,27 +347,15 @@ export default {
       }
       console.log('dataError', dataError)
       console.log('dataSecess', dataSecess)
-      if (dataError) {
-        this.insertError(dataError)
-      }
+      this.insertSecess(dataSecess, dataError)
     },
-    insertError(data) {
-      const api = 'https://a-nuphasupit58.000webhostapp.com/20190405.php';
+    insertSecess(dataSecess, dataError) {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/insertItemsOut.php';
       const dataParams = new URLSearchParams();
-      const dataInsert = JSON.stringify(data)
-      console.log('this.Store.dataScan', data)
-      dataParams.append('dataInsertError', dataInsert)
-      Axios.post(api, dataParams)
-        .then((response) => {
-          console.log(response.data)
-        })
-    },
-    insertSecess(data) {
-      const api = 'https://a-nuphasupit58.000webhostapp.com/20190405.php';
-      const dataParams = new URLSearchParams();
-      const dataInsert = JSON.stringify(data)
-      console.log('this.Store.dataScan', data)
-      dataParams.append('dataInsertError', dataInsert)
+      const dataSecessInsert = JSON.stringify(dataSecess)
+      const dataErrorInsert = JSON.stringify(dataError)
+      dataParams.append('dataSuccess', dataSecessInsert)
+      dataParams.append('dataError', dataErrorInsert)
       Axios.post(api, dataParams)
         .then((response) => {
           console.log(response.data)
