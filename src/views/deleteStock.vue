@@ -77,16 +77,6 @@
         <v-text-field prepend-icon=" " label="Name" v-model="nameItems" />
       </v-flex>
     </v-layout>
-    <!-- <v-layout>
-      <v-flex xs10>
-        <v-text-field prepend-icon=" " v-model="price" suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
-      </v-flex>
-    </v-layout> -->
-    <!-- <v-layout>
-      <v-flex xs10>
-        <v-text-field prepend-icon=" " v-model="cost" suffix="Baht"  name="input-7-4" label="Cost"></v-text-field>
-      </v-flex>
-    </v-layout> -->
     <v-layout>
       <v-flex xs10>
         <v-form
@@ -95,7 +85,7 @@
       lazy-validation
     >
     {{valid}}
-        <v-text-field prepend-icon=" " label="Qty" suffix="Piece" v-model="qty" :rules="rules" required/>
+        <v-text-field prepend-icon=" " label="Qty" v-model="qty" :rules="rules" required/>
         </v-form>
       </v-flex>
     </v-layout>

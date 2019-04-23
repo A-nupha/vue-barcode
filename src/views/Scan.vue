@@ -216,7 +216,6 @@ export default {
       }
       console.log(obj)
       this.Store.dataScan.push(obj)
-
       // console.log('this.$store.state.dataScan', this.$store.state.dataScan)
       this.dialogScan = false
     },

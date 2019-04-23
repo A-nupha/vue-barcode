@@ -57,7 +57,7 @@ SearchArray($dataItems,$barcode,$conn);
 function SearchArray($dataItems,$barcode,$conn)
 {
 
-    // echo json_encode($dataItems)."\r\n";
+
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     } else{
@@ -100,8 +100,8 @@ function SearchArray($dataItems,$barcode,$conn)
             }
 
 
-            $querytransac = "insert into transaction_in(id, barcode, add_date, add_time, branch_id, quantity, status_id, approve_id, pid_user, pid_approve, remark)
-            values (NULL,'".$barcode[$i]['barcode']."', CURRENT_DATE(), CURRENT_TIME(), '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."')";
+            $querytransac = "insert into transaction_in(id, barcode, add_date, add_time, branch_id, quantity, status_id, approve_id, pid_user, pid_approve, remark, price ,cost)
+            values (NULL,'".$barcode[$i]['barcode']."', CURRENT_DATE(), CURRENT_TIME(), '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."', ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].")";
             $result3 = $conn->query($querytransac);
             if($result3)
             {
@@ -156,8 +156,8 @@ function SearchArray($dataItems,$barcode,$conn)
                 // echo "Error Save [".$query."]";
             }
 
-            $querytransac = "insert into transaction_in(id, barcode, add_date, add_time, branch_id, quantity, status_id, approve_id, pid_user, pid_approve, remark)
-            values (NULL,'".$barcode[$i]['barcode']."', '".$barcode[$i]['date_in']."', '".$barcode[$i]['add_time']."', '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."')";
+            $querytransac = "insert into transaction_in(id, barcode, add_date, add_time, branch_id, quantity, status_id, approve_id, pid_user, pid_approve, remark, price, cost)
+            values (NULL,'".$barcode[$i]['barcode']."', '".$barcode[$i]['date_in']."', '".$barcode[$i]['add_time']."', '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."', ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].")";
             $result3 = $conn->query($querytransac);
             if($result3)
             {

@@ -102,7 +102,7 @@ export default {
     setMenuRequest() {
       const menu = 'Menu'
       this.setDataLogin(menu);
-      this.Store.dataScan = ''
+      this.Store.dataScan = []
     },
     insert() {
       const api = 'https://a-nuphasupit58.000webhostapp.com/php/Edit_20190405.php';

@@ -58,11 +58,29 @@ function DataSuccessInsert($data,$conn){
         $pid_user =$data[$i]['pid_user'];
         $pid_approve =$data[$i]['pid_approve'];
         $detailItems =$data[$i]['detailItems'];
+        $barcode_stock = $data[$i]['databarcode'];
+        $dataStock= array();
+
+
+        $dataPriceCost=array();
+        $queryit = "select * from items where barcode = '".$barcode."'";
+        $resultqueryit = $conn->query($queryit);
+        if($resultqueryit)
+        {
+        while ($row=mysqli_fetch_assoc($resultqueryit))
+            {   
+            $dataPriceCost[]=$row;
+            }
+        }
+        else
+        {
+            echo 'error===>select * from items'
+        }
         
 
-        $barcode_stock = $data[$i]['databarcode'];
+        $price=$dataPriceCost['price'];
+        $cost=$dataPriceCost['cost'];
 
-        $dataStock= array();
         $queryStock = "select * from stock where branch_id = ".$branch_id." and barcode = '".$barcode_stock."'";
         $resultItems = $conn->query($queryStock);
         if($resultItems)
@@ -76,9 +94,7 @@ function DataSuccessInsert($data,$conn){
         {
 
         }
-
         $quantity_old = (int)$dataStock[0]['quantity_stock'];
-
         $new_quantity_in = $quantity_old - $data[$i]['quantity'];
         $query = "update stock set quantity_stock = '$new_quantity_in' where branch_id = '".$data[$i]['branch_id']."' and barcode = '".$barcode_stock."'";
         $result = $conn->query($query);
@@ -92,8 +108,8 @@ function DataSuccessInsert($data,$conn){
              echo "\r\n update Error Save [".$query."] \r\n";
         }
      
-        $queryInsert="INSERT INTO `transaction_out`(`id`, `barcode`, `add_date`, `add_time`, `branch_id`, `quantity`, `status_id`, `approve_id`, `pid_user`, `pid_approve`, `remark`) 
-        VALUES (null,'".$barcode."','".$add_date."','".$add_time."','".$branch_id."','".$quantity."','".$status_id."','".$approve_id."','".$pid_user."','".$pid_approve."','".$detailItems."')";
+        $queryInsert="INSERT INTO `transaction_out`(`id`, `barcode`, `add_date`, `add_time`, `branch_id`, `quantity`, `status_id`, `approve_id`, `pid_user`, `pid_approve`, `remark`, `price`, `cost`) 
+        VALUES (null,'".$barcode."','".$add_date."','".$add_time."','".$branch_id."','".$quantity."','".$status_id."','".$approve_id."','".$pid_user."','".$pid_approve."','".$detailItems."','".$price."','".$cost."')";
 
         $resultInsertSuccess = $conn->query($queryInsert);
         if($resultInsertSuccess)
@@ -117,6 +133,8 @@ function DataErrorInsert($data,$conn){
         $branch_id = $data[$i]['branch_id'];
         $quantity = $data[$i]['quantity'];
         $status_id = $data[$i]['status_id'];
+        $dataPriceCost=array();
+
 
        $queryInsert="INSERT INTO `items_approve`(`id`, `barcode`, `add_date`, `add_time`, `branch_id`, `quantity`, `status`) 
        VALUES (null,'".$barcode."','".$add_date."','".$add_time."','".$branch_id."','".$quantity."','".$status_id."')";
