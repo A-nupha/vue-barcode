@@ -105,7 +105,7 @@ export default {
       this.Store.dataScan = ''
     },
     insert() {
-      const api = 'https://a-nuphasupit58.000webhostapp.com/Edit_feen_20190405.php';
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/Edit_20190405.php';
       const dataParams = new URLSearchParams();
       const dataInsert = JSON.stringify(this.Store.dataScan)
       console.log('this.Store.dataScan', this.Store.dataScan)

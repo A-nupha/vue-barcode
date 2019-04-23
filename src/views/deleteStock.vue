@@ -44,7 +44,6 @@
     </v-data-table>
     </v-flex>
 </v-layout>
-
     </v-layout>
 <v-dialog v-model="dialogScan"  fullscreen hide-overlay transition="dialog-bottom-transition">
       <v-toolbar dark color="blue">
@@ -282,8 +281,7 @@ export default {
       this.openDialog = false
       const menu = 'Menu'
       this.setDataLogin(menu);
-      this.Store.dataScanOut = ''
-
+      this.Store.dataScanOut = []
     },
     getBranch() {
       controlData.selectBranch(Number(this.Store.dataLogin[0].rcode_id))

@@ -19,9 +19,9 @@
                                 <v-data-table :headers="headers"
                                 :items="desserts" class="elevation-1">
                                     <template slot="items" slot-scope="props">
-                                        <td class="text-xs-center">{{ props.item.Barcode }}</td>
-                                        <td class="text-xs-center">{{ props.item.fat }}</td>
-                                        <td class="text-xs-center">{{ props.item.carbs }}</td>
+                                        <td class="text-xs-center">{{ props.item.barcode }}</td>
+                                        <td class="text-xs-center">{{ props.item.status }}</td>
+                                        <td class="text-xs-center">{{ props.item.total }}</td>
                                         <td class="text-xs-center">
                                             <v-btn icon>
                                             <v-icon color="green"
@@ -34,10 +34,6 @@
                                             @click="deleteItem(props.item)">mdi-delete</v-icon>
                                             </v-btn>
                                         </td>
-                                    </template>
-                                    <template slot="no-data">
-                                        <v-btn color="primary" @click="initialize">
-                                            Reset</v-btn>
                                     </template>
                                 </v-data-table>
                             </div>
@@ -106,148 +102,218 @@
     <v-flex><v-btn
         color="white"
         flat
+        @click="ApproveItems()"
+      >
+        yes
+      </v-btn></v-flex></v-layout>
+  </v-snackbar>
+
+  <v-snackbar
+    :vertical="true"
+    v-model="snackฺฺฺBarBoolError"
+    color="orange"
+    :timeout="timeout"
+    bottom>
+    <v-flex >{{msgSnackBar}}</v-flex>
+    <v-layout><v-flex><v-btn
+        color="white"
+        flat
+        @click="snackฺฺฺBarBoolError = false "
+      >
+        no
+      </v-btn></v-flex>
+    <v-flex><v-btn
+        color="white"
+        flat
         @click="deleteItemS()"
       >
         yes
       </v-btn></v-flex></v-layout>
   </v-snackbar>
+  {{getdataTable}}
 </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 import {
   mapActions,
 } from 'vuex'
+import Axios from 'axios';
+import {
+  sync,
+} from 'vuex-pathify'
+import store from '../store/store'
+import functions from '../plugins/functions'
 
 export default {
   name: 'Request',
   components: {
     // tab,
   },
-  data: () => ({
-    timeout: 5000,
-    confirm: false,
-    snackฺฺฺBarBool: '',
-    msgSnackBar: '',
-    dialog: false,
-    headers: [{
-      text: 'Barcode',
-      align: 'center',
-      sortable: false,
-      value: 'name',
-    },
-    {
-      text: 'Status',
-      value: 'fat',
-      sortable: false,
-      align: 'center',
-    },
-    {
-      text: 'Qty',
-      value: 'protein',
-      align: 'center',
-      sortable: false,
-    },
-    {
-      text: 'Approved',
-      value: 'name',
-      sortable: false,
-      align: 'center',
-    },
-    {
-      text: 'Delete',
-      value: 'name',
-      sortable: false,
-      align: 'center',
-    },
-    ],
-    desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
-    defaultItem: {
-      name: '',
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0,
-    },
-  }),
+  data() {
+    return {
+      getdataTable: [],
+      nowDate: functions.moment(moment().format('YYYYMMDD')),
+      time: moment().format('hmmss'),
+      snackฺฺฺBarBoolError: false,
+      Store: this.$store.state,
+      timeout: 5000,
+      confirm: false,
+      snackฺฺฺBarBool: '',
+      msgSnackBar: '',
+      dialog: false,
+      headers: [{
+        text: 'Barcode',
+        align: 'center',
+        sortable: false,
+        value: 'name',
+      },
+      {
+        text: 'Status',
+        value: 'fat',
+        sortable: false,
+        align: 'center',
+      },
+      {
+        text: 'Qty',
+        value: 'protein',
+        align: 'center',
+        sortable: false,
+      },
+      {
+        text: 'Approved',
+        value: 'name',
+        sortable: false,
+        align: 'center',
+      },
+      {
+        text: 'Delete',
+        value: 'name',
+        sortable: false,
+        align: 'center',
+      },
+      ],
+      desserts: [],
+      editedIndex: -1,
+      editedItem: {
+        name: '',
+        calories: 0,
+        fat: 0,
+        carbs: 0,
+        protein: 0,
+      },
+      defaultItem: {
+        name: '',
+        calories: 0,
+        fat: 0,
+        carbs: 0,
+        protein: 0,
+      },
+    }
+  },
   computed: {
+    ...sync('*'),
   },
   watch: {
     // dialog(val) {
     //   val || this.close()
     // },
   },
-  created() {
-    this.initialize()
+
+  async created() {
+    await this.getdataReq()
   },
   methods: {
     ...mapActions({
       // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
       setDataLogin: 'getApi/setDataLogin',
     }),
-    initialize() {
-      this.desserts = [{
-        Barcode: '12345678910115',
-        calories: 'งามวงวาล',
-        fat: 'ชำรุด',
-        carbs: 24,
-        protein: 'โค๊ก',
-      },
-      {
-        Barcode: '12365498798788',
-        calories: 'พญาไท',
-        fat: 'สูญหาย',
-        carbs: 37,
-        protein: 'น้ำเปล่า',
-      },
-      {
-        Barcode: '12365498798788',
-        calories: 'ดินแดง',
-        fat: 'สูญหาย',
-        carbs: 23,
-        protein: 'ดินสอ',
-      },
-      {
-        Barcode: '12365412398788',
-        calories: 'สุขุมวิท',
-        fat: 'ชำรุด',
-        carbs: 67,
-        protein: 'เมาส์',
-      },
-      {
-        Barcode: '12367892398118',
-        calories: 'อโศก',
-        fat: 'ชำรุด',
-        carbs: 49,
-        protein: 'ปากกา',
-      },
-      ]
+    async getdataReq() {
+      console.log('data login', store.state.dataLogin[0].rcode_id)
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/getDataItemsApp.php';
+      const params = new URLSearchParams();
+      params.append('branch_id', Number(store.state.dataLogin[0].rcode_id))
+      const response = await Axios.post(api, params)
+      console.log('response', response.data)
+      this.desserts = response.data
     },
     Confirm(item) {
-      alert('ยังไม่เสร็จ')
+      console.log('=====>', item)
+      const rcodeid = Number(store.state.dataLogin[0].rcode_id)
       this.getdataTable = item
+      console.log('test', store.state.dataLogin[0])
+      this.$set(this.getdataTable, 'add_date', functions.moment(moment().format('YYYYMMDD')))
+      this.$set(this.getdataTable, 'add_time', moment().format('hmmss'))
+      this.$set(this.getdataTable, 'branch_id', rcodeid)
+      this.$set(this.getdataTable, 'quantity', item.total)
+      this.$set(this.getdataTable, 'status_id', item.status)
+      this.$set(this.getdataTable, 'pid_user', store.state.dataLogin[0].pid)
+      this.$set(this.getdataTable, 'pid_approve', store.state.dataLogin[0].pid)
+      this.$set(this.getdataTable, 'approve_id', 'ไม่ปกติ')
+      this.$set(this.getdataTable, 'remark', ' ')
+      console.log('getdataTable', this.getdataTable)
       this.msgSnackBar = 'Are you sure you want to Approved this item?'
       this.snackฺฺฺBarBool = true
     },
     deleteItem(item) {
       this.getdataTable = item
+      console.log(this.getdataTable.length)
+      this.getdataTable = item
+      console.log('test', store.state.dataLogin[0])
+      const rcodeid = Number(store.state.dataLogin[0].rcode_id)
+      this.$set(this.getdataTable, 'add_date', functions.moment(moment().format('YYYYMMDD')))
+      this.$set(this.getdataTable, 'add_time', moment().format('hmmss'))
+      this.$set(this.getdataTable, 'branch_id', rcodeid)
+      this.$set(this.getdataTable, 'quantity', item.total)
+      this.$set(this.getdataTable, 'status_id', item.status)
+      this.$set(this.getdataTable, 'pid_user', store.state.dataLogin[0].pid)
+      this.$set(this.getdataTable, 'pid_approve', store.state.dataLogin[0].pid)
+      this.$set(this.getdataTable, 'approve_id', 'ไม่ปกติ')
+      this.$set(this.getdataTable, 'remark', ' ')
+      console.log('getdataTable', this.getdataTable)
       this.msgSnackBar = 'Are you sure you want to delete this item?'
-      this.snackฺฺฺBarBool = true
+      this.snackฺฺฺBarBoolError = true
     },
     deleteItemS() {
       const index = this.desserts.indexOf(this.getdataTable)
       this.desserts.splice(index, 1)
+      this.deleteItemData()
       this.snackฺฺฺBarBool = false
     },
-
+    ApproveItems() {
+      console.log(this.getdataTable)
+      const index = this.desserts.indexOf(this.getdataTable)
+      this.desserts.splice(index, 1)
+      console.log('desserts', this.desserts)
+      this.appProve()
+      this.snackฺฺฺBarBool = false
+    },
+    async appProve() {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/insertItemApp.php';
+      // const fromData = new FormData();
+      const Empparams = new URLSearchParams();
+      const az = JSON.stringify(this.getdataTable)
+      console.log(az)
+      Empparams.append('data_approve', az)
+      await Axios.post(api, Empparams)
+        .then((response) => {
+          console.log(response.data);
+        })
+    },
+    async deleteItemData() {
+      console.log('test')
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/DeleteAppProveItems.php';
+      // const fromData = new FormData();
+      const Empparams = new URLSearchParams();
+      const az = JSON.stringify(this.getdataTable)
+      Empparams.append('data_approve', az)
+      await Axios.post(api, Empparams)
+        .then((response) => {
+          console.log(response.data);
+        })
+    },
     close() {
       this.dialog = false
       setTimeout(() => {
