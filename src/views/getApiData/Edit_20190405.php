@@ -76,7 +76,7 @@ function SearchArray($dataItems,$barcode,$conn)
 
         if(gettype($key)=='boolean'){
             // echo "\r\n\r\n\r\n\r\n if1 \r\n\r\n\r\n\r\n";
-            $queryitem = "INSERT INTO `items`(`barcode`, `name`, `desc`, `cate_id`, `price`, `cost`, `remark`) VALUES ('".$barcode[$i]['barcode']."', '".$barcode[$i]['name']."', '".$barcode[$i]['desc']."', 2, ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].", '".$barcode[$i]['remark']."')";
+            $queryitem = "INSERT INTO `items`(`barcode`, `name`, `desc`, `cate_id`, `price`, `cost`, `remark`) VALUES ('".$barcode[$i]['barcode']."', '".$barcode[$i]['name']."', '".$barcode[$i]['desc']."', '".$barcode[$i]['cate_id']."', ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].", '".$barcode[$i]['remark']."')";
             $result1 = $conn->query($queryitem);
             if($result1)
             {

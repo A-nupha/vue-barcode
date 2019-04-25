@@ -18,8 +18,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 //chk pid
-$query = "SELECT `stock`.*, `items`.`name`, `items`.`desc`,`items`.`price`,`items`.`cost`, `category`.`cate_name` FROM `stock` , `items` , `category` WHERE `stock`.`branch_id`='$branch_id' AND `items`.`barcode` = `stock`.`barcode` AND `items`.`cate_id`= `category`.`cate_id`
+$query = "SELECT `stock`.*, `items`.`name`, `items`.`desc`,`items`.`price`,`items`.`cost`, `category`.`cate_name`,`category`.`cate_id` FROM `stock` , `items` , `category` WHERE `stock`.`branch_id`='$branch_id' AND `items`.`barcode` = `stock`.`barcode` AND `items`.`cate_id`= `category`.`cate_id`
 ";
+// echo $query;
 
 $result = $conn->query($query);
 $returnData = array();

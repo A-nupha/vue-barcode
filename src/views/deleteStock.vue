@@ -258,6 +258,10 @@ export default {
         this.nameItems = response.data[0].name
         this.detailItems = response.data[0].desc
         this.qtyBase = response.data[0].quantity_stock
+        this.price = response.data[0].price
+        this.cost = response.data[0].cost
+        console.log('price', response.data[0].price)
+        console.log('cost', response.data[0].cost)
       }
     },
 
@@ -269,9 +273,9 @@ export default {
     }),
     setMenuRequest() {
       this.openDialog = false
-      const menu = 'Menu'
-      this.setDataLogin(menu);
-      this.Store.dataScanOut = []
+      // const menu = 'Menu'
+      // this.setDataLogin(menu);
+      // this.Store.dataScanOut = []
     },
     getBranch() {
       controlData.selectBranch(Number(this.Store.dataLogin[0].rcode_id))
@@ -296,6 +300,8 @@ export default {
         pid_user: String(this.Store.dataLogin[0].pid),
         pid_approve: String(this.Store.dataLogin[0].pid),
         detailItems: this.detailItems,
+        price: this.price,
+        cost: this.cost,
       }
       this.$store.state.dataScanOut.push(obj)
       this.nameItems = ''

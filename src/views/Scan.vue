@@ -76,7 +76,7 @@
       <v-select
                 :items="getCate"
                 prepend-icon=" "
-                tem-value="cate_id"
+                item-value="cate_id"
                 key="cate_name"
                 v-model="cate_value"
                 item-text="cate_name"
@@ -84,6 +84,7 @@
                 single-line
                 return-object
                 />
+                <!-- {{cate_value}} -->
       </v-flex>
     </v-layout>
     <v-layout>
@@ -197,6 +198,7 @@ export default {
       console.log('date', this.nowDate)
       console.log('time', this.time)
       // console.log('this.Store.dataBranch[0].pid', this.Store.dataBranch[0].pid)
+      console.log('this.cate_value.cate_id', this.cate_value.cate_id)
       const obj = {
         barcode: String(this.databarcode),
         name: String(this.name),

@@ -20,9 +20,9 @@ $dbname = "id3526601_projest_vue_barcode";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
 // echo "true";
 // Check connection
 // echo json_encode($dataItems);
@@ -33,19 +33,20 @@ $barcode = array();
 $dataSecess = json_decode($_POST['dataSuccess'], true);
 $dataError = json_decode($_POST['dataError'], true);
 
-// echo json_encode($dataSecess)."\r\n\r\n\r\n\r\n\r\n\r\n";
-// echo json_encode($dataError)."\r\n";
-if($dataSecess.length != 0){
+
+if(count($dataSecess)!=0){
     DataSuccessInsert($dataSecess,$conn);
+    // echo "sussessInsert=".json_encode($dataSecess)."\r\n \r\n";
 }
-if($dataError.length != 0){
-    DataSuccessInsert($dataSecess,$conn);
+if(count($dataError)!=0){
+    // echo " dataError=".json_encode($dataError)."\r\n \r\n";
+    DataErrorInsert($dataError,$conn);
 }
 
 function DataSuccessInsert($data,$conn){
-    $secess1 = false
-    $secess2 = false
-    $secess3 = false
+    $secess1 = false;
+    $secess2 = false;
+    $secess3 = false;
     for($i=0;$i<count($data);$i++){
         $barcode = $data[$i]['databarcode'];
         $add_date = $data[$i]['add_date'];
@@ -59,27 +60,10 @@ function DataSuccessInsert($data,$conn){
         $pid_approve =$data[$i]['pid_approve'];
         $detailItems =$data[$i]['detailItems'];
         $barcode_stock = $data[$i]['databarcode'];
+        $price = $data[$i]['price'];
+        $cost = $data[$i]['cost'];
+
         $dataStock= array();
-
-
-        $dataPriceCost=array();
-        $queryit = "select * from items where barcode = '".$barcode."'";
-        $resultqueryit = $conn->query($queryit);
-        if($resultqueryit)
-        {
-        while ($row=mysqli_fetch_assoc($resultqueryit))
-            {   
-            $dataPriceCost[]=$row;
-            }
-        }
-        else
-        {
-            echo 'error===>select * from items'
-        }
-        
-
-        $price=$dataPriceCost['price'];
-        $cost=$dataPriceCost['cost'];
 
         $queryStock = "select * from stock where branch_id = ".$branch_id." and barcode = '".$barcode_stock."'";
         $resultItems = $conn->query($queryStock);
@@ -101,7 +85,7 @@ function DataSuccessInsert($data,$conn){
         if($result)
         {
             //  echo "\r\n update result1 Save Done. \r\n";
-            $secess1 = true
+            $secess1 = true;
         }
         else
         {
@@ -115,7 +99,7 @@ function DataSuccessInsert($data,$conn){
         if($resultInsertSuccess)
         {
             // echo "\r\n resultInsertSuccess Save Done. \r\n";
-            $secess2 = true
+            $secess2 = true;
         }
         else
         {
@@ -143,7 +127,7 @@ function DataErrorInsert($data,$conn){
     if($resultInsertApp)
     {
         //  echo "\r\n resultInsertApprove Save Done. \r\n";
-        $secess3 = true
+        $secess3 = true;
     }
     else
     {

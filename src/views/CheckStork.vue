@@ -70,7 +70,7 @@
             <v-toolbar-title>Settings</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark flat @click="putdata()">Save</v-btn>
+              <v-btn dark flat @click="dialogDtail= false">Save</v-btn>
             </v-toolbar-items>
             </v-toolbar>
       <v-card>
@@ -78,34 +78,50 @@
           <v-spacer></v-spacer>
           <v-layout>
             <v-flex>
+              {{getdataStork}}
               <v-layout>
       <v-flex xs10>
-        <v-text-field type="number" prepend-icon=" " label="Barcode" v-model="getdataStork.barcode" />
+        <v-text-field type="number" prepend-icon=" " label="Barcode" v-model="getdataStork.barcode" disabled />
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Name" v-model="getdataStork.name" />
-      </v-flex>
-    </v-layout>
-    <v-layout>
-      <v-flex xs10>
-        <v-text-field prepend-icon=" "
-        type="number"
-        suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
+        <v-text-field prepend-icon=" " label="Name" v-model="getdataStork.name "/>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
         <v-text-field prepend-icon=" "
         type="number"
-        suffix="Baht"  name="input-7-4" label="Cost"></v-text-field>
+        suffix="Baht"  name="input-7-4" label="Price" v-model="getdataStork.price" ></v-text-field>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs10>
+        <v-text-field prepend-icon=" "
+        type="number"
+        suffix="Baht"  name="input-7-4" label="Cost" v-model="getdataStork.cost"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
         <v-text-field type="number"
-        prepend-icon=" " label="Qty" suffix="Piece" required/>
+        prepend-icon=" " label="Qty" suffix="Piece" v-model="getdataStork.quantity_stock" disabled required/>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs10>
+      <v-select
+                :items="getCate"
+                prepend-icon=" "
+                item-value="cate_id"
+                key="cate_name"
+                v-model="getdataStork.cate_id"
+                item-text="cate_name"
+                label="category"
+                single-line
+                return-object
+                />
       </v-flex>
     </v-layout>
     <v-layout>
@@ -133,6 +149,7 @@ import {
 } from 'vuex-pathify'
 import functions from '../plugins/functions'
 import store from '../store/store'
+import controlData from './getApiData/controlData'
 
 
 export default {
@@ -146,28 +163,29 @@ export default {
     confirm: false,
     snackฺฺฺBarBool: false,
     msgSnackBar: '',
+    cate_value: '',
     headers: [
       {
         text: 'name',
-        value: 'fat',
-        sortable: false,
-        align: 'center',
-      },
-      {
-        text: 'Category',
         value: 'name',
         sortable: false,
         align: 'center',
       },
       {
+        text: 'cat',
+        value: 'cate_name',
+        sortable: false,
+        align: 'center',
+      },
+      {
         text: 'Qty',
-        value: 'protein',
+        value: 'Qty',
         align: 'center',
         sortable: false,
       },
       {
         text: 'detail',
-        value: 'protein',
+        value: 'detail',
         align: 'center',
         sortable: false,
       },
@@ -190,7 +208,8 @@ export default {
       protein: 0,
     },
     dataStork: [],
-    getdataStork: null,
+    getdataStork: [],
+    getCate: null,
   }),
   computed: {
     ...sync('*'),
@@ -200,9 +219,16 @@ export default {
   async created() {
     await this.getdataReq()
   },
+  mounted() {
+    controlData.getCate().then((response) => {
+      const retData = response.data
+      this.getCate = retData
+      console.log('dataCate', this.getCate)
+    });
+  },
   methods: {
     ...mapActions({
-      // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
+      SetDataMenuRequest: 'getApi/SetDataMenuRequest',
       setDataLogin: 'getApi/setDataLogin',
     }),
     openDtail(data) {
@@ -219,40 +245,16 @@ export default {
       const params = new URLSearchParams();
       params.append('branch_id', Number(store.state.dataLogin[0].rcode_id))
       const response = await Axios.post(api, params)
-      console.log('response', response.data)
+      console.log('datagetApiselect', response.data)
       this.desserts = response.data
     },
-
-    editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
-    },
-    deleteItem(item) {
-      this.getdataTable = item
-      this.msgSnackBar = 'Are you sure you want to delete this item?'
-      this.snackฺฺฺBarBool = true
-    },
-    deleteItemS() {
-      const index = this.desserts.indexOf(this.getdataTable)
-      this.desserts.splice(index, 1)
-      this.snackฺฺฺBarBool = false
-    },
-
-    close() {
-      this.dialog = false
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      }, 300)
-    },
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      } else {
-        this.desserts.push(this.editedItem)
-      }
-      this.close()
+    async updateItems() {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/updateItems.php';
+      const params = new URLSearchParams();
+      params.append('dataStork', Number(this.getdataStork))
+      const response = await Axios.post(api, params)
+      console.log('datagetApiselect', response.data)
+      this.desserts = response.data
     },
   },
 }
