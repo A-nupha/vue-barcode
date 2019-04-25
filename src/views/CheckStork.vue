@@ -70,7 +70,7 @@
             <v-toolbar-title>Settings</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-              <v-btn dark flat @click="dialogDtail= false">Save</v-btn>
+              <v-btn dark flat @click="updateItems()">Save</v-btn>
             </v-toolbar-items>
             </v-toolbar>
       <v-card>
@@ -116,7 +116,7 @@
                 prepend-icon=" "
                 item-value="cate_id"
                 key="cate_name"
-                v-model="getdataStork.cate_id"
+                v-model="cate_value"
                 item-text="cate_name"
                 label="category"
                 single-line
@@ -249,12 +249,16 @@ export default {
       this.desserts = response.data
     },
     async updateItems() {
+      this.getdataStork.cate_id = this.cate_value.cate_id
       const api = 'https://a-nuphasupit58.000webhostapp.com/php/updateItems.php';
       const params = new URLSearchParams();
-      params.append('dataStork', Number(this.getdataStork))
+      params.append('dataStork', JSON.stringify(this.getdataStork))
+      console.log('getdatastock', this.getdataStork)
       const response = await Axios.post(api, params)
-      console.log('datagetApiselect', response.data)
+      console.log('dedededededededed', response.data)
       this.desserts = response.data
+      this.dialogDtail = false
+      this.getdataReq()
     },
   },
 }
