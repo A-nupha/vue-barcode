@@ -58,7 +58,7 @@ export default {
   props: {
     value: 0,
     label: {
-      default: "data"
+      default: ""
     },
     disabled: {
       default: false

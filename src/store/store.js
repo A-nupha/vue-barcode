@@ -24,8 +24,8 @@ const getDefaultState = () => ({
   editUser: null,
   getdataTableDelte: null,
   SnacbarDeleteUser: null,
-  aDateIn: '',
-  aDateOut: '',
+  aDateIn: '25620101',
+  aDateOut: '25630101',
 })
 // console.log(getDefaultState)
 const state = Object.assign(getDefaultState())

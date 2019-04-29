@@ -143,7 +143,6 @@ export default {
             lost: '3213',
             other: 'eqw',
           },
-          ////
           {
             date: '18/06/2562',
             code: '5235355235423',

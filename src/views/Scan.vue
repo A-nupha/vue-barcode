@@ -43,7 +43,7 @@
             <v-flex>
               <v-layout>
       <v-flex xs10>
-        <v-text-field type="number" prepend-icon=" " label="Barcode" v-model="databarcode" />
+        <v-text-field type="number" prepend-icon=" "  :counter="13" mask="#############" label="Barcode" v-model="databarcode" />
       </v-flex>
     </v-layout>
     <v-layout>
@@ -55,20 +55,20 @@
       <v-flex xs10>
         <v-text-field prepend-icon=" " v-model="price"
         type="number"
-        suffix="Baht"  name="input-7-4" label="Price"></v-text-field>
+        suffix="Baht"  :counter="6" mask="######" name="input-7-4" label="Price"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
         <v-text-field prepend-icon=" " v-model="cost"
         type="number"
-        suffix="Baht"  name="input-7-4" label="Cost"></v-text-field>
+        suffix="Baht"  :counter="6" mask="######" name="input-7-4" label="Cost"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
         <v-text-field type="number"
-        prepend-icon=" " label="Qty" suffix="Piece" v-model="qty" required/>
+        prepend-icon=" " label="Qty" suffix="Piece" :counter="7" mask="#######" v-model="qty" required/>
       </v-flex>
     </v-layout>
     <v-layout>

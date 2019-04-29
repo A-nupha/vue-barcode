@@ -69,7 +69,7 @@
             <v-flex>
               <v-layout>
       <v-flex xs10>
-        <v-text-field type="number" prepend-icon=" " label="Barcode" v-model="databarcode" />
+        <v-text-field type="number" prepend-icon=" " label="Barcode" :counter="13" mask="#############" v-model="databarcode" />
       </v-flex>
     </v-layout>
     <v-layout>
@@ -85,7 +85,7 @@
       lazy-validation
     >
     {{valid}}
-        <v-text-field prepend-icon=" " label="Qty" v-model="qty" :rules="rules" required/>
+        <v-text-field prepend-icon=" " label="Qty" :counter="7" mask="#######" v-model="qty" :rules="rules" required/>
         </v-form>
       </v-flex>
     </v-layout>
@@ -151,7 +151,6 @@
         yes
       </v-btn></v-flex></v-layout>
   </v-snackbar>
-  {{dataScanOut}}
   </div>
 </template>
 
@@ -268,14 +267,14 @@ export default {
   },
   methods: {
     ...mapActions({
-    // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
+      SetDataMenuRequest: 'getApi/SetDataMenuRequest',
       setDataLogin: 'getApi/setDataLogin',
     }),
     setMenuRequest() {
       this.openDialog = false
-      // const menu = 'Menu'
-      // this.setDataLogin(menu);
-      // this.Store.dataScanOut = []
+      const menu = 'Menu'
+      this.setDataLogin(menu);
+      this.Store.dataScanOut = []
     },
     getBranch() {
       controlData.selectBranch(Number(this.Store.dataLogin[0].rcode_id))

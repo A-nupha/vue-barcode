@@ -89,9 +89,10 @@ function DataSuccessInsert($data,$conn){
         }
         else
         {
-             echo "\r\n update Error Save [".$query."] \r\n";
+            echo "\r\n update Error Save [".$query."] \r\n";
         }
      
+        InsertUpdateReport($conn,$add_date,$barcode,$quantity,$branch_id);
         $queryInsert="INSERT INTO `transaction_out`(`id`, `barcode`, `add_date`, `add_time`, `branch_id`, `quantity`, `status_id`, `approve_id`, `pid_user`, `pid_approve`, `remark`, `price`, `cost`) 
         VALUES (null,'".$barcode."','".$add_date."','".$add_time."','".$branch_id."','".$quantity."','".$status_id."','".$approve_id."','".$pid_user."','".$pid_approve."','".$detailItems."','".$price."','".$cost."')";
 
@@ -134,6 +135,61 @@ function DataErrorInsert($data,$conn){
          echo "\r\n Error Save [".$queryInsert."] \r\n";
     }
     }
+
+}
+
+function InsertUpdateReport($conn,$date,$barcode,$quantity,$branch_id){
+
+    $selectquery="SELECT * FROM `report` WHERE `date`='$date' AND `barcode`='$barcode' AND `branch_id`='$branch_id'";
+    $selectresult = $conn->query($selectquery);
+    $dataselect=array();
+    
+    
+    
+    if($selectresult)
+        while ($row=mysqli_fetch_assoc($selectresult))
+            $dataselect[]=$row;
+    
+            echo "count = ".count($dataselect);
+    
+            if(count($dataselect)!=0){
+    
+                $oldTotal=(int)$dataselect[0]['out'];
+                // echo "\r\n old total=".$oldTotal." new=".$quantity." \r\n";
+                $ConQuantity=(int)$quantity;
+                $newQuantity=  $ConQuantity + $oldTotal;
+                
+                $updatequery="UPDATE `report` SET `out`='$newQuantity',`yes`='$quantity' WHERE `date`='$date' AND `barcode`='$barcode' AND `branch_id`='$branch_id'";
+                echo $updatequery;
+                $updateResult = $conn->query($updatequery);
+                echo "\r\n";
+                if($updateResult)
+                {
+                    echo "update Save Done.";
+                }
+                else
+                {
+                    echo "update Error Save [".$updatequery."]";
+                }
+        
+            }else if(count($dataselect)==0){
+        
+                echo "\r\n";
+                $queryReport = "INSERT INTO `report`(`id`, `date`, `branch_id`, `barcode`, `in`, `out`, `yes`, `no`) VALUES (null,'".$date."','".$branch_id."','".$barcode."','0','".$quantity."','".$quantity."','0')";
+                echo "\r\n". $queryReport;
+                $updateResult = $conn->query($queryReport);
+                echo "\r\n";
+                if($updateResult)
+                {
+                    echo "insert Save Done.";
+                }
+                else
+                {
+                    echo "insert Error Save [".$updateResult."]";
+                }
+            
+            }
+    
 
 }
 

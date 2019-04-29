@@ -10,7 +10,7 @@
                                 <v-toolbar flat color="white">
                                     <v-toolbar-title>
                                         <v-flex xs12 subheader class="blue--text" ma-1>
-                                            Stork
+                                            Stock
                                         </v-flex>
                                     </v-toolbar-title>
                                     <v-spacer></v-spacer>
@@ -78,7 +78,7 @@
           <v-spacer></v-spacer>
           <v-layout>
             <v-flex>
-              {{getdataStork}}
+              <!-- {{getdataStork}} -->
               <v-layout>
       <v-flex xs10>
         <v-text-field type="number" prepend-icon=" " label="Barcode" v-model="getdataStork.barcode" disabled />
@@ -142,12 +142,10 @@
 import {
   mapActions,
 } from 'vuex'
-import moment from 'moment'
 import Axios from 'axios';
 import {
   sync,
 } from 'vuex-pathify'
-import functions from '../plugins/functions'
 import store from '../store/store'
 import controlData from './getApiData/controlData'
 
@@ -233,6 +231,9 @@ export default {
     }),
     openDtail(data) {
       this.getdataStork = data
+      console.log('getdataStork.cate_id', this.getdataStork.cate_id)
+      console.log('cate_value.cate_id', this.cate_value.cate_id)
+      this.cate_value = this.getdataStork.cate_id
       console.log('this.getdataStork', this.getdataStork)
       this.dialogDtail = true
     },
@@ -249,14 +250,13 @@ export default {
       this.desserts = response.data
     },
     async updateItems() {
-      this.getdataStork.cate_id = this.cate_value.cate_id
+      console.log('getdataStork', this.getdataStork)
       const api = 'https://a-nuphasupit58.000webhostapp.com/php/updateItems.php';
       const params = new URLSearchParams();
       params.append('dataStork', JSON.stringify(this.getdataStork))
-      console.log('getdatastock', this.getdataStork)
       const response = await Axios.post(api, params)
-      console.log('dedededededededed', response.data)
       this.desserts = response.data
+      console.log('response.updateItems', response.data)
       this.dialogDtail = false
       this.getdataReq()
     },

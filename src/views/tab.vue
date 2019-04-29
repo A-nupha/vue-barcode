@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      // SetDataMenuRequest: 'getApi/SetDataMenuRequest',
+      SetDataMenuRequest: 'getApi/SetDataMenuRequest',
       setDataLogin: 'getApi/setDataLogin',
     }),
     setMenuRequest() {

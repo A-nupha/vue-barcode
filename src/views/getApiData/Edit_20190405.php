@@ -47,7 +47,6 @@ else
 // echo json_encode($dataItems);
 
 $response = array();
-
 $barcode = array();
 $barcode = json_decode($_POST['dataInsert'], true);
 
@@ -56,8 +55,6 @@ SearchArray($dataItems,$barcode,$conn);
 
 function SearchArray($dataItems,$barcode,$conn)
 {
-
-
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     } else{
@@ -76,11 +73,12 @@ function SearchArray($dataItems,$barcode,$conn)
 
         if(gettype($key)=='boolean'){
             // echo "\r\n\r\n\r\n\r\n if1 \r\n\r\n\r\n\r\n";
+           
             $queryitem = "INSERT INTO `items`(`barcode`, `name`, `desc`, `cate_id`, `price`, `cost`, `remark`) VALUES ('".$barcode[$i]['barcode']."', '".$barcode[$i]['name']."', '".$barcode[$i]['desc']."', '".$barcode[$i]['cate_id']."', ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].", '".$barcode[$i]['remark']."')";
             $result1 = $conn->query($queryitem);
             if($result1)
             {
-                // echo "result1 Save Done.";
+
             }
             else
             {
@@ -99,9 +97,10 @@ function SearchArray($dataItems,$barcode,$conn)
                 // echo "Error Save [".$querystock."]";
             }
 
+            InsertReport($conn,$barcode[$i]['barcode'],$barcode[$i]['date_in'],$barcode[$i]['quantity_stock']);
 
             $querytransac = "insert into transaction_in(id, barcode, add_date, add_time, branch_id, quantity, status_id, approve_id, pid_user, pid_approve, remark, price ,cost)
-            values (NULL,'".$barcode[$i]['barcode']."', CURRENT_DATE(), CURRENT_TIME(), '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."', ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].")";
+            values (NULL,'".$barcode[$i]['barcode']."', '".$barcode[$i]['date_in']."','".$barcode[$i]['add_time']."', '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."', ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].")";
             $result3 = $conn->query($querytransac);
             if($result3)
             {
@@ -112,6 +111,7 @@ function SearchArray($dataItems,$barcode,$conn)
                 // echo "Error Save [".$querytransac."]";
             }
             // echo "\r\n      loop '$i' data ' $barcode_item' isn't found in database naka. \r\n";
+
         }else{
             // echo "\r\n\r\n\r\n\r\n else \r\n\r\n\r\n\r\n";
             $barcode_stock = $barcode[$i]['barcode'];
@@ -155,6 +155,7 @@ function SearchArray($dataItems,$barcode,$conn)
             {
                 // echo "Error Save [".$query."]";
             }
+            InsertReport($conn,$barcode[$i]['barcode'],$barcode[$i]['date_in'],$barcode[$i]['quantity_stock'],$barcode[$i]['branch_id']);
 
             $querytransac = "insert into transaction_in(id, barcode, add_date, add_time, branch_id, quantity, status_id, approve_id, pid_user, pid_approve, remark, price, cost)
             values (NULL,'".$barcode[$i]['barcode']."', '".$barcode[$i]['date_in']."', '".$barcode[$i]['add_time']."', '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."', ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].")";
@@ -170,6 +171,60 @@ function SearchArray($dataItems,$barcode,$conn)
                 
         }        
     }
+}
+
+function InsertReport($conn,$barcode,$date,$quantity,$branch_id){
+
+    $selectquery="SELECT * FROM `report` WHERE `date`='$date' AND `barcode`='$barcode'";
+    $selectresult = $conn->query($selectquery);
+    $dataselect=array();
+
+    if($selectresult)
+        while ($row=mysqli_fetch_assoc($selectresult))
+            $dataselect[]=$row;
+
+            // echo "count = ".count($dataselect);
+
+            if(count($dataselect)!=0){
+
+                echo "\r\n if 1 \r\n";
+                $oldTotal=(int)$dataselect[0]['in'];
+
+                $newQuantity=(int)$quantity+$oldTotal;
+                
+                $updatequery="UPDATE `report` SET `in`='$newQuantity' WHERE `date`='$date' AND `barcode`='$barcode'";
+                echo $updatequery;
+                $updateResult = $conn->query($updatequery);
+            
+                if($updateResult)
+                {
+                    // echo "update Save Done.";
+                }
+                else
+                {
+                    // echo "update Error Save [".$updatequery."]";
+                }
+        
+            }else if(count($dataselect)==0){
+        
+                echo "\r\n";
+                $queryReport = "INSERT INTO `report`(`id`, `date`, `branch_id`, `barcode`, `in`, `out`, `yes`, `no`) VALUES (null,'".$date."','".$branch_id."','".$barcode."','".$quantity."','0','0','0')";
+                echo "\r\n". $queryReport;
+                $updateResult = $conn->query($queryReport);
+            
+                if($updateResult)
+                {
+                    // echo "insert Save Done.";
+                }
+                else
+                {
+                    // echo "insert Error Save [".$updatequery."]";
+                }
+            
+            }
+
+
+
 }
 
 $conn->close();
