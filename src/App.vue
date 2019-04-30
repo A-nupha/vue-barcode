@@ -1,5 +1,5 @@
 <template>
-  <div id="app" dark>
+  <v-app id="app" >
        <v-toolbar
       color="blue lighten-1"
       dark
@@ -100,7 +100,7 @@
 
 
     <!-- <SnackBar/> -->
-  </div>
+  </v-app>
 </template>
 <script>
 import {
@@ -244,10 +244,7 @@ export default {
   font-weight: bold;
   color: #2c3e50;
 }
-.v-menu__content {
-  top: 50px !important;
-  left: 0px !important;
-}
+
 
 .viewport canvas[data-v-047f45f1], .viewport video[data-v-047f45f1] {
     position: absolute !important;

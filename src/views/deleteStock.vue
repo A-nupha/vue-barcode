@@ -69,12 +69,12 @@
             <v-flex>
               <v-layout>
       <v-flex xs10>
-        <v-text-field type="number" prepend-icon=" " label="Barcode" :counter="13" mask="#############" v-model="databarcode" />
+        <v-text-field type="number" :disabled="disbleBtn" prepend-icon=" " label="Barcode" :counter="13" mask="#############" v-model="databarcode" />
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Name" v-model="nameItems" />
+        <v-text-field :disabled="disbleBtn" prepend-icon=" " label="Name" v-model="nameItems" />
       </v-flex>
     </v-layout>
     <v-layout>
@@ -84,8 +84,7 @@
       v-model="valid"
       lazy-validation
     >
-    {{valid}}
-        <v-text-field prepend-icon=" " label="Qty" :counter="7" mask="#######" v-model="qty" :rules="rules" required/>
+        <v-text-field prepend-icon=" " suffix="Piece" label="Qty" :counter="7" mask="#######" v-model="qty" :rules="rules" required/>
         </v-form>
       </v-flex>
     </v-layout>
@@ -101,7 +100,7 @@
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-textarea prepend-icon=" " v-model="detailItems" box name="input-7-4" label="Description" auto-grow></v-textarea>
+        <v-textarea prepend-icon=" " :disabled="disbleBtn" v-model="detailItems" box name="input-7-4" label="Description" auto-grow></v-textarea>
       </v-flex>
     </v-layout>
             </v-flex>
@@ -129,6 +128,39 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+
+
+
+
+<v-dialog v-model="openDialogNotmatch" persistent max-width="400px">
+        <v-card>
+          <v-flex>
+          <v-card-title
+          :class="'red'"
+          primary-title
+          flat>
+          <v-icon class="mr-3" color="white">mdi-information</v-icon>
+          <v-flex class=""><v-flex class="white--text">INFORMATION</v-flex></v-flex>
+        </v-card-title>
+          <v-card-title>
+            <v-layout justify-center><span>barcode is not match</span></v-layout>
+          </v-card-title>
+          </v-flex>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="setMenuRequest()">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+
+
+
+
+
+
+
     <v-snackbar
     :vertical="true"
     v-model="snackฺฺฺBarBool"
@@ -172,8 +204,10 @@ import controlData from './getApiData/controlData'
 export default {
   data() {
     return {
+      disbleBtn: false,
       nowDate: functions.moment(moment().format('YYYYMMDD')),
       valid: true,
+      openDialogNotmatch: false,
       nameItems: '',
       timeout: 5000,
       select: 'ขาย',
@@ -210,16 +244,20 @@ export default {
         width: 50,
         height: 100,
       },
+
       detecteds: [],
       getdataTable: [],
       msgSnackBar: '',
       snackฺฺฺBarBool: false,
       Store: this.$store.state,
+
       confirmData: '',
       qtyBase: '',
       getDataBarcode: [],
       disble: false,
       time: moment().format('hmmss'),
+      qtyRules: [
+        v => !!v || 'qty is required' ],
     };
   },
   components: {
@@ -242,11 +280,8 @@ export default {
   },
   watch: {
     async databarcode() {
-      if (this.databarcode.length !== 0) {
+      if (this.databarcode.length === 13) {
         console.log('this.Store.dataBranch[0].branch_id', this.Store.dataBranch[0].branch_id)
-        // await controlData.getDataBarcode(this.databarcode, this.Store.dataBranch[0].branch_id).then((response) => {
-        //   console.log(response.data)
-        // });
         const api = 'https://a-nuphasupit58.000webhostapp.com/php/getDataBarcode.php';
         const params = new URLSearchParams();
         params.append('barcode', this.databarcode)
@@ -261,6 +296,11 @@ export default {
         this.cost = response.data[0].cost
         console.log('price', response.data[0].price)
         console.log('cost', response.data[0].cost)
+        if (response.data !== 'error') {
+          this.disbleBtn = true
+        } else {
+          this.openDialogNotmatch = true
+        }
       }
     },
 
@@ -274,6 +314,7 @@ export default {
       this.openDialog = false
       const menu = 'Menu'
       this.setDataLogin(menu);
+      this.openDialogNotmatch = false
       this.Store.dataScanOut = []
     },
     getBranch() {
@@ -285,6 +326,7 @@ export default {
       this.databarcode = ''
       this.detailItems = ''
       this.qty = ''
+      this.disbleBtn = false
     },
     putdata() {
       const obj = {
@@ -308,6 +350,7 @@ export default {
       this.detailItems = ''
       this.qty = ''
       this.dialogScan = false
+      this.disbleBtn = false
     },
     openQuagga() {
       this.dialogScan = true
@@ -361,24 +404,3 @@ export default {
   },
 }
 </script>
-<style>
-.theme--light .v-datatable thead th.column,
-.theme--light .v-datatable thead th.column.sortable.active,
-.theme--light .v-datatable thead th.column.sortable:hover,
-.theme--light .v-datatable thead th.column.sortable.active i {
-    color: white;
-    background-color: #0091ea;
-    font-size: 16px;
-}
-.table.v-table thead td:not(:nth-child(1)),
-table.v-table tbody td:not(:nth-child(1)),
-table.v-table thead th:not(:nth-child(1)),
-table.v-table tbody th:not(:nth-child(1)),
-table.v-table thead td:first-child,
-table.v-table tbody td:first-child,
-table.v-table thead th:first-child,
-table.v-table tbody th:first-child {
-    padding: 0 7px;
-    font-size: 13px;
-}
-</style>

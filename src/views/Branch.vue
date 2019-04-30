@@ -11,12 +11,12 @@
               <v-text-field v-model="Store.dataBranch[0].branch_id" disabled prepend-icon="mdi-city" name="Branch" label="Branch"></v-text-field>
             </v-flex>
           </v-layout>
-          <v-layout align-center justify-center>
+          <!-- <v-layout align-center justify-center>
             <v-flex xs10>
               <v-text-field prepend-icon="mdi-package-variant-closed"
               name="batch" label="batch"></v-text-field>
             </v-flex>
-          </v-layout>
+          </v-layout> -->
           <v-layout align-center justify-center>
             <v-flex xs10>
               <v-text-field prepend-icon="mdi-map-marker"

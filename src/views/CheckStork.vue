@@ -29,9 +29,15 @@
                                         <td class="text-xs-center">{{ props.item.quantity_stock }}</td>
                                         <td class="text-xs-center">
                                           <v-btn icon>
-                                            <v-icon color="green" @click="openDtail(props.item)"
+                                            <div v-if="dataLogin[0].role_id == '1'">
+                                            <v-icon  color="green" @click="openDtail(props.item)"
                                             >mdi-arrow-up-bold-box</v-icon>
+                                            </div>
+                                            <div v-else>
+                                            <v-icon color="grey"
+                                            >mdi-arrow-up-bold-box</v-icon></div>
                                             </v-btn>
+                                            
                                         </td>
                                     </template>
                                     <template slot="no-data">
@@ -135,6 +141,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <!-- {{dataLogin}} -->
 </div>
 </template>
 

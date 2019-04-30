@@ -97,7 +97,7 @@ function SearchArray($dataItems,$barcode,$conn)
                 // echo "Error Save [".$querystock."]";
             }
 
-            InsertReport($conn,$barcode[$i]['barcode'],$barcode[$i]['date_in'],$barcode[$i]['quantity_stock']);
+            InsertReport($conn,$barcode[$i]['barcode'],$barcode[$i]['date_in'],$barcode[$i]['quantity_stock'],$barcode[$i]['branch_id']);
 
             $querytransac = "insert into transaction_in(id, barcode, add_date, add_time, branch_id, quantity, status_id, approve_id, pid_user, pid_approve, remark, price ,cost)
             values (NULL,'".$barcode[$i]['barcode']."', '".$barcode[$i]['date_in']."','".$barcode[$i]['add_time']."', '".$barcode[$i]['branch_id']."', '".$barcode[$i]['quantity_stock']."', '".$barcode[$i]['status_id']."', '".$barcode[$i]['approve_id']."', '".$barcode[$i]['pid_user']."', '".$barcode[$i]['pid_approve']."', '".$barcode[$i]['remark']."', ".$barcode[$i]['price'].", ".$barcode[$i]['cost'].")";
@@ -162,11 +162,11 @@ function SearchArray($dataItems,$barcode,$conn)
             $result3 = $conn->query($querytransac);
             if($result3)
             {
-                // echo "result3 Save Done.";
+                echo "result3 Save Done.";
             }
             else
             {
-                // echo "Error Save [".$querytransac."]";
+                echo "Error Save [".$querytransac."]";
             }
                 
         }        
@@ -186,10 +186,8 @@ function InsertReport($conn,$barcode,$date,$quantity,$branch_id){
             // echo "count = ".count($dataselect);
 
             if(count($dataselect)!=0){
-
                 echo "\r\n if 1 \r\n";
                 $oldTotal=(int)$dataselect[0]['in'];
-
                 $newQuantity=(int)$quantity+$oldTotal;
                 
                 $updatequery="UPDATE `report` SET `in`='$newQuantity' WHERE `date`='$date' AND `barcode`='$barcode'";
@@ -198,11 +196,11 @@ function InsertReport($conn,$barcode,$date,$quantity,$branch_id){
             
                 if($updateResult)
                 {
-                    // echo "update Save Done.";
+                    echo "update Save Done.";
                 }
                 else
                 {
-                    // echo "update Error Save [".$updatequery."]";
+                    echo "update Error Save [".$updatequery."]";
                 }
         
             }else if(count($dataselect)==0){
@@ -214,11 +212,11 @@ function InsertReport($conn,$barcode,$date,$quantity,$branch_id){
             
                 if($updateResult)
                 {
-                    // echo "insert Save Done.";
+                    echo "insert Save Done.";
                 }
                 else
                 {
-                    // echo "insert Error Save [".$updatequery."]";
+                    echo "insert Error Save [".$updatequery."]";
                 }
             
             }

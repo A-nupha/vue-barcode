@@ -15,6 +15,7 @@ const getDefaultState = () => ({
   msgLogin: null,
   dataLogin: [],
   dataScanOut: [],
+  dataStock: [],
   msginsertBranch: null,
   dataBranch: null,
   msgSuscessLogin: null,
@@ -25,7 +26,7 @@ const getDefaultState = () => ({
   getdataTableDelte: null,
   SnacbarDeleteUser: null,
   aDateIn: '25620101',
-  aDateOut: '25630101',
+  aDateOut: '25621231',
 })
 // console.log(getDefaultState)
 const state = Object.assign(getDefaultState())

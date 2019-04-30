@@ -4,17 +4,23 @@
     <v-flex>
     </v-flex></div>
                 <v-subheader>date in</v-subheader>
-              <v-flex md3>
+              <v-flex xs5 md2>
+                <v-layout justify-start>
         <GlobalDate :value.sync="Store.aDateIn" />
+
+                </v-layout>
       </v-flex>
         <v-subheader>date out</v-subheader>
-              <v-flex md3>
-        <GlobalDate  :value.sync="Store.aDateOut" />
+              <v-flex xs5 md2>
+        <GlobalDate :value.sync="Store.aDateOut" />
       </v-flex>
       <v-flex ma-1>
-        <v-layout justify-end>
-        <v-btn dark color="blue" @click="getdataReport()">submit
+        <v-layout>
+          <v-flex xs5>
+
+            <v-btn dark color="blue" @click="getdataReport()">submit
         </v-btn>
+          </v-flex>
       </v-layout>
       </v-flex>
     <v-flex v-if="this.chart == true">
@@ -59,10 +65,12 @@ export default {
       chart: false,
       Store: this.$store.state,
       dialog: true,
+      dataChat: [],
       donutData: [
         { label: 'Input', value: 50 },
         { label: 'Output', value: 40 },
         { label: 'Stock', value: 40 },
+        
       ],
     }
   },
@@ -77,33 +85,29 @@ export default {
     },
     async getdataReport() {
       this.chart = true
-      // ============================Tran-In==============================
-      const apiTranin = 'https://a-nuphasupit58.000webhostapp.com/php/getdataReportTranin.php';
-      const paramsTranin = new URLSearchParams();
-      paramsTranin.append('date_in', this.Store.aDateIn)
-      paramsTranin.append('date_out', this.Store.aDateOut)
-      paramsTranin.append('branch_id', Number(store.state.dataLogin[0].rcode_id))
-      const responseTranin = await Axios.post(apiTranin, paramsTranin)
-      this.dataTranIn = responseTranin.data
-      for (let i = 0; i < this.dataTranIn.length; i += 1) {
-        this.$set(this.dataTranIn, i, { ...this.dataTranIn[i], totol: Number(this.dataTranIn[i].price) * Number(this.dataTranIn[i].quantity) })
-      }
-      console.log('----Get_API--TRANIN----', responseTranin.data)
-      // =============================Tran-Out=============================
-      // const apiTranout = 'https://a-nuphasupit58.000webhostapp.com/php/getdataReportTranout.php';
-      // const paramsTranout = new URLSearchParams();
-      // paramsTranout.append('date_in', this.Store.aDateIn)
-      // paramsTranout.append('date_out', this.Store.aDateOut)
-      // paramsTranout.append('branch_id', Number(store.state.dataLogin[0].rcode_id))
-      // const responseTranout = await Axios.post(apiTranout, paramsTranout)
-      // console.log('----Get_API--TRANOUT---', responseTranout.data)
-      // =============================Stock================================
       const apiStock = 'https://a-nuphasupit58.000webhostapp.com/php/getdataReportStock.php';
       const paramsStock = new URLSearchParams();
       paramsStock.append('branch_id', Number(store.state.dataLogin[0].rcode_id))
+      paramsStock.append('date_in', this.Store.aDateIn)
+      paramsStock.append('date_out', this.Store.aDateOut)
       const responseStock = await Axios.post(apiStock, paramsStock)
-      this.dataStock = responseStock.data
+      this.Store.dataStock = responseStock.data
       console.log('----Get_API--STOCK---', responseStock.data)
+
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/getdataReportChat.php';
+      const params = new URLSearchParams();
+      params.append('branch_id', Number(store.state.dataLogin[0].rcode_id))
+      params.append('date_in', this.Store.aDateIn)
+      params.append('date_out', this.Store.aDateOut)
+      const response = await Axios.post(api, params)
+      this.dataChat = response.data
+      console.log(this.dataChat)
+      console.log(this.dataChat[0].SUM_IN)
+      console.log(this.dataChat[0].SUM_OUT)
+      console.log(this.dataChat[0].sum_stock)
+      this.donutData[0].value = this.dataChat[0].SUM_IN
+      this.donutData[1].value = this.dataChat[0].SUM_OUT
+      this.donutData[2].value = this.dataChat[0].sum_stock
     },
   },
 }
