@@ -94,11 +94,12 @@
                         <v-icon style="font-size:100px;">mdi-truck-delivery</v-icon>
                         <p class="text-xs-center menuLabel">RETURN</p>
                       </v-card>
-
                     </v-flex>
                   </v-layout>
                   <div v-if="validateRole() == false">
                   <v-layout wrap>
+
+
                     <v-flex xs6 pa-2>
                       <v-card
                         dark
@@ -106,7 +107,7 @@
                         class="text-xs-center menuCard"
                         clickable
                         style="position:relative;"
-                        @click="setMenuRequest()"
+                        @click.native="click=setMenuRequest()"
                         height="100%"
                       >
                         <div class="background-icon">
@@ -116,6 +117,26 @@
                         <p class="text-xs-center menuLabel">Request</p>
                       </v-card>
                     </v-flex>
+                    <!-- <v-flex xs6 pa-2>
+                      <v-card
+                        dark
+                        color="#1565C0"
+                        class="text-xs-center menuCard"
+                        clickable
+                        style="position:relative;"
+                        @click.native="setMenuRequest()"
+                        height="100%"
+                      >
+                        <div class="background-icon">
+                          <v-icon class="icon">mdi-sync-alert</v-icon>
+                        </div>
+                        <v-icon style="font-size:100px;">mdi-sync-alert</v-icon>
+                        <p class="text-xs-center menuLabel">Request</p>
+                      </v-card>
+                    </v-flex> -->
+
+
+
                     <v-flex xs6 pa-2>
                       <v-card
                         dark
@@ -133,6 +154,9 @@
                         <p class="text-xs-center menuLabel">Report</p>
                       </v-card>
                     </v-flex>
+
+
+
                   </v-layout>
                   </div>
                   <v-layout wrap>

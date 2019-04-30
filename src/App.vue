@@ -1,5 +1,6 @@
 <template>
-  <div id="app" dark>
+  <v-app id="app" >
+    <!-- {{login}} -->
        <v-toolbar
       color="blue lighten-1"
       dark
@@ -100,7 +101,7 @@
 
 
     <!-- <SnackBar/> -->
-  </div>
+  </v-app>
 </template>
 <script>
 import {
@@ -219,15 +220,15 @@ export default {
 }
 </script>
 <style>
-  .selectCtrl .v-select>.v-input__control>.v-input__slot{
+  /* .selectCtrl .v-select>.v-input__control>.v-input__slot{
     height:28px !important ;
-  }
+  } */
 
-  .selectCtrl2 .v-select>.v-input__control>.v-input__slot{
+  /* .selectCtrl2 .v-select>.v-input__control>.v-input__slot{
     height:28px !important ;
     width: 15rem;
-  }
-#app {
+  } */
+/* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -235,19 +236,19 @@ export default {
   overflow: auto;
   text-align: center;
   color: #2c3e50;
-}
-#nav {
+} */
+/* #nav {
   padding: 30px;
-}
+} */
 
-#nav a {
+/* #nav a {
   font-weight: bold;
   color: #2c3e50;
-}
-.v-menu__content {
+} */
+/* .v-menu__content {
   top: 50px !important;
   left: 0px !important;
-}
+} */
 
 .viewport canvas[data-v-047f45f1], .viewport video[data-v-047f45f1] {
     position: absolute !important;
@@ -259,11 +260,11 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-#background{
+/* #background{
 color: #0D47A1 ;
-}
-.selectTest .v-menu__content {
+} */
+/* .selectTest .v-menu__content {
   top: 35px !important;
   left: 0px !important;
-}
+} */
 </style>

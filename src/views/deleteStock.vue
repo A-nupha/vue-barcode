@@ -74,7 +74,7 @@
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Name" v-model="nameItems" />
+        <v-text-field prepend-icon=" " disabled label="Name" v-model="nameItems" />
       </v-flex>
     </v-layout>
     <v-layout>
@@ -84,7 +84,8 @@
       v-model="valid"
       lazy-validation
     >
-    {{valid}}
+    <!-- {{valid}} -->
+    <!-- <v-btn color="error"></v-btn> -->
         <v-text-field prepend-icon=" " label="Qty" :counter="7" mask="#######" v-model="qty" :rules="rules" required/>
         </v-form>
       </v-flex>
@@ -101,7 +102,7 @@
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-textarea prepend-icon=" " v-model="detailItems" box name="input-7-4" label="Description" auto-grow></v-textarea>
+        <v-textarea prepend-icon=" " disabled v-model="detailItems" box name="input-7-4" label="Description" auto-grow></v-textarea>
       </v-flex>
     </v-layout>
             </v-flex>

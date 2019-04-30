@@ -130,7 +130,7 @@
         yes
       </v-btn></v-flex></v-layout>
   </v-snackbar>
-  {{getdataTable}}
+  <!-- {{getdataTable}} -->
 </div>
 </template>
 
