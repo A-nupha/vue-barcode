@@ -71,6 +71,16 @@
                                                                     label="Password">
                                                                     </v-text-field>
                                                                 </v-flex>
+                                                                <v-flex xs6 sm6 md6>
+                                                                  <!-- {{select}} -->
+                                                                  <v-select
+                                                                    v-model="select"
+                                                                    :items="items"
+                                                                    label="role"
+                                                                    item-value="id"
+                                                                    item-text="name"
+                                                                  />
+                                                                </v-flex>
                                                             </v-layout>
                                                         </v-container>
                                                     </v-card-text>
@@ -156,6 +166,16 @@ export default {
   components: {},
   data() {
     return {
+      items: [{
+        name: 'manager',
+        id: 1,
+      },
+      {
+        name: 'employee',
+        id: 2,
+      },
+      ],
+      select: '',
       loading: false,
       Snac: false,
       getdataTable: [],
@@ -227,6 +247,7 @@ export default {
     editItem(value) {
       // console.log('เข้า', value.indexLog);
       this.index = value
+      this.select = value.role_id
       this.dialog = true
       // await controlData.save(obj)
     },
@@ -236,6 +257,7 @@ export default {
       const obj = {
         pid: this.Store.dataUserApi[this.index.indexLog].pid,
         Password: this.Store.dataUserApi[this.index.indexLog].index2Edit,
+        role: this.select,
       }
       console.log('obj', obj)
       await controlData.editUser(obj)

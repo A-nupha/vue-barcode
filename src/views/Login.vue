@@ -244,12 +244,14 @@ export default {
         const menu = 'Menu'
         this.setDataLogin(menu);
         this.getUser()
+        this.Store.nameUser = store.state.dataLogin[0].fname
         this.loading = false
+        console.log('store.state.dataLogin', store.state.dataLogin[0].fname)
       } if (String(await store.state.dataLogin) === 'password is incorrect') {
         console.log('test')
         this.msgSnackBar = 'password is incorrect'
         this.snackฺฺฺBarBool = true
-        console.log(typeof store.state.dataLogin)
+        console.log(store.state.dataLogin)
         this.loading = false
       }
     },

@@ -11,10 +11,10 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon>mdi-account</v-icon>
-      <div>{{userName}}</div>
-      <!-- <v-btn icon @click="drawerS = true"> -->
-      <!-- <v-icon>mdi-dots-vertical</v-icon> -->
-    <!-- </v-btn> -->
+      <div>{{Store.nameUser}}</div>
+      <v-btn icon @click="dialogContact = true">
+      <v-icon>mdi-dots-vertical</v-icon>
+    </v-btn>
    </v-toolbar>
    <!-- <LoginApp/> -->
    <transition name="component-fade" mode="out-in">
@@ -75,7 +75,7 @@
       </v-list-tile>
       </v-list>
     </v-navigation-drawer> -->
-    <v-dialog v-model="openDialog" persistent max-width="400px">
+    <v-dialog v-model="dialogContact" persistent max-width="400px">
         <v-card>
           <v-flex>
           <v-card-title
@@ -93,7 +93,7 @@
           </v-flex>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="openDialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click="dialogContact = false">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -130,6 +130,7 @@ export default {
   name: 'Profile',
   data() {
     return {
+      dialogContact: false,
       openDialog: false,
       drawerS: false,
       Store: this.$store.state,
@@ -209,7 +210,7 @@ export default {
       setDataLogin: 'getApi/setDataLogin',
     }),
     navigationtab() {
-      console.log('this.Store.dataLogin[0].rcode_id', this.Store.dataLogin[0].rcode_id)
+      console.log('this.Store.dataLogin[0]', this.Store.dataLogin[0])
       if (this.Store.dataLogin[0].rcode_id !== null || this.Store.dataLogin[0] !== '') {
         const menu = 'Menu'
         this.setDataLogin(menu);

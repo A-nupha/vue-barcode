@@ -11,6 +11,7 @@ const getDefaultState = () => ({
   output: '',
   Input: '',
   Stock: '',
+  nameUser: '',
   userName: null,
   passWord: null,
   dataSelect: [],

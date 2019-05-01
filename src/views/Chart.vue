@@ -33,8 +33,8 @@
     <cerprint/>
     </v-flex>
     <!-- {{dataTranIn}}
-    =========================================
-    {{dataStock}} -->
+    =========================================-->
+    <!-- {{dataStock}} -->
 
   </div>
 </template>
@@ -92,6 +92,7 @@ export default {
       paramsStock.append('date_out', this.Store.aDateOut)
       const responseStock = await Axios.post(apiStock, paramsStock)
       this.Store.dataStock = responseStock.data
+      // console.log()
       console.log('----Get_API--STOCK---', responseStock.data)
 
       const api = 'https://a-nuphasupit58.000webhostapp.com/php/getdataReportChat.php';

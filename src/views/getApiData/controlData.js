@@ -21,10 +21,12 @@ const funcs = {
   },
 
   async editUser(data) {
+    console.log('editUser', data)
     var api = 'https://a-nuphasupit58.000webhostapp.com/php/deleteuser.php';
     var params = new URLSearchParams();
     params.append('pid', data.pid)
     params.append('index2', data.Password)
+    params.append('role_id', data.role)
     const response = await Axios.post(api, params)
     // eslint-disable-next-line no-unused-vars
     store.state.editUser = response.data
