@@ -79,12 +79,12 @@ function dataInsert($data,$conn){
         $result = $conn->query($query);
         if($result)
         {
-              echo "\r\n update result1 Save Done. \r\n";
+            echo "\r\n update result1 Save Done. \r\n";
             $secess1 = true;
         }
         else
         {
-             echo "\r\n update Error Save [".$query."] \r\n";
+            echo "\r\n update Error Save [".$query."] \r\n";
         }
         InsertUpdateReport($conn,$add_date,$barcode,$quantity,$branch_id);
         $queryInsert="INSERT INTO `transaction_out`(`id`, `barcode`, `add_date`, `add_time`, `branch_id`, `quantity`, `status_id`, `approve_id`, `pid_user`, `pid_approve`, `remark`, `price`, `cost`) 
@@ -131,11 +131,15 @@ function InsertUpdateReport($conn,$date,$barcode,$quantity,$branch_id){
             if(count($dataselect)!=0){
     
                 $oldTotal=(int)$dataselect[0]['out'];
+                $noOldTotal=(int)$dataselect[0]['no'];
+                echo "\r\n \r\n \r\n no total echo = ".$noOldTotal;
                 // echo "\r\n old total=".$oldTotal." new=".$quantity." \r\n";
+
                 $ConQuantity=(int)$quantity;
+                $newNoQuantity=$ConQuantity + $noOldTotal;
                 $newQuantity=  $ConQuantity + $oldTotal;
-                
-                $updatequery="UPDATE `report` SET `out`='$newQuantity',`no`='$quantity' WHERE `date`='$date' AND `barcode`='$barcode' AND `branch_id`='$branch_id'";
+
+                $updatequery="UPDATE `report` SET `out`='$newQuantity',`no`='$newNoQuantity' WHERE `date`='$date' AND `barcode`='$barcode' AND `branch_id`='$branch_id'";
                 echo $updatequery;
                 $updateResult = $conn->query($updatequery);
                 echo "\r\n";

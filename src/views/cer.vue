@@ -241,7 +241,7 @@ export default {
       const body = formatBody.map(f => ({
         style: 'content',
         table: {
-          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
+          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, '*'],
           body: [
             [
               { text: `${f.date}`, alignment: 'center', border: [true, true, true, false] },
@@ -253,7 +253,7 @@ export default {
               { text: `${f.price}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.total_cost}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.sale}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.total_sale}`, alignment: 'center', border: [true, true, true, false] },
+              // { text: `${f.total_sale}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.items_lost}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.total_lost}`, alignment: 'center', border: [true, true, true, false] },
               // { text: `${f.quantity_stock}`, alignment: 'center', border: [true, true, true, false] },
@@ -320,7 +320,7 @@ export default {
           {
             style: 'content',
             table: {
-              widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
+              widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40,  '*'],
               body: [
                 [
                   { text: 'date', alignment: 'center', border: [true, true, true, false] },
@@ -332,7 +332,7 @@ export default {
                   { text: 'total_cost', alignment: 'center', border: [true, true, true, false] },
                   { text: 'price', alignment: 'center', border: [true, true, true, false] },
                   { text: 'sale', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'total_sale', alignment: 'center', border: [true, true, true, false] },
+                  // { text: 'total_sale', alignment: 'center', border: [true, true, true, false] },
                   { text: 'items_lost', alignment: 'center', border: [true, true, true, false] },
                   { text: 'total_lost', alignment: 'center', border: [true, true, true, false] },
                   // { text: 'quantity_stock', alignment: 'center', border: [true, true, true, false] },
