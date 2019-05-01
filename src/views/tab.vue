@@ -113,9 +113,10 @@ export default {
       Axios.post(api, dataParams)
         .then((response) => {
           console.log('-=-=-==-')
+          console.log(response.data)
           this.insertsuccess = response.data
           if (Boolean(this.insertsuccess) === true) {
-            alert('สำเร็จ')
+            // alert('สำเร็จ')
             this.msg = 'success'
             this.color = 'green'
             this.openDialog = true

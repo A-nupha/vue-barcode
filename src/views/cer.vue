@@ -1,15 +1,23 @@
 <template>
-  <v-btn color="blue" class="white--text" @click="print">report</v-btn>
+  <div>
+      <v-btn color="blue" class="white--text" @click="print">report</v-btn>
+  </div>
 </template>
 <script>
 import pdfmakeCustom from '@cdglib/js-pdfmake-custom/src/plugin/pdfmake-custom';
 import printDoc from '@cdglib/js-pdfmake-custom/src/pdf/print';
+import { sync } from 'vuex-pathify'
+import functions from '../plugins/functions'
+import store from '../store/store'
+
 
 export default {
   name: 'Pdf',
   data() {
     return {
       data: {
+        functions,
+        Store: this.$store.state,
         detail: [
           {
             date: '12/06/2562',
@@ -207,38 +215,48 @@ export default {
       },
     }
   },
+  computed: {
+    ...sync('*'),
+
+  },
   methods: {
     createID1(data) {
       this.index = 0
       const formatBody = data
         .map(d => ({
           date: `${d.date}`,
-          code: `${d.code}`,
+          barcode: `${d.barcode}`,
           name: `${d.name}`,
-          count_in: `${d.count_in}`,
-          count_out: `${d.count_out}`,
-          invert: `${d.invert}`,
-          profit: `${d.profit}`,
-          balance: `${d.balance}`,
-          lost: `${d.lost}`,
-          other: `${d.other}`,
+          in: `${d.in}`,
+          out: `${d.out}`,
+          cost: `${d.cost}`,
+          price: `${d.price}`,
+          total_cost: `${d.total_cost}`,
+          sale: `${d.sale}`,
+          total_sale: `${d.total_sale}`,
+          items_lost: `${d.items_lost}`,
+          total_lost: `${d.total_lost}`,
+          quantity_stock: `${d.quantity_stock}`,
         }))
       const body = formatBody.map(f => ({
         style: 'content',
         table: {
-          widths: [50, 90, 80, 50, 50, 50, 80, 70, 70, '*'],
+          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
           body: [
             [
               { text: `${f.date}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.code}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.barcode}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.name}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.count_in}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.count_out}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.invert}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.profit}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.balance}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.lost}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.other}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.in}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.out}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.cost}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.price}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.total_cost}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.sale}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.total_sale}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.items_lost}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.total_lost}`, alignment: 'center', border: [true, true, true, false] },
+              // { text: `${f.quantity_stock}`, alignment: 'center', border: [true, true, true, false] },
             ],
           ],
         },
@@ -249,14 +267,13 @@ export default {
     },
     // empty line
     space() {
-      let body = []
+      const body = []
       const a = {
         style: 'content',
         table: {
-          widths: [50, 90, 80, 50, 50, 50, 80, 70, 70, '*'],
+          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
           body: [
             [
-              { text: ' ', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
@@ -266,14 +283,15 @@ export default {
               { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
+              // { text: '', alignment: 'center', border: [true, true, true, false] },
             ],
           ],
         },
       }
-      for (let i = 0; i < 3; i +=1) {
+      for (let i = 0; i < 3; i += 1) {
         body.push(a)
       }
-      
+
       return { body }
     },
     async print() {
@@ -288,33 +306,37 @@ export default {
           {
             style: 'header',
             text: [
-              'รายการสินค้า เข้าออกประจำวันที่ 01/01/2562 - 31/01/2562 \n',
+              `Transaction in-out ${functions.getDateFormat(String(store.state.aDateIn)).long} - ${functions.getDateFormat(String(store.state.aDateOut)).long} \n`,
             ],
             bold: true,
           },
-          {
-            style: 'content',
-            text: [
-              '\nมูลค่ารวมของสินค้าคงคลัง 4649.00 บาท รายการสินค้าคงคลัง 2\n\n',
-            ],
-          },
+          // {
+          //   style: 'content',
+          //   text: [
+          //     '\nมูลค่ารวมของสินค้าคงคลัง 4649.00 บาท รายการสินค้าคงคลัง 2\n\n',
+          //   ],
+          // },
 
           {
             style: 'content',
             table: {
-              widths: [50, 90, 80, 50, 50, 50, 80, 70, 70, '*'],
+              widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
               body: [
                 [
-                  { text: 'วันที่', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'รหัสสินค้า', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'ชื่อสินค้า', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'สินค้าเข้า', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'สินค้าออก', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'เงินทุน', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'เงินจากการขาย', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'มูลค้าสินค้าคงคลัง', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'สินค้าเสียหาย', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'สินค้าถูกจำหน่ายด้วยประเภทอื่น', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'date', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'barcode', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'name', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'in', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'out', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'cost', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'total_cost', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'price', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'sale', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'total_sale', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'items_lost', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'total_lost', alignment: 'center', border: [true, true, true, false] },
+                  // { text: 'quantity_stock', alignment: 'center', border: [true, true, true, false] },
+
                 ],
               ],
             },
@@ -323,8 +345,8 @@ export default {
               defaultBorder: false,
             },
           },
-          ...this.createID1(this.data.detail).body,
-          ...this.space().body, // empty line
+          ...this.createID1(store.state.dataStock).body,
+          // ...this.space().body, // empty line
 
           // Footer
           {
@@ -333,7 +355,9 @@ export default {
               widths: [50, 90, 80, 50, 50, 50, 80, 70, 70, '*'],
               body: [
                 [
-                  { text: 'รายการชำรุด/สูญหาย', alignment: 'left', border: [true, true, true, false], colSpan: 8 },
+                  {
+                    text: 'Output', alignment: 'left', border: [true, true, true, false], colSpan: 8,
+                  },
                   { text: '', alignment: 'left', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
@@ -341,8 +365,8 @@ export default {
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
-                  { text: '20', alignment: 'center', border: [true, true, true, false] },
-                  { text: '500', alignment: 'center', border: [true, true, true, false] },
+                  { text: '', alignment: 'center', border: [false, true, false, false] },
+                  { text: store.state.Input, alignment: 'center', border: [false, true, true, false] },
                 ],
               ],
             },
@@ -356,7 +380,9 @@ export default {
               widths: [50, 90, 80, 50, 50, 50, 80, 70, 70, '*'],
               body: [
                 [
-                  { text: 'รายได้', alignment: 'left', border: [true, true, true, false], colSpan: 8, },
+                  {
+                    text: 'Input', alignment: 'left', border: [true, true, true, false], colSpan: 8,
+                  },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
@@ -364,8 +390,8 @@ export default {
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
-                  { text: '10', alignment: 'center', border: [true, true, true, false] },
-                  { text: '100000', alignment: 'center', border: [true, true, true, false] },
+                  { text: '', alignment: 'center', border: [false, true, false, false] },
+                  { text: store.state.output, alignment: 'center', border: [false, true, true, false] },
                 ],
               ],
             },
@@ -379,7 +405,9 @@ export default {
               widths: [50, 90, 80, 50, 50, 50, 80, 70, 70, '*'],
               body: [
                 [
-                  { text: 'รวมทั้งสิ้น 2 รายการ', alignment: 'left', border: [true, true, true, false], colSpan: 8, },
+                  {
+                    text: 'Stock', alignment: 'left', border: [true, true, true, false], colSpan: 8,
+                  },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
@@ -387,8 +415,8 @@ export default {
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
-                  { text: '30', alignment: 'center', border: [true, true, true, false] },
-                  { text: '55555', alignment: 'center', border: [true, true, true, false] },
+                  { text: '', alignment: 'center', border: [false, true, false, false] },
+                  { text: store.state.Stock, alignment: 'center', border: [false, true, true, false] },
                 ],
               ],
             },

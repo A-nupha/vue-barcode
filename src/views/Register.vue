@@ -1,26 +1,35 @@
 <template>
 <div>
   <v-container>
-    <v-layout row v-if="error">
-      <v-flex xs12 sm6 offset-sm3>
-        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
-      </v-flex>
-    </v-layout>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
           <v-card-text>
             <v-container>
               <form>
+                <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
+                    prepend-icon="mdi-account-box"
+
+        v-model="username"
+        :counter="15"
+        :rules="nameRules"
+        label="Name"
+        required
+      ></v-text-field>
+                    <!-- <v-text-field
                       prepend-icon="mdi-account-box"
-                      name="Username"
                       label="Username"
                       v-model="username"
+                      rules="nameRules"
                       required>
-                    </v-text-field>
+                    </v-text-field> -->
                   </v-flex>
                 </v-layout>
                 <v-layout row>
@@ -29,6 +38,7 @@
                       prepend-icon="mdi-lock-question"
                       v-model="password"
                       label="password"
+                      :rules="passRules"
                       type="password"
                       required></v-text-field>
                   </v-flex>
@@ -46,11 +56,18 @@
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
+                    prepend-icon="mdi-email"
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+                  ></v-text-field>
+                    <!-- <v-text-field
+                    rules="emailRules"
                       prepend-icon="mdi-email"
                       label="Your E-mail"
                       v-model="email"
-                      type="email"
-                      required></v-text-field>
+                      required></v-text-field> -->
                   </v-flex>
                 </v-layout>
                 <v-layout row>
@@ -59,6 +76,7 @@
                       prepend-icon="mdi-account"
                       name="FirstName"
                       label="FirstName"
+                      :rules="fnameRules"
                       id="name"
                       v-model="fname"
                       type="text"
@@ -71,6 +89,7 @@
                       prepend-icon=" "
                       label="LastName"
                       v-model="lname"
+                      :rules="lnameRules"
                       type="text"
                       required></v-text-field>
                   </v-flex>
@@ -80,6 +99,7 @@
                     <v-text-field
                     prepend-icon="mdi-account-card-details"
                       label="Pid"
+                      :rules="pidRules"
                       v-model="pid"
                       mask="#-####-#####-##-#"
                       required></v-text-field>
@@ -87,32 +107,38 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-text-field
+                    <!-- <v-text-field
                     prepend-icon="mdi-account-card-details"
                       label="id branch"
                       v-model="branch"
                       mask="####"
-                      required></v-text-field>
+                      required></v-text-field> -->
+                       <!-- {{cate_value}} -->
+                       <v-select
+                       :rules="branchRules"
+                :items="getBranch"
+                prepend-icon=" "
+                item-value="branch_id"
+                key="branch_id"
+                v-model="cate_value"
+                item-text="branch_name"
+                label="branch"
+                single-line
+                return-object
+                />
                   </v-flex>
                 </v-layout>
                 <v-layout>
                   <v-flex>
-                 <v-text-field
-                    prepend-icon="mdi-account-card-details"
-                      label="Name branch"
-                      v-model="branchName"
-                      required></v-text-field>
                   </v-flex>
                 </v-layout>
               <v-layout wrap>
               <v-flex xs12>
-
                 <v-radio-group v-model="tname" row>
                   <v-radio required prepend-icon=" "  color="blue" label="Mr." value="Mr."/>
                   <v-radio required prepend-icon=" "  color="blue" label="Mrs." value="Mrs."/>
                   <v-radio required prepend-icon=" "  color="blue" label="Ms." value="Ms."/>
                 </v-radio-group>
-
               </v-flex>
               </v-layout>
               <v-layout>
@@ -124,11 +150,12 @@
               <v-layout ma-0>
                   <v-flex xs12 ma-0>
                     <v-btn color="blue" dark large block :loading='loadingbtn'
-                    @click="dataInsert()">Register</v-btn>
+                    @click="validate()" :disabled="!valid" >Register</v-btn>
                   </v-flex>
                 </v-layout>
                 <v-flex xs12>
                 </v-flex>
+                </v-form>
               </form>
             </v-container>
           </v-card-text>
@@ -169,6 +196,7 @@ import {
   sync,
 } from 'vuex-pathify'
 import moment from 'moment'
+import Axios from 'axios';
 import controlData from './getApiData/controlData'
 import store from '../store/store'
 import functions from '../plugins/functions'
@@ -177,6 +205,8 @@ import functions from '../plugins/functions'
 export default {
   data() {
     return {
+      cate_value: '',
+      valid: true,
       color: '',
       branchName: '',
       snackฺฺฺBarBool: null,
@@ -188,10 +218,34 @@ export default {
       ],
       selected: '',
       confirmPassword: '',
+      getBranch: '',
       LastName: '',
       username: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+      ],
+      branchRules: [
+        v => !!v || 'branch is required',
+      ],
+      pidRules: [
+        v => !!v || 'pid is required',
+        v => (v && v.length === 13) || 'pid is not match',
+      ],
+      passRules: [
+        v => !!v || 'password is required',
+      ],
+      fnameRules: [
+        v => !!v || 'firstName is required',
+      ],
+      lnameRules: [
+        v => !!v || 'lastName is required',
+      ],
       password: '',
       email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
       fname: '',
       lname: '',
       tname: 'Mr.',
@@ -208,32 +262,20 @@ export default {
     comparePasswords() {
       return this.password !== this.confirmPassword ? 'Passwords do not match.' : true
     },
-    user() {
-      return this.$store.getters.user
-    },
-    error() {
-      return this.$store.getters.error
-    },
-    loading() {
-      return this.$store.getters.loading
-    },
   },
   watch: {
-    user(value) {
-      if (value !== null && value !== undefined) {
-        this.$router.push('/')
-      }
-    },
+  },
+  created() {
+    this.getDataBranch()
   },
   methods: {
     ...mapActions({
       setDataLogin: 'getApi/setDataLogin',
     }),
-    onSignup() {
-      this.$store.dispatch('signUserUp', { email: this.email, password: this.password, username: this.username })
-    },
-    onDismissed() {
-      this.$store.dispatch('clearError')
+    validate() {
+      if (this.$refs.form.validate()) {
+        this.dataInsert()
+      }
     },
     async dataInsert() {
       if (this.username || this.password || this.fname || this.pid) {
@@ -248,16 +290,16 @@ export default {
           pid: this.pid,
           flag_id: this.select,
           now_date: this.nowDate,
-          rcode_id: this.branch,
+          rcode_id: this.cate_value.branch_id,
           role_id: this.select,
         }
         console.log('obj', obj)
         await controlData.save(obj)
-        const objBranch = {
-          branchName: this.branchName,
-          branch: this.branch,
-        }
-        await controlData.insertBranchName(objBranch)
+        // const objBranch = {
+        //   branchName: this.branchName,
+        //   branch: this.branch,
+        // }
+        // await controlData.insertBranchName(objBranch)
         await this.awitData()
       } else {
         this.snackฺฺฺBarBool = true
@@ -283,6 +325,12 @@ export default {
       this.snackฺฺฺBarBool = false
       const menu = 'Menu'
       this.setDataLogin(menu);
+    },
+    async getDataBranch() {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/getBranch.php';
+      const response = await Axios(api)
+      this.getBranch = response.data
+      console.log(this.getBranch)
     },
   },
 }

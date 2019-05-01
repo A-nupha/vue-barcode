@@ -70,7 +70,7 @@ export default {
   getDateFormat(date) {
     // console.log(date)
     let day = '-'
-    let month = { digit: '-', long: '-', short: '-'}
+    let month = { digit: '-', long: '-', short: '-' }
     let year = '-'
     let long = '-'
     let short = '-'
@@ -95,13 +95,14 @@ export default {
       day = ''
     }
     year = Math.floor(date / 10000)
+    year -= 543
     let m = Math.floor(date / 100) % 100
     if (m === 0) { m = '' }
     // let mShort = ''
     // let mLong = ''
     m = this.getThaiMonth(m)
     month = { digit: m.digit, long: m.long, short: m.short }
-    long = `${day} ${m.long} พ.ศ.${year}`
+    long = `${day} ${m.long} ${year}`
     short = `${day} ${m.short} ${year}`
     format = {
       day,
@@ -117,51 +118,51 @@ export default {
     let mLong = ''
     switch (m) {
       case 1:
-        mLong = 'มกราคม'
+        mLong = 'January '
         mShort = 'ม.ค.';
         break
       case 2:
-        mLong = 'กุมภาพันธ์'
+        mLong = 'February '
         mShort = 'ก.พ.';
         break
       case 3:
-        mLong = 'มีนาคม'
+        mLong = 'March '
         mShort = 'มี.ค.';
         break
       case 4:
-        mLong = 'เมษายน'
+        mLong = 'April '
         mShort = 'เม.ย.';
         break
       case 5:
-        mLong = 'พฤษภาคม'
+        mLong = 'May '
         mShort = 'พ.ค.';
         break
       case 6:
-        mLong = 'มิถุนายน'
+        mLong = 'June '
         mShort = 'มิ.ย.';
         break
       case 7:
-        mLong = 'กรกฎาคม'
+        mLong = 'July '
         mShort = 'ก.ค.';
         break
       case 8:
-        mLong = 'สิงหาคม'
+        mLong = 'August '
         mShort = 'ส.ค.';
         break
       case 9:
-        mLong = 'กันยายน'
+        mLong = 'September '
         mShort = 'ก.ย.';
         break
       case 10:
-        mLong = 'ตุลาคม'
+        mLong = 'October '
         mShort = 'ต.ค.';
         break
       case 11:
-        mLong = 'พฤศจิกายน'
+        mLong = 'November '
         mShort = 'พ.ย.';
         break
       case 12:
-        mLong = 'ธันวาคม'
+        mLong = 'December '
         mShort = 'ธ.ค.';
         break
       default:
@@ -232,7 +233,7 @@ export default {
     } else if (this.getSysDate().month < bd.month.digit) {
       age -= 1
     }
-    console.log('age ' + age)
+    console.log(`age ${  age}`)
     return age
   },
   getTimeFormat(time, noSec = true) {
@@ -263,7 +264,7 @@ export default {
     if (popSt === 0 || popSt === 14 || popSt === 15) {
       if (ownSt === 0) {
         return ('ผู้อาศัย')
-      } else if (ownSt === 1) {
+      } if (ownSt === 1) {
         return ('เจ้าบ้าน')
       }
       return (`หัวหน้าครอบครัวที่ ${ownSt}`)

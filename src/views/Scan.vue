@@ -43,24 +43,24 @@
             <v-flex>
               <v-layout>
       <v-flex xs10>
-        <v-text-field type="number" prepend-icon=" "  :counter="13" mask="#############" label="Barcode" v-model="databarcode" />
+        <v-text-field type="number" prepend-icon=" " :disabled="disabledApi" :counter="13" mask="#############" label="Barcode" v-model="databarcode" />
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " label="Name" v-model="name" />
+        <v-text-field prepend-icon=" " label="Name" :disabled="disabledApi" v-model="name" />
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " v-model="price"
+        <v-text-field prepend-icon=" " v-model="price" :disabled="disabledApi"
         type="number"
         suffix="Baht"  :counter="6" mask="######" name="input-7-4" label="Price"></v-text-field>
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-text-field prepend-icon=" " v-model="cost"
+        <v-text-field prepend-icon=" " v-model="cost" :disabled="disabledApi"
         type="number"
         suffix="Baht"  :counter="6" mask="######" name="input-7-4" label="Cost"></v-text-field>
       </v-flex>
@@ -74,22 +74,21 @@
     <v-layout>
       <v-flex xs10>
       <v-select
+      :disabled="disabledApi"
                 :items="getCate"
                 prepend-icon=" "
                 item-value="cate_id"
-                key="cate_name"
                 v-model="cate_value"
                 item-text="cate_name"
                 label="category"
                 single-line
                 return-object
                 />
-                <!-- {{cate_value}} -->
       </v-flex>
     </v-layout>
     <v-layout>
       <v-flex xs10>
-        <v-textarea prepend-icon=" " v-model="detailItems"
+        <v-textarea prepend-icon=" " v-model="detailItems" :disabled="disabledApi"
         box name="input-7-4" label="Description" auto-grow></v-textarea>
       </v-flex>
     </v-layout>
@@ -130,6 +129,7 @@ export default {
         'สูญหาย',
         'ชำรุด',
       ],
+      disabledApi: false,
       Store: this.$store.state,
       cost: null,
       price: null,
@@ -154,7 +154,7 @@ export default {
   },
   watch: {
     async databarcode() {
-      if (this.databarcode.length !== 0) {
+      if (this.databarcode.length === 13) {
         console.log('this.Store.dataBranch[0].branch_id', this.Store.dataBranch[0].branch_id)
         // await controlData.getDataBarcode(this.databarcode, this.Store.dataBranch[0].branch_id).then((response) => {
         //   console.log(response.data)
@@ -166,9 +166,13 @@ export default {
         console.log('response', response)
         this.name = response.data[0].name
         this.detailItems = response.data[0].desc
-        this.cate_value = response.data[0].cate_name
+        // eslint-disable-next-line prefer-destructuring
+        this.cate_value = response.data[0]
         this.cost = response.data[0].cost
         this.price = response.data[0].price
+        if (response.data !== 'error') {
+          this.disabledApi = true
+        }
       }
     },
 
@@ -192,13 +196,19 @@ export default {
       this.cate_value = ''
       this.cost = ''
       this.price = ''
+      this.qty = ''
       this.dialogScan = false
+      this.disabledApi = false
     },
     putdata() {
       console.log('date', this.nowDate)
       console.log('time', this.time)
       // console.log('this.Store.dataBranch[0].pid', this.Store.dataBranch[0].pid)
-      console.log('this.cate_value.cate_id', this.cate_value.cate_id)
+      // console.log('this.cate_value.cate_id', this.cate_value.cate_id)
+      // if(this.disabledApi = true ){
+      //   this.cate_value.cate_id = ''
+      //   this.cate_value.cate_id = this.cate_value
+      // }
       const obj = {
         barcode: String(this.databarcode),
         name: String(this.name),
@@ -219,7 +229,14 @@ export default {
       console.log(obj)
       this.Store.dataScan.push(obj)
       // console.log('this.$store.state.dataScan', this.$store.state.dataScan)
+      this.name = ''
+      this.detailItems = ''
+      this.cate_value = ''
+      this.cost = ''
+      this.price = ''
+      this.qty = ''
       this.dialogScan = false
+      this.disabledApi = false
     },
     openQuagga() {
       this.dialogScan = true

@@ -1,6 +1,5 @@
 <template>
   <v-app id="app" >
-    <!-- {{login}} -->
        <v-toolbar
       color="blue lighten-1"
       dark
@@ -11,11 +10,11 @@
       <!-- <span>{{ moment().format('MMMM Do YYYY, h:mm:ss a') }}</span> -->
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <!-- <v-icon>mdi-account</v-icon>
-      <div>{{userName}}</div> -->
-      <v-btn icon @click="drawerS = true">
-      <v-icon>mdi-dots-vertical</v-icon>
-    </v-btn>
+      <v-icon>mdi-account</v-icon>
+      <div>{{userName}}</div>
+      <!-- <v-btn icon @click="drawerS = true"> -->
+      <!-- <v-icon>mdi-dots-vertical</v-icon> -->
+    <!-- </v-btn> -->
    </v-toolbar>
    <!-- <LoginApp/> -->
    <transition name="component-fade" mode="out-in">
@@ -222,13 +221,13 @@ export default {
 <style>
   /* .selectCtrl .v-select>.v-input__control>.v-input__slot{
     height:28px !important ;
-  } */
+  }
 
-  /* .selectCtrl2 .v-select>.v-input__control>.v-input__slot{
+  .selectCtrl2 .v-select>.v-input__control>.v-input__slot{
     height:28px !important ;
     width: 15rem;
   } */
-/* #app {
+#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -236,15 +235,15 @@ export default {
   overflow: auto;
   text-align: center;
   color: #2c3e50;
-} */
-/* #nav {
+}
+#nav {
   padding: 30px;
-} */
+}
 
-/* #nav a {
+#nav a {
   font-weight: bold;
   color: #2c3e50;
-} */
+}
 /* .v-menu__content {
   top: 50px !important;
   left: 0px !important;
