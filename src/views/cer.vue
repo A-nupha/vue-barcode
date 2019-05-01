@@ -241,7 +241,7 @@ export default {
       const body = formatBody.map(f => ({
         style: 'content',
         table: {
-          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
+          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
           body: [
             [
               { text: `${f.date}`, alignment: 'center', border: [true, true, true, false] },
@@ -256,7 +256,7 @@ export default {
               { text: `${f.total_sale}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.items_lost}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.total_lost}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.quantity_stock}`, alignment: 'center', border: [true, true, true, false] },
+              // { text: `${f.quantity_stock}`, alignment: 'center', border: [true, true, true, false] },
             ],
           ],
         },
@@ -283,7 +283,7 @@ export default {
               { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
-              { text: '', alignment: 'center', border: [true, true, true, false] },
+              // { text: '', alignment: 'center', border: [true, true, true, false] },
             ],
           ],
         },
@@ -320,7 +320,7 @@ export default {
           {
             style: 'content',
             table: {
-              widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
+              widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
               body: [
                 [
                   { text: 'date', alignment: 'center', border: [true, true, true, false] },
@@ -335,7 +335,7 @@ export default {
                   { text: 'total_sale', alignment: 'center', border: [true, true, true, false] },
                   { text: 'items_lost', alignment: 'center', border: [true, true, true, false] },
                   { text: 'total_lost', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'quantity_stock', alignment: 'center', border: [true, true, true, false] },
+                  // { text: 'quantity_stock', alignment: 'center', border: [true, true, true, false] },
 
                 ],
               ],
@@ -366,7 +366,7 @@ export default {
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
-                  { text: '500', alignment: 'center', border: [false, true, true, false] },
+                  { text: store.state.output, alignment: 'center', border: [false, true, true, false] },
                 ],
               ],
             },
@@ -391,7 +391,7 @@ export default {
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
-                  { text: '100000', alignment: 'center', border: [false, true, true, false] },
+                  { text: store.state.Input, alignment: 'center', border: [false, true, true, false] },
                 ],
               ],
             },
@@ -416,7 +416,7 @@ export default {
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
-                  { text: '55555', alignment: 'center', border: [false, true, true, false] },
+                  { text: store.state.Stock, alignment: 'center', border: [false, true, true, false] },
                 ],
               ],
             },

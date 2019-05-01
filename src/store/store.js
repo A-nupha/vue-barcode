@@ -8,6 +8,9 @@ pathify.options.mapping = 'simple'
 
 const getDefaultState = () => ({
   test: 'test',
+  output: '',
+  Input: '',
+  Stock: '',
   userName: null,
   passWord: null,
   dataSelect: [],

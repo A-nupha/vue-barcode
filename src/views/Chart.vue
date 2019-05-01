@@ -108,6 +108,9 @@ export default {
       this.donutData[0].value = this.dataChat[0].SUM_IN
       this.donutData[1].value = this.dataChat[0].SUM_OUT
       this.donutData[2].value = this.dataChat[0].sum_stock
+      this.Store.output = this.dataChat[0].SUM_IN
+      this.Store.Input = this.dataChat[0].SUM_OUT
+      this.Store.Stock = this.dataChat[0].sum_stock
     },
   },
 }
