@@ -236,12 +236,14 @@ export default {
           total_sale: `${d.total_sale}`,
           items_lost: `${d.items_lost}`,
           total_lost: `${d.total_lost}`,
+          broken: `${d.broken}`,
+          total_broken: `${d.total_broken}`,
           quantity_stock: `${d.quantity_stock}`,
         }))
       const body = formatBody.map(f => ({
         style: 'content',
         table: {
-          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
+          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40,40,40, '*'],
           body: [
             [
               { text: `${f.date}`, alignment: 'center', border: [true, true, true, false] },
@@ -253,10 +255,11 @@ export default {
               { text: `${f.total_cost}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.price}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.sale}`, alignment: 'center', border: [true, true, true, false] },
-              { text: `${f.total_sale}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.broken}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.items_lost}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.total_sale}`, alignment: 'center', border: [true, true, true, false] },
               { text: `${f.total_lost}`, alignment: 'center', border: [true, true, true, false] },
-              // { text: `${f.quantity_stock}`, alignment: 'center', border: [true, true, true, false] },
+              { text: `${f.total_broken}`, alignment: 'center', border: [true, true, true, false] },
             ],
           ],
         },
@@ -271,9 +274,10 @@ export default {
       const a = {
         style: 'content',
         table: {
-          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
+          widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40,40,40, '*'],
           body: [
             [
+              { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
               { text: '', alignment: 'center', border: [true, true, true, false] },
@@ -320,23 +324,23 @@ export default {
           {
             style: 'content',
             table: {
-              widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
+              widths: [50, 70, 80, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, '*'],
               body: [
                 [
                   { text: 'date', alignment: 'center', border: [true, true, true, false] },
                   { text: 'barcode', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'name', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'in', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'out', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'cost', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'total_cost', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'price', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'sale', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'total_sale', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'items_lost', alignment: 'center', border: [true, true, true, false] },
-                  { text: 'total_lost', alignment: 'center', border: [true, true, true, false] },
-                  // { text: 'quantity_stock', alignment: 'center', border: [true, true, true, false] },
-
+                  { text: 'product name', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'quantity in', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'quantity out', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'cost(THB/pic)', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'total cost(THB)', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'price(THB/pic)', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'sale(pic)', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'broken(pic)', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'lost(pic)', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'total sale(THB)', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'total lost(THB)', alignment: 'center', border: [true, true, true, false] },
+                  { text: 'total broken(THB)', alignment: 'center', border: [true, true, true, false] },
                 ],
               ],
             },

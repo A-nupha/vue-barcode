@@ -243,6 +243,7 @@ export default {
       console.log('=====>', item)
       const rcodeid = Number(store.state.dataLogin[0].rcode_id)
       this.getdataTable = item
+      console.log('00000000000', item.status)
       console.log('test', store.state.dataLogin[0])
       this.$set(this.getdataTable, 'add_date', functions.moment(moment().format('YYYYMMDD')))
       this.$set(this.getdataTable, 'add_time', moment().format('hmmss'))

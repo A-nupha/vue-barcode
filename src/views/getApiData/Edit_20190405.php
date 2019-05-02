@@ -206,7 +206,7 @@ function InsertReport($conn,$barcode,$date,$quantity,$branch_id){
             }else if(count($dataselect)==0){
         
                 echo "\r\n";
-                $queryReport = "INSERT INTO `report`(`id`, `date`, `branch_id`, `barcode`, `in`, `out`, `yes`, `no`) VALUES (null,'".$date."','".$branch_id."','".$barcode."','".$quantity."','0','0','0')";
+                $queryReport = "INSERT INTO `report`(`id`, `date`, `branch_id`, `barcode`, `in`, `out`, `yes`, `no`, `broken`) VALUES (null,'".$date."','".$branch_id."','".$barcode."','".$quantity."','0','0','0','0')";
                 echo "\r\n". $queryReport;
                 $updateResult = $conn->query($queryReport);
             

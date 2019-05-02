@@ -96,6 +96,25 @@
                       </v-card>
                     </v-flex>
                   </v-layout>
+                  <v-layout>
+                    <v-flex xs12 pa-2>
+                      <v-card
+                        dark
+                        color="#1565C0"
+                        class="text-xs-center menuCard"
+                        clickable
+                        style="position:relative;"
+                        @click.native="click=setMenuAddItems()"
+                        height="100%"
+                      >
+                        <div class="background-icon">
+                          <v-icon class="icon">mdi-truck-delivery</v-icon>
+                        </div>
+                        <v-icon style="font-size:100px;">mdi-truck-delivery</v-icon>
+                        <p class="text-xs-center menuLabel">add items</p>
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
                   <div v-if="validateRole() == false">
                   <v-layout wrap>
 
@@ -231,6 +250,10 @@ export default {
     },
     setMenuTab() {
       const menu = 'tab'
+      this.setDataLogin(menu);
+    },
+    setMenuAddItems() {
+      const menu = 'items'
       this.setDataLogin(menu);
     },
     setMenuChart() {

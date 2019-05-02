@@ -21,20 +21,16 @@ if ($conn->connect_error) {
 //chk pid
 $query = "SELECT SUM(result.in) AS 'SUM_IN',SUM(result.out) AS 'SUM_OUT',str.sum_stock
 FROM
-(SELECT DISTINCT re.date,re.barcode,it.name,re.in,re.out,it.cost,
-(re.out*it.cost) AS total_cost,
-it.price,re.yes AS sale,
+(SELECT re.date,re.barcode,it.name,re.in,re.out,it.cost, 
+(re.out*it.cost) AS total_cost, 
+it.price,re.yes AS sale, 
 (re.yes*it.price) AS total_sale,
-re.no AS items_lost,
+re.no AS items_lost, 
 (re.no*it.cost) AS total_lost,
-stock.quantity_stock 
-FROM 
-report AS re,
-items AS it,
-stock
-WHERE
-re.barcode=it.barcode
-AND re.barcode=stock.barcode 
+re.broken,
+(re.broken*it.cost) AS total_broken
+FROM report AS re, items AS it
+WHERE re.barcode=it.barcode
 AND re.date BETWEEN '$date_in' AND '$date_out'
 AND re.branch_id = '$branch_id') AS result,
 (SELECT SUM(stock.quantity_stock) AS 'sum_stock' FROM stock  WHERE branch_id ='$branch_id') AS str";

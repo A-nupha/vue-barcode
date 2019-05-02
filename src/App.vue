@@ -121,6 +121,8 @@ import chart from './views/Chart.vue'
 import User from './views/User.vue'
 import Stork from './views/CheckStork.vue'
 import deleteStork from './views/deleteStock.vue'
+import items from './views/Items.vue'
+import test from './views/test.vue'
 
 // import LineChart from './lineChart'
 // import SnackBar from './views/SnackBar.vue'
@@ -169,6 +171,8 @@ export default {
     User,
     Stork,
     deleteStork,
+    items,
+    test,
   },
   mounted() {
 
@@ -184,6 +188,7 @@ export default {
       if (this.login === 'User') { this.z = 'User' }
       if (this.login === 'Stork') { this.z = 'Stork' }
       if (this.login === 'deleteStork') { this.z = 'deleteStork' }
+      if (this.login === 'items') { this.z = 'items' }
     },
     
 

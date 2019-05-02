@@ -97,7 +97,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <!-- {{Store.dataLogin[0].pid}} -->
   </div>
 </template>
 

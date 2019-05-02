@@ -155,11 +155,17 @@ function InsertUpdateReport($conn,$date,$barcode,$quantity,$branch_id){
             if(count($dataselect)!=0){
     
                 $oldTotal=(int)$dataselect[0]['out'];
+                $OldTotalYes=(int)$dataselect[0]['yes'];
                 // echo "\r\n old total=".$oldTotal." new=".$quantity." \r\n";
+
                 $ConQuantity=(int)$quantity;
+
+                $newInQuantity=$OldTotalYes + $ConQuantity;
+
+                echo "\r\n old in total=".$OldTotalIn." new=".$ConQuantity." Calculate=".$OldTotalYes."\r\n";
                 $newQuantity=  $ConQuantity + $oldTotal;
                 
-                $updatequery="UPDATE `report` SET `out`='$newQuantity',`yes`='$quantity' WHERE `date`='$date' AND `barcode`='$barcode' AND `branch_id`='$branch_id'";
+                $updatequery="UPDATE `report` SET `out`='$newQuantity',`yes`='$newInQuantity' WHERE `date`='$date' AND `barcode`='$barcode' AND `branch_id`='$branch_id'";
                 echo $updatequery;
                 $updateResult = $conn->query($updatequery);
                 echo "\r\n";
@@ -175,7 +181,7 @@ function InsertUpdateReport($conn,$date,$barcode,$quantity,$branch_id){
             }else if(count($dataselect)==0){
         
                 echo "\r\n";
-                $queryReport = "INSERT INTO `report`(`id`, `date`, `branch_id`, `barcode`, `in`, `out`, `yes`, `no`) VALUES (null,'".$date."','".$branch_id."','".$barcode."','0','".$quantity."','".$quantity."','0')";
+                $queryReport = "INSERT INTO `report`(`id`, `date`, `branch_id`, `barcode`, `in`, `out`, `yes`, `no`, `broken`) VALUES (null,'".$date."','".$branch_id."','".$barcode."','0','".$quantity."','".$quantity."','0','0')";
                 echo "\r\n". $queryReport;
                 $updateResult = $conn->query($queryReport);
                 echo "\r\n";
