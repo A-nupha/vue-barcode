@@ -200,7 +200,7 @@ export default {
       this.disabledApi = false
     },
     putdata() {
-      console.log('date', this.nowDate)
+      console.log('0000000', this.Store.dataBranch[0].branch_id)
       console.log('time', this.time)
       // console.log('this.Store.dataBranch[0].pid', this.Store.dataBranch[0].pid)
       // console.log('this.cate_value.cate_id', this.cate_value.cate_id)

@@ -88,9 +88,9 @@ export default {
   watch: {
     active() {
       if (Number(this.active) === 2) {
-        this.button = 'บันทึก'
+        this.button = 'SAVE'
       } else {
-        this.button = 'ถัดไป'
+        this.button = 'NEXT'
       }
     },
   },

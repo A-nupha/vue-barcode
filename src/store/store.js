@@ -7,6 +7,7 @@ import getApi from './modules/getApi'
 pathify.options.mapping = 'simple'
 
 const getDefaultState = () => ({
+  dataScan2: [],
   test: 'test',
   output: '',
   Input: '',

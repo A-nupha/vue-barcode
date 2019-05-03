@@ -193,7 +193,7 @@
                           <v-icon class="icon">mdi-calendar-edit</v-icon>
                         </div>
                         <v-icon style="font-size:100px;">mdi-calendar-edit</v-icon>
-                        <p class="text-xs-center menuLabel">Check Stork</p>
+                        <p class="text-xs-center menuLabel">Check Stock</p>
                       </v-card>
                     </v-flex>
                   </v-layout>

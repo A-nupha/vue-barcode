@@ -15,7 +15,7 @@
     "@cdglib/js-system-date": "^1.0.1",
     "@cdglib/js-title-print": "^0.1.15",
     "@cdglib/vuetify-am1-stylus": "^0.1.13",
-    "@mdi/font": "^3.5.95",
+    "@mdi/font": "^3.6.95",
     "axios": "^0.18.0",
     "chart.js": "^2.7.3",
     "chartkick": "^3.0.2",
