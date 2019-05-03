@@ -75,11 +75,31 @@
                           <v-icon class="icon">mdi-truck</v-icon>
                         </div>
                         <v-icon style="font-size:100px;">mdi-truck</v-icon>
-                        <p class="text-xs-center menuLabel">ADD</p>
+                        <p class="text-xs-center menuLabel">ADD ITEMS/PIECE</p>
               </v-card>
               </v-flex>
                     <v-flex xs6 pa-2>
                       <v-card
+                        dark
+                        color="#1565C0"
+                        class="text-xs-center menuCard"
+                        clickable
+                        style="position:relative;"
+                        @click.native="click=setMenuAddItems()"
+                        height="100%"
+                      >
+                        <div class="background-icon">
+                          <v-icon class="icon">mdi-truck</v-icon>
+                        </div>
+                        <v-icon style="font-size:100px;">mdi-truck</v-icon>
+                        <p class="text-xs-center menuLabel">ADD ITEMS/TYPE</p>
+                      </v-card>
+                     
+                    </v-flex>
+                  </v-layout>
+                  <v-layout>
+                    <v-flex xs12 pa-2>
+                       <v-card
                         dark
                         color="#1565C0"
                         class="text-xs-center menuCard"
@@ -93,25 +113,6 @@
                         </div>
                         <v-icon style="font-size:100px;">mdi-truck-delivery</v-icon>
                         <p class="text-xs-center menuLabel">RETURN</p>
-                      </v-card>
-                    </v-flex>
-                  </v-layout>
-                  <v-layout>
-                    <v-flex xs12 pa-2>
-                      <v-card
-                        dark
-                        color="#1565C0"
-                        class="text-xs-center menuCard"
-                        clickable
-                        style="position:relative;"
-                        @click.native="click=setMenuAddItems()"
-                        height="100%"
-                      >
-                        <div class="background-icon">
-                          <v-icon class="icon">mdi-truck-delivery</v-icon>
-                        </div>
-                        <v-icon style="font-size:100px;">mdi-truck-delivery</v-icon>
-                        <p class="text-xs-center menuLabel">add items</p>
                       </v-card>
                     </v-flex>
                   </v-layout>

@@ -1,5 +1,10 @@
 <template>
 <div>
+  <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+      >
 
     <v-content>
         <v-container>
@@ -9,8 +14,10 @@
                         <v-card flat>
 
 
-                                    <v-btn large block color="blue-grey" class="white--text" @click="dialogFull = true">creat Items
-                                        <v-icon right dark>mdi-file-document</v-icon>
+                                    <v-btn large block color="blue-grey"
+                                      class="white--text" @click="dialogFull = true">
+                                      creat Items
+                                      <v-icon right dark>mdi-file-document</v-icon>
                                     </v-btn>
 
                                       <v-flex>
@@ -23,98 +30,145 @@
                                         <v-divider class="mx-2" inset vertical></v-divider>
                                         <v-spacer></v-spacer>
                                         <div v-if="Store.dataScan2 != ''">
-                                            <v-btn class="white--text" color="blue" @click="confirm()">confirm</v-btn>
+                                            <v-btn class="white--text"
+                                            color="blue" @click="confirm()">confirm</v-btn>
                                         </div>
                                     </v-toolbar>
                                       </v-flex>
-                                    <v-data-table :headers="headers" :items="Store.dataScan2" :loading="true" class="elevation-1">
-                                        <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-                                        <template slot="items" slot-scope="props">
-                                            <td class="text-xs-center">{{ props.item.databarcodeTracking }}</td>
-                                            <td class="text-xs-center">{{ props.item.name }}</td>
-                                            <td class="text-xs-center">{{ props.item.QtyType }}</td>
-                                            <td class="text-xs-center">{{ props.item.qty }}</td>
+                                    <v-data-table :headers="headers"
+                                    :items="Store.dataScan2"
+                                    :loading="true" class="elevation-1">
+                                        <v-progress-linear slot="progress"
+                                        color="blue" indeterminate></v-progress-linear>
+                                        <template slot="items"
+                                        slot-scope="props">
+                                            <td class="text-xs-center">
+                                              {{ props.item.databarcodeTracking }}</td>
+                                            <td class="text-xs-center">
+                                              {{ props.item.name }}</td>
+                                            <td class="text-xs-center">
+                                              {{ props.item.QtyType }}</td>
+                                            <td class="text-xs-center">
+                                              {{ props.item.qty }}</td>
                                             <td>
                                                 <v-btn icon>
-                                                    <v-icon color="red" @click="deleteItem(props.item)">mdi-delete</v-icon>
+                                                    <v-icon color="red"
+                                                    @click="deleteItem(props.item)">
+                                                    mdi-delete</v-icon>
                                                 </v-btn>
                                             </td>
                                         </template>
                                     </v-data-table>
-
-
-
-                            <v-dialog v-model="dialogFull" fullscreen hide-overlay transition="dialog-bottom-transition">
+                            <v-dialog v-model="dialogFull"
+                            fullscreen hide-overlay
+                            transition="dialog-bottom-transition">
                                 <v-toolbar dark color="blue">
                                     <v-btn icon dark @click="closeDialogFull()">
                                         <v-icon>mdi-close</v-icon>
                                     </v-btn>
                                     <v-spacer></v-spacer>
                                     <v-toolbar-items>
-                                        <v-btn dark flat @click="putdataInsert()">Save</v-btn>
+                                        <v-btn dark flat :disabled="!valid"  @click="validate()">Save</v-btn>
                                     </v-toolbar-items>
                                 </v-toolbar>
                                 <v-card>
+
                                     <v-layout mr-4>
-                                        <v-text-field prepend-icon=" " mask="#############" counter="13" label="barcodetracking" v-model="databarcodeInput1" />
-                                        <v-btn color="info" @click="openQuagga()">
-                                            <v-icon justify-center>mdi-barcode-scan</v-icon>
+                                        <v-text-field prepend-icon=" "
+                                        :rules="databarcodeInput1Rules"
+                                        mask="#############" counter="13"
+                                        label="barcodetracking" v-model="databarcodeInput1" />
+                                        <v-btn color="info"
+                                        @click="openQuagga()">
+                                            <v-icon justify-center>
+                                              mdi-barcode-scan
+                                              </v-icon>
                                         </v-btn>
                                     </v-layout>
                                     <v-layout>
                                         <v-flex>
                                             <v-layout mr-5>
-                                                <v-select :items="items" prepend-icon=" " item-value="id" v-model="value" item-text="name" label="Type" single-line return-object />
+                                                <v-select :items="items"
+                                                :rules="TypeNameRules"
+                                                prepend-icon=" " item-value="id"
+                                                v-model="value" item-text="name"
+                                                label="Type" single-line return-object />
                                                 <v-flex xs7 mr-3>
-                                                    <v-text-field type="number" label="QtyType" prepend-icon=" " :counter="7" mask="#######" v-model="QtyType" required />
+                                                    <v-text-field
+                                                    type="number" label="QtyType"
+                                                    :rules="QtyTypeRules"
+                                                    prepend-icon=" "
+                                                    :counter="7" mask="#######"
+                                                    v-model="QtyType" required />
                                                 </v-flex>
                                             </v-layout>
                                             <v-layout>
                                                 <v-flex xs10 mr-3>
-                                                    <v-text-field type="number" label="Qty" prepend-icon=" " :counter="7" mask="#######" v-model="qty" required />
+                                                    <v-text-field type="number"
+                                                    :rules="qtyRules"
+                                                    label="Qty" prepend-icon=" "
+                                                    :counter="7" mask="#######"
+                                                    v-model="qty" required />
                                                 </v-flex>
                                             </v-layout>
                                             <v-layout>
                                                 <v-flex xs10>
-                                                    <v-text-field prepend-icon=" " v-model="price" type="number" suffix="Baht" :counter="6" mask="######" name="input-7-4" label="Price/Type"></v-text-field>
+                                                    <v-text-field prepend-icon=" "
+                                                    :rules="priceRules"
+                                                    v-model="price" type="number"
+                                                    suffix="Baht" :counter="6" mask="######"
+                                                    name="input-7-4"
+                                                    label="Price/Type"></v-text-field>
                                                 </v-flex>
                                             </v-layout>
                                             <v-layout>
                                                 <v-flex xs10>
-                                                    <v-text-field prepend-icon=" " v-model="cost" type="number" suffix="Baht" :counter="6" mask="######" name="input-7-4" label="cost/Type"></v-text-field>
+                                                    <v-text-field prepend-icon=" "
+                                                    :rules="costRules"
+                                                    v-model="cost" type="number"
+                                                    suffix="Baht" :counter="6"
+                                                    mask="######" name="input-7-4"
+                                                    label="cost/Type"></v-text-field>
                                                 </v-flex>
                                             </v-layout>
                                             <v-layout mr-4>
-                                                <v-text-field prepend-icon=" " mask="#############" counter="13" label="barcodeitems" v-model="databarcodeInput2" />
+                                                <v-text-field prepend-icon=" "
+                                                mask="#############" counter="13"
+                                                :rules="barcodeItemsRules"
+                                                label="barcodeitems" v-model="databarcodeInput2" />
                                                 <v-btn color="info" @click="openQuagga2()">
                                                     <v-icon justify-center>mdi-barcode-scan</v-icon>
                                                 </v-btn>
                                             </v-layout>
-                                            <!-- <v-layout>
-                <v-flex xs10>
-                    <v-text-field type="number" prepend-icon=" " label="qty" :counter="7" mask="#######" suffix="Piece" v-model="qty" />
-                </v-flex>
-            </v-layout> -->
                                             <v-layout>
                                                 <v-flex xs10>
-                                                    <v-text-field prepend-icon=" " label="Name" v-model="name" />
+                                                    <v-text-field prepend-icon=" "
+                                                    :rules="nameRules"
+                                                    label="Name" v-model="name" />
                                                 </v-flex>
                                             </v-layout>
                                             <v-layout>
                                                 <v-flex xs10>
-                                                    <v-select :items="getCate" prepend-icon=" " item-value="cate_id" v-model="cate_value" item-text="cate_name" label="category" single-line return-object />
+                                                    <v-select :items="getCate"
+                                                    :rules="cateRules"
+                                                    prepend-icon=" " item-value="cate_id"
+                                                    v-model="cate_value" item-text="cate_name"
+                                                    label="category" single-line return-object />
                                                 </v-flex>
                                             </v-layout>
                                             <v-layout>
                                                 <v-flex xs10>
-                                                    <v-textarea prepend-icon=" " v-model="detailItems" box name="input-7-4" label="Description" auto-grow></v-textarea>
+                                                    <v-textarea prepend-icon=" "
+                                                    v-model="detailItems" box name="input-7-4"
+                                                    label="Description" auto-grow></v-textarea>
                                                 </v-flex>
                                             </v-layout>
                                         </v-flex>
                                     </v-layout>
                                     <v-flex>
                                     </v-flex>
-                                    <v-dialog v-model="dialogScan" fullscreen hide-overlay transition="dialog-bottom-transition">
+                                    <v-dialog v-model="dialogScan"
+                                    fullscreen hide-overlay transition="dialog-bottom-transition">
                                         <v-toolbar dark color="blue">
                                             <v-btn icon dark @click="closeDialog()">
                                                 <v-icon>mdi-close</v-icon>
@@ -127,8 +181,12 @@
                                         </v-toolbar>
                                         <v-card>
                                             <v-card-text>
-                                                <quagga-scanner v-if="!databarcode" :onDetected="logIt" class="videoo" :readerSize="readerSize" :readerType="'ean_reader'">
-                                                    <video v-if="!databarcode" class="videoo" ></video>
+                                                <quagga-scanner v-if="!databarcode"
+                                                :onDetected="logIt" class="videoo"
+                                                :readerSize="readerSize"
+                                                :readerType="'ean_reader'">
+                                                    <video v-if="!databarcode"
+                                                    class="videoo" ></video>
                                                 </quagga-scanner>
                                             </v-card-text>
                                             <v-card-actions>
@@ -137,8 +195,11 @@
                                                     <v-flex>
                                                         <v-layout>
                                                             <v-flex xs10>
-                                                                dialog1
-                                                                <v-text-field type="number" prepend-icon=" " :counter="13" mask="#############" label="Barcode" v-model="databarcode" />
+                                                                <v-text-field
+                                                                type="number" prepend-icon=" "
+                                                                :counter="13" mask="#############"
+                                                                label="Barcode"
+                                                                v-model="databarcode" />
                                                             </v-flex>
                                                         </v-layout>
                                                     </v-flex>
@@ -147,7 +208,8 @@
                                         </v-card>
                                     </v-dialog>
                                     <!-- =================================================== -->
-                                    <v-dialog v-model="dialogScan2" fullscreen hide-overlay transition="dialog-bottom-transition">
+                                    <v-dialog v-model="dialogScan2"
+                                    fullscreen hide-overlay transition="dialog-bottom-transition">
                                         <v-toolbar dark color="blue">
                                             <v-btn icon dark @click="closeDialog2()">
                                                 <v-icon>mdi-close</v-icon>
@@ -160,8 +222,12 @@
                                         </v-toolbar>
                                         <v-card>
                                             <v-card-text>
-                                                <quagga-scanner v-if="!databarcode2" :onDetected="logIt2" class="videoo2" :readerSize="readerSize" :readerType="'ean_reader'">
-                                                    <video v-if="!databarcode2" class="videoo2" ></video>
+                                                <quagga-scanner v-if="!databarcode2"
+                                                :onDetected="logIt2" class="videoo2"
+                                                :readerSize="readerSize"
+                                                :readerType="'ean_reader'">
+                                                    <video v-if="!databarcode2"
+                                                    class="videoo2" ></video>
                                                 </quagga-scanner>
                                             </v-card-text>
                                             <v-card-actions>
@@ -170,8 +236,10 @@
                                                     <v-flex>
                                                         <v-layout>
                                                             <v-flex xs10>
-                                                                dialog2
-                                                                <v-text-field prepend-icon=" " :counter="13" mask="#############" label="Barcode" v-model="databarcode2" />
+                                                                <v-text-field prepend-icon=" "
+                                                                :counter="13" mask="#############"
+                                                                label="Barcode"
+                                                                v-model="databarcode2" />
                                                             </v-flex>
                                                         </v-layout>
                                                     </v-flex>
@@ -179,12 +247,10 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
-                                    <!-- ================================================================ -->
-                                    {{Store.dataScan2}}
                                 </v-card>
                             </v-dialog>
-
-                            <v-snackbar :vertical="true" v-model="snackฺฺฺBarBool" color="orange" bottom>
+                            <v-snackbar :vertical="true"
+                            v-model="snackฺฺฺBarBool" color="orange" bottom>
                                 <v-flex>{{msgSnackBar}}</v-flex>
                                 <v-layout>
                                     <v-flex>
@@ -226,6 +292,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      </v-form>
 </div>
 </template>
 
@@ -241,10 +308,10 @@ import {
 } from 'vue-quaggajs';
 import moment from 'moment'
 import Quagga from 'quagga';
+import { sync } from 'vuex-pathify'
 import functions from '../plugins/functions'
 import controlData from './getApiData/controlData'
-import { sync } from 'vuex-pathify'
-import Axios from 'axios';
+// import Axios from 'axios';
 
 export default {
   components: {
@@ -252,6 +319,25 @@ export default {
   },
   data() {
     return {
+      nameRules: [
+        v => !!v || 'Name is required'],
+      databarcodeInput1Rules: [
+        v => !!v || 'databarcodeTracking is required'],
+      TypeNameRules: [
+        v => !!v || 'TypeName is required'],
+      priceRules: [
+        v => !!v || 'price is required'],
+      costRules: [
+        v => !!v || 'cost is required'],
+      QtyTypeRules: [
+        v => !!v || 'QtyType is required'],
+      qtyRules: [
+        v => !!v || 'QTY is required'],
+      barcodeItemsRules: [
+        v => !!v || 'barcodeItems is required'],
+      cateRules: [
+        v => !!v || 'catetagory is required'],
+      valid: true,
       time: moment().format('hmmss'),
       nowDate: functions.moment(moment().format('YYYYMMDD')),
       msgSnackBar: '',
@@ -304,23 +390,23 @@ export default {
       value: '',
       items: [{
         name: 'crate',
-        id: 1,
+        id: '1',
       },
       {
         name: 'pack',
-        id: 2,
+        id: '2',
       },
       {
         name: 'Wrap',
-        id: 3,
+        id: '3',
       },
       {
         name: 'bag',
-        id: 4,
+        id: '4',
       },
       {
         name: 'box',
-        id: 5,
+        id: '5',
       },
 
       ],
@@ -341,6 +427,11 @@ export default {
       SetDataMenuRequest: 'getApi/SetDataMenuRequest',
       setDataLogin: 'getApi/setDataLogin',
     }),
+    validate() {
+      if (this.$refs.form.validate()) {
+        this.putdataInsert()
+      }
+    },
     logIt(data) {
       this.databarcode = data.codeResult.code
     },
@@ -390,11 +481,11 @@ export default {
         TypeId: this.value.id,
         price: toNumber(this.price),
         cost: toNumber(this.cost),
-        price_Piece: this.price / (this.qty * this.QtyType),
-        cost_Piece: this.cost / (this.qty * this.QtyType),
+        price_Piece: toNumber(this.price) / (toNumber(this.qty) * toNumber(this.QtyType)),
+        cost_Piece: toNumber(this.cost) / (toNumber(this.qty) * toNumber(this.QtyType)),
         QtyType: toNumber(this.QtyType),
         qty: toNumber(this.qty),
-        Qty_Piece: this.qty * this.QtyType,
+        Qty_Piece: toNumber(this.qty) * toNumber(this.QtyType),
         barcodeItems: this.databarcodeInput2,
         name: this.name,
         cate_id: this.cate_value.cate_id,
@@ -408,10 +499,19 @@ export default {
         approve_id: '01',
         pid_user: String(this.Store.dataLogin[0].pid),
         pid_approve: String(this.Store.dataLogin[0].pid),
-
       }
-      console.log(obj)
       this.Store.dataScan2.push(obj)
+      console.log(obj)
+      this.databarcodeInput1 = ''
+      this.databarcodeInput2 = ''
+      this.name = ''
+      this.value = ''
+      this.price = ''
+      this.cost = ''
+      this.QtyType = ''
+      this.qty = ''
+      this.cate_value = ''
+      this.detailItems = ''
     },
     deleteItem(item) {
       this.getdataTable = item
@@ -424,7 +524,6 @@ export default {
       this.snackฺฺฺBarBool = false
     },
     confirm() {
-
       this.openDialog = true
     },
     setMenuRequest() {
