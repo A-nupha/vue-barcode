@@ -167,6 +167,7 @@ export default {
         this.detailItems = response.data[0].desc
         // eslint-disable-next-line prefer-destructuring
         this.cate_value = response.data[0]
+        console.log(response.data[0])
         this.cost = response.data[0].cost
         this.price = response.data[0].price
         if (response.data !== 'error') {

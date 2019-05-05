@@ -134,7 +134,7 @@
                           <v-icon class="icon">mdi-sync-alert</v-icon>
                         </div>
                         <v-icon style="font-size:100px;">mdi-sync-alert</v-icon>
-                        <p class="text-xs-center menuLabel">Request</p>
+                        <p class="text-xs-center menuLabel">REQUEST</p>
                       </v-card>
                     </v-flex>
                     <!-- <v-flex xs6 pa-2>
@@ -171,7 +171,7 @@
                           <v-icon class="icon">mdi-chart-areaspline</v-icon>
                         </div>
                         <v-icon style="font-size:100px;">mdi-chart-areaspline</v-icon>
-                        <p class="text-xs-center menuLabel">Report</p>
+                        <p class="text-xs-center menuLabel">REPORT</p>
                       </v-card>
                     </v-flex>
 
@@ -194,7 +194,7 @@
                           <v-icon class="icon">mdi-calendar-edit</v-icon>
                         </div>
                         <v-icon style="font-size:100px;">mdi-calendar-edit</v-icon>
-                        <p class="text-xs-center menuLabel">Check Stock</p>
+                        <p class="text-xs-center menuLabel">CHECK STOCK</p>
                       </v-card>
                     </v-flex>
                   </v-layout>

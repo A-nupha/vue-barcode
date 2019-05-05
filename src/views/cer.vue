@@ -360,7 +360,7 @@ export default {
               body: [
                 [
                   {
-                    text: 'Output', alignment: 'left', border: [true, true, true, false], colSpan: 8,
+                    text: 'All Items Out', alignment: 'left', border: [true, true, true, false], colSpan: 8,
                   },
                   { text: '', alignment: 'left', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
@@ -385,7 +385,7 @@ export default {
               body: [
                 [
                   {
-                    text: 'Input', alignment: 'left', border: [true, true, true, false], colSpan: 8,
+                    text: 'All Item In', alignment: 'left', border: [true, true, true, false], colSpan: 8,
                   },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
@@ -410,7 +410,7 @@ export default {
               body: [
                 [
                   {
-                    text: 'Stock', alignment: 'left', border: [true, true, true, false], colSpan: 8,
+                    text: 'All Stock', alignment: 'left', border: [true, true, true, false], colSpan: 8,
                   },
                   { text: '', alignment: 'center', border: [false, true, false, false] },
                   { text: '', alignment: 'center', border: [false, true, false, false] },

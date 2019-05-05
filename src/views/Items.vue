@@ -76,8 +76,9 @@
                                     <v-layout mr-4>
                                         <v-text-field prepend-icon=" "
                                         :rules="databarcodeInput1Rules"
+                                        :disabled="disabledApi"
                                         mask="#############" counter="13"
-                                        label="barcodetracking" v-model="databarcodeInput1" />
+                                        label="Barcodetracking" v-model="databarcodeInput1" />
                                         <v-btn color="info"
                                         @click="openQuagga()">
                                             <v-icon justify-center>
@@ -89,13 +90,14 @@
                                         <v-flex>
                                             <v-layout mr-5>
                                                 <v-select :items="items"
+                                                :disabled="disabledApi"
                                                 :rules="TypeNameRules"
                                                 prepend-icon=" " item-value="id"
                                                 v-model="value" item-text="name"
-                                                label="Type" single-line return-object />
+                                                label="Unit" single-line return-object />
                                                 <v-flex xs7 mr-3>
                                                     <v-text-field
-                                                    type="number" label="QtyType"
+                                                    type="number" label="Qty/Unit"
                                                     :rules="QtyTypeRules"
                                                     prepend-icon=" "
                                                     :counter="7" mask="#######"
@@ -105,7 +107,9 @@
                                             <v-layout>
                                                 <v-flex xs10 mr-3>
                                                     <v-text-field type="number"
+                                                    :disabled="disabledApi"
                                                     :rules="qtyRules"
+                                                    suffix="price"
                                                     label="Qty" prepend-icon=" "
                                                     :counter="7" mask="#######"
                                                     v-model="qty" required />
@@ -114,27 +118,30 @@
                                             <v-layout>
                                                 <v-flex xs10>
                                                     <v-text-field prepend-icon=" "
+                                                    :disabled="disabledApi"
                                                     :rules="priceRules"
                                                     v-model="price" type="number"
                                                     suffix="Baht" :counter="6" mask="######"
                                                     name="input-7-4"
-                                                    label="Price/Type"></v-text-field>
+                                                    label="Price/Unit"></v-text-field>
                                                 </v-flex>
                                             </v-layout>
                                             <v-layout>
                                                 <v-flex xs10>
                                                     <v-text-field prepend-icon=" "
+                                                    :disabled="disabledApi"
                                                     :rules="costRules"
                                                     v-model="cost" type="number"
                                                     suffix="Baht" :counter="6"
                                                     mask="######" name="input-7-4"
-                                                    label="cost/Type"></v-text-field>
+                                                    label="cost/Unit"></v-text-field>
                                                 </v-flex>
                                             </v-layout>
                                             <v-layout mr-4>
                                                 <v-text-field prepend-icon=" "
                                                 mask="#############" counter="13"
-                                                :rules="barcodeItemsRules"
+                                                :rules="BarcodeItemsRules"
+                                                :disabled="disabledApi"
                                                 label="barcodeitems" v-model="databarcodeInput2" />
                                                 <v-btn color="info" @click="openQuagga2()">
                                                     <v-icon justify-center>mdi-barcode-scan</v-icon>
@@ -144,6 +151,7 @@
                                                 <v-flex xs10>
                                                     <v-text-field prepend-icon=" "
                                                     :rules="nameRules"
+                                                    :disabled="disabledApi"
                                                     label="Name" v-model="name" />
                                                 </v-flex>
                                             </v-layout>
@@ -151,6 +159,7 @@
                                                 <v-flex xs10>
                                                     <v-select :items="getCate"
                                                     :rules="cateRules"
+                                                    :disabled="disabledApi"
                                                     prepend-icon=" " item-value="cate_id"
                                                     v-model="cate_value" item-text="cate_name"
                                                     label="category" single-line return-object />
@@ -159,6 +168,7 @@
                                             <v-layout>
                                                 <v-flex xs10>
                                                     <v-textarea prepend-icon=" "
+                                                    :disabled="disabledApi"
                                                     v-model="detailItems" box name="input-7-4"
                                                     label="Description" auto-grow></v-textarea>
                                                 </v-flex>
@@ -309,6 +319,7 @@ import {
 import moment from 'moment'
 import Quagga from 'quagga';
 import { sync } from 'vuex-pathify'
+import Axios from 'axios';
 import functions from '../plugins/functions'
 import controlData from './getApiData/controlData'
 // import Axios from 'axios';
@@ -378,6 +389,7 @@ export default {
       databarcodeInput1: null,
       databarcode: null,
       databarcode2: null,
+      disabledApi: false,
       getdataTable: [],
       price: '',
       cost: '',
@@ -414,6 +426,93 @@ export default {
   },
   computed: {
     ...sync('*'),
+  },
+  watch: {
+    async databarcodeInput1() {
+      // console.log('test')
+      console.log('test-API', this.databarcodeInput1)
+      if (this.databarcodeInput1.length === 13) {
+        const api = 'https://a-nuphasupit58.000webhostapp.com/php/selectItemCenter.php';
+        const params = new URLSearchParams();
+        params.append('barcode', this.databarcodeInput1)
+        const response = await Axios.post(api, params)
+        console.log('response', response.data)
+        // eslint-disable-next-line no-cond-assign
+        if (response.data[0].TypeId = '1') {
+          this.value = {
+            name: 'crate',
+            id: '1',
+          }
+          console.log(this.value)
+        // eslint-disable-next-line no-cond-assign
+        } else if (response.data[0].TypeId = '2') {
+          this.value = {
+            name: 'pack',
+            id: '2',
+          }
+        // eslint-disable-next-line no-cond-assign
+        } else if (response.data[0].TypeId = '3') {
+          this.value = {
+            name: 'Wrap',
+            id: '3',
+          }
+        // eslint-disable-next-line no-cond-assign
+        } else if (response.data[0].TypeId = '4') {
+          this.value = {
+            name: 'bag',
+            id: '4',
+          }
+        // eslint-disable-next-line no-cond-assign
+        } else if (response.data[0].TypeId = '5') {
+          this.value = {
+            name: 'box',
+            id: '5',
+          }
+        }
+        this.qty = response.data[0].qty
+        this.databarcodeInput2 = response.data[0].barcodeItems
+        this.name = response.data[0].name
+        this.price = response.data[0].price
+        this.cost = response.data[0].cost
+        // eslint-disable-next-line no-cond-assign
+        if (response.data[0].cate_id = '1') {
+          this.cate_value = {
+            cate_name: 'อาหารเเละเครื่องดื่ม',
+            cate_id: '1',
+          }
+          console.log(this.value)
+        // eslint-disable-next-line no-cond-assign
+        } else if (response.data[0].cate_id = '2') {
+          this.cate_value = {
+            cate_name: 'อุปกรณ์อิเล็กทรอนิกส์',
+            cate_id: '2',
+          }
+        // eslint-disable-next-line no-cond-assign
+        } else if (response.data[0].cate_id = '3') {
+          this.cate_value = {
+            cate_name: 'ผลิตภัณฑ์เกี่ยวกับผิว',
+            cate_id: '3',
+          }
+        // eslint-disable-next-line no-cond-assign
+        } else if (response.data[0].cate_id = '4') {
+          this.cate_value = {
+            cate_name: 'เครื่องแต่งกาย',
+            cate_id: '4',
+          }
+        // eslint-disable-next-line no-cond-assign
+        } else if (response.data[0].cate_id = '5') {
+          this.cate_value = {
+            cate_name: 'อื่นๆ',
+            cate_id: '5',
+          }
+        }
+        this.detailItems = response.data[0].desc
+        if (response.data !== 'error') {
+          this.disabledApi = true
+        }
+      }
+    },
+
   },
   mounted() {
     controlData.getCate().then((response) => {
@@ -524,7 +623,30 @@ export default {
       this.snackฺฺฺBarBool = false
     },
     confirm() {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/InsertItemsNewFeeger.php';
+      const dataParams = new URLSearchParams();
+      const dataInsert = JSON.stringify(this.Store.dataScan2)
+      console.log('this.Store.dataScan', this.Store.dataScan)
+      dataParams.append('dataInsert', dataInsert)
+      Axios.post(api, dataParams)
+        .then((response) => {
+          console.log('-=-=-==-')
+          console.log(response.data)
+        })
+      this.insertItemsCenter()
       this.openDialog = true
+      // ==========================================
+    },
+    insertItemsCenter() {
+      const api = 'https://a-nuphasupit58.000webhostapp.com/php/InsertItemsCenter.php';
+      const dataParams = new URLSearchParams();
+      const dataInsert2 = JSON.stringify(this.Store.dataScan2)
+      dataParams.append('dataInsert', dataInsert2)
+      Axios.post(api, dataParams)
+        .then((response) => {
+          console.log('-=-=-==-')
+          console.log(response.data)
+        })
     },
     setMenuRequest() {
       this.openDialog = false
